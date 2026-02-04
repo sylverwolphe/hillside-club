@@ -3,557 +3,340 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Gratified - A coffee experience bringing warmth, creativity, and community to every corner. Explore our menu, subscribe for perks, or partner with us.">
-    <title>Gratified  |  coffee + art</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='8' y='8' width='16' height='16' fill='%23C08497' transform='rotate(45 16 16)'/><rect x='10' y='10' width='12' height='12' fill='%23C08497' transform='rotate(45 16 16)'/></svg>">
-    <link href="https://api.fontshare.com/v2/css?f[]=Satoshi@1&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/styles.css">
+    <meta name="description" content="The Hillside Club – Supporting community, culture, and the arts in Berkeley since 1898.">
+    <title>Hillside Club | Berkeley Landmark Since 1898</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Default: clean readable sans + slab -->
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Craftsman/Arts & Crafts alternate: more vintage serif/slab feel -->
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=EB+Garamond:wght@500;700&family=Playfair+Display+SC&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f8f5f0;
+            --text: #2d2a24;
+            --accent: #8b6f47;     /* warm wood/bronze */
+            --accent-dark: #5c4528;
+            --border: #d4c9b0;
+            --font-body: 'Libre Franklin', system-ui, sans-serif;
+            --font-heading: 'Roboto Slab', serif;
+        }
+        body.craftsman {
+            --bg: #fdf8f0;
+            --text: #3f2a1d;
+            --accent: #a67c52;
+            --accent-dark: #6b4e2f;
+            --border: #c19a6b;
+            --font-body: 'Crimson Text', Georgia, serif;
+            --font-heading: 'Playfair Display SC', 'EB Garamond', serif;
+            background: url('https://images.unsplash.com/photo-1517999144096-3a4a4d9d7e5c?auto=format&fit=crop&q=60') center/cover fixed sepia(0.15) brightness(0.98);
+            background-attachment: fixed;
+        }
+        body {
+            margin: 0;
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+        }
+        header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(248,245,240,0.92);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border);
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-dark);
+            text-decoration: none;
+        }
+        .controls button {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.5rem 1rem;
+            margin-left: 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            font-family: var(--font-heading);
+        }
+        .controls button:hover { background: var(--accent); color: white; }
+        main {
+            padding-top: 90px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        section {
+            padding: 5rem 2rem;
+            min-height: 60vh;
+            border-bottom: 1px solid var(--border);
+        }
+        h1, h2 {
+            font-family: var(--font-heading);
+            color: var(--accent-dark);
+            margin-top: 0;
+        }
+        .floating-club {
+            position: relative;
+            text-align: center;
+            margin: 3rem 0 6rem;
+        }
+        .floating-club img {
+            max-width: 90%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            animation: float 14s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%,100% { transform: translateY(0) rotate(0deg); }
+            50%     { transform: translateY(-30px) rotate(1.5deg); }
+        }
+        .poster-board {
+            background: #fffef8;
+            border: 2px dashed var(--accent);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(139,111,71,0.12);
+        }
+        .poster-board h2 { text-align: center; margin-bottom: 2rem; }
+        .poster-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+        .calendar-embed {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        /* Very basic member gate – real auth would need backend */
+        #member-area { display: none; padding: 3rem; background: #fffef8; border: 2px solid var(--accent); border-radius: 12px; }
+        .login-prompt {
+            text-align: center;
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #fdf8f0, #f0e8d8);
+            border-radius: 12px;
+        }
+        .login-prompt button {
+            font-size: 1.4rem;
+            padding: 1rem 2.5rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .login-prompt button:hover { background: var(--accent-dark); }
+        .history-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .history-content {
+            background: white;
+            max-width: 700px;
+            padding: 2.5rem;
+            border-radius: 12px;
+            position: relative;
+        }
+        .close-modal { position: absolute; top: 1rem; right: 1.5rem; font-size: 2rem; cursor: pointer; }
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #777;
+            font-size: 0.95rem;
+        }
+    </style>
 </head>
 <body>
-    <!-- Skip Navigation Link for Accessibility -->
-    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <div class="muddy-flow"></div>
-    <canvas id="spice-canvas"></canvas>
-    <div class="grain-overlay"></div>
-    <div class="ancient-pattern"></div>
-
-    <!-- Temporary Particle Toggle Button - DISABLED (uncomment to re-enable)
-    <button class="particle-toggle" id="particleToggle" onclick="cycleParticleMode()">Particles: Steam</button>
-    <script>
-        function cycleParticleMode() {
-            const modes = ['dots', 'diamonds', 'steam', 'dust', 'grounds'];
-            const current = window.getParticleMode ? window.getParticleMode() : 'steam';
-            const nextIndex = (modes.indexOf(current) + 1) % modes.length;
-            if (window.setParticleMode) window.setParticleMode(modes[nextIndex]);
-        }
-    </script>
-    -->
-
-    <!-- Main Navigation -->
-    <nav class="main-nav" id="mainNav">
-        <a href="#landing" class="nav-link active" data-page="landing">
-            <span class="nav-icon icon-dash"></span>
-          <!--  <span class="nav-label">Home</span> -->
-        </a>
-        <a href="#menu" class="nav-link" data-page="menu">
-            <span class="nav-icon icon-equal"></span>
-           <!-- <span class="nav-label">Menu</span> -->
-        </a>
-        <a href="#subscribe" class="nav-link" data-page="subscribe">
-            <svg class="nav-icon icon-diamond" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="18" height="18"></rect></svg>
-            <!--<span class="nav-label">Subscribe</span> -->
-        </a>
-        <a href="#partnerships" class="nav-link" data-page="partnerships">
-            <svg class="nav-icon icon-bronze" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="18" height="18"></rect></svg>
-            <!-- <span class="nav-label">Partner</span>  -->
-        </a>
-        <a href="#buttercup" class="nav-link" data-page="buttercup">
-            <svg class="nav-icon icon-yellow" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 511.995 511.995" fill="currentColor" aria-hidden="true"><path d="M507.807,200.272L262.474,12.859c-3.819-2.923-9.109-2.923-12.949,0L4.191,200.272c-3.627,2.773-5.077,7.509-3.648,11.84l93.717,281.92c1.451,4.352,5.547,7.296,10.133,7.296h303.253c4.608,0,8.683-2.944,10.091-7.296l93.717-281.92C512.885,207.803,511.413,203.046,507.807,200.272z"/></svg>
-           <!-- <span class="nav-label">Buttercup</span> -->
-        </a>
-    </nav>
-
-    <!-- Theme Toggle Button -->
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-        <svg class="theme-toggle-icon light" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-        <svg class="theme-toggle-icon dark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-    </button>
-
-    <!-- Solstice Popup Toggle Button -->
-<button class="solstice-toggle" id="solsticeToggle" aria-label="View solstice event">
-    <svg viewBox="0 0 100 100" class="solstice-toggle-diamond">
-        <circle cx="50" cy="50" r="30" fill="none" stroke="var(--rich-saffron)" stroke-width="2" opacity="0.3"/>
-        <rect x="15" y="15" width="70" height="70" transform="rotate(45 50 50)" fill="var(--dusty-rose)"/>
-    </svg>
-</button>
-
-    <!-- Page Container -->
-    <main class="pages-container" id="main-content">
-
-        <!-- ========== LANDING PAGE ========== -->
-        <div class="page active" id="page-landing" data-page="landing">
-            <div class="container landing-container">
-                <div class="landing-hero">
-                                        <p class="tagline landing-tagline">nourish collab create</p>
-
-                    <h1 class="logo landing-logo">Gratified</h1>
-                    <div class="logobot landing-logobot">coffee + art</div>
-
-                    <!-- Diamond Logo -->
-                    <div class="landing-diamond">
-                        <svg viewBox="0 0 100 100" class="diamond-svg">
-                            <rect class="diamond-fill" x="15" y="15" width="70" height="70" transform="rotate(45 50 50)" fill="var(--theme-accent)"/>
-                            <rect class="diamond-stroke" x="15" y="15" width="70" height="70" transform="rotate(45 50 50)" fill="none" stroke="var(--theme-accent)" stroke-width="2"/>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ========== MENU PAGE ========== -->
-        <div class="page" id="page-menu" data-page="menu">
-            <div class="container">
-                <div class="header">
-                    <h2 class="logo">Nourish</h2>
-                    <div class="tagline">what we're brewing</div>
-                </div>
-
-                <div class="content">
-                    <div class="section" id="menu">
-                        <canvas id="liquid-canvas"></canvas>
-
-                        <!-- Expanded drink detail view (hidden by default) -->
-                        <div class="drink-detail-view" id="drinkDetailView">
-                            <div class="drink-detail-nav-top">
-                                <button class="drink-detail-back" id="drinkDetailBack">← back</button>
-                                <div class="drink-detail-arrows">
-                                    <button class="drink-detail-arrow" id="drinkDetailPrev" aria-label="Previous drink">←</button>
-                                    <button class="drink-detail-arrow" id="drinkDetailNext" aria-label="Next drink">→</button>
-                                </div>
-                            </div>
-                            <div class="drink-detail-content">
-                                <div class="drink-detail-illustration" id="drinkDetailIllustration"></div>
-                                <div class="drink-detail-info">
-                                    <h3 class="drink-detail-name" id="drinkDetailName"></h3>
-                                    <p class="drink-detail-desc" id="drinkDetailDesc"></p>
-                                    <div class="drink-detail-extras" id="drinkDetailExtras"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="menu-scroll-wrapper" id="menuScrollWrapper">
-                            <!-- Drink cards are dynamically loaded from menu-config.json -->
-                            <div class="drinks-scroll"></div>
-                            <div class="menu-slider-container">
-                                <input type="range" id="menuSlider" min="0" max="100" value="0" class="menu-slider">
-                            </div>
-                            <div class="scroll-indicator">
-                                <span class="scroll-arrow">←</span>
-                                <span class="scroll-text">slide</span>
-                                <span class="scroll-arrow">→</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ========== SUBSCRIPTION PAGE ========== -->
-        <!-- Subscribe page content loaded from config/subscribe-config.json -->
-        <div class="page" id="page-subscribe" data-page="subscribe">
-            <div class="container">
-                <div class="header">
-                    <h2 class="logo"></h2>
-                    <div class="tagline"></div>
-                </div>
-
-                <div class="content">
-                    <div class="section">
-                        <h3 class="section-title"></h3>
-                        <p class="section-intro"></p>
-                        <div class="subscription-grid"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ========== PARTNERSHIPS PAGE ========== -->
-        <div class="page" id="page-partnerships" data-page="partnerships">
-            <div class="container">
-                <div class="header">
-                    <h2 class="logo">Collab</h2>
-                    <div class="tagline">grow with us</div>
-                </div>
-
-                <!--
-
-                <div class="content">
-                    <div class="section">
-                        <h3 class="section-title">Work With Us</h3>
-                        <p class="section-intro">We're always looking for venues, brands, and creatives who share our vision of community through coffee and art.</p>
-
-                        <div class="partnership-layout">
-                            <div class="partnership-form-container">
-                                <form id="partnershipForm" class="partnership-form">
-                                    <div class="form-group">
-                                        <label class="form-label">Who are you?</label>
-                                        <input type="hidden" id="partner-category" name="category" value="">
-                                        <div class="category-buttons" id="categoryButtons" role="group" aria-label="Select your role">
-                                            <button type="button" class="category-btn" data-category="investor" aria-pressed="false">Investor</button>
-                                            <button type="button" class="category-btn" data-category="business" aria-pressed="false">Business</button>
-                                            <button type="button" class="category-btn" data-category="barista" aria-pressed="false">Barista</button>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="form-label" for="partner-name">Your Name</label>
-                                        <input type="text" class="form-input" id="partner-name" name="name" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="form-label" for="partner-email">Email</label>
-                                        <input type="email" class="form-input" id="partner-email" name="email" required>
-                                    </div>
-
-                                    <div class="category-fields" data-category="investor">
-                                        <div class="form-group">
-                                            <label class="form-label" for="partner-phone">Phone</label>
-                                            <input type="tel" class="form-input" id="partner-phone" name="phone">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label" for="partner-linkedin">LinkedIn or Website</label>
-                                            <input type="url" class="form-input" id="partner-linkedin" name="linkedin" placeholder="Optional">
-                                        </div>
-                                    </div>
-
-                                    <div class="category-fields" data-category="business">
-                                        <div class="form-group">
-                                            <label class="form-label" for="partner-business">Business Name</label>
-                                            <input type="text" class="form-input" id="partner-business" name="business">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label" for="partner-website">Website</label>
-                                            <input type="url" class="form-input" id="partner-website" name="website" placeholder="Optional">
-                                        </div>
-                                    </div>
-
-                                    <div class="category-fields" data-category="barista">
-                                        <div class="form-group">
-                                            <label class="form-label" for="partner-experience">Experience</label>
-                                            <input type="text" class="form-input" id="partner-experience" name="experience" placeholder="Years, previous roles...">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label" for="partner-availability">Availability</label>
-                                            <input type="text" class="form-input" id="partner-availability" name="availability" placeholder="Weekends, mornings, flexible...">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="form-label" for="partner-details">Tell us more</label>
-                                        <textarea class="form-textarea" id="partner-details" name="details" placeholder="What you're looking for, ideas, questions..."></textarea>
-                                    </div>
-
-                                    <button type="submit" class="submit-btn" id="partnershipSubmit" disabled>Select a category above</button>
-                                </form>
-
-                                <button class="info-card-toggle" id="infoCardToggle" aria-label="Toggle info panel" title="More info"></button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bottom-sheet-backdrop" id="bottomSheetBackdrop"></div>
-
-                    <div class="partnership-info-container">
-                        <div class="partnership-info-card" id="partnershipInfoCard">
-                        </div>
-                    </div>
--->
-                    <div class="section">
-                        <h3 class="section-title">Partners</h3>
-                        <p class="partners-note">We've had the pleasure of working with these amazing groups and businesses.</p>
-
-                        <!-- Partner logos are dynamically loaded from partners/partners.json -->
-                        <div class="partners-logos" id="partnersLogos">
-                            <div class="partner-logo-placeholder">Your logo here</div>
-                        </div>
-                        
-                    </div>
-
-<div class="section">
-    <h3 class="section-title">Interested?</h3>
-    <p class="section-intro">Would love to hear from space managers, local roasters, etc</p>
-
-    <div class="partnership-layout">
-        <div class="partnership-form-container">
-            <form id="contactForm" class="partnership-form" action="https://formspree.io/f/manrvldp" method="POST">
-                
-                <div class="form-group">
-                    <label class="form-label" for="contact-name">Name</label>
-                    <input type="text" class="form-input" id="contact-name" name="name" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="contact-email">Email</label>
-                    <input type="email" class="form-input" id="contact-email" name="email" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="contact-message">Message</label>
-                    <textarea class="form-textarea" id="contact-message" name="message" placeholder="Tell us what you're up to and how we could do epic stuff together" required></textarea>
-                </div>
-
-                <button type="submit" class="submit-btn">Send</button>
-            </form>
-            <div id="contactSuccess" style="display: none; padding: 20px; text-align: center; color: var(--theme-accent);">
-                ✓ Message sent! We'll get back to you soon.
-            </div>
-        </div>
+<header>
+    <a href="#" class="logo">Hillside Club</a>
+    <div class="controls">
+        <button id="historyBtn">History Corner</button>
+        <button id="themeToggle">Craftsman Mode</button>
     </div>
-</div>
+</header>
 
-                
+<main>
+
+    <!-- Section 1: Cute floating image -->
+    <section style="text-align:center; padding-top: 2rem;">
+        <div class="floating-club">
+            <img src="https://www.hillsideclub.org/_files/ugd/0e0e4d_3d8b0e6e6f2b4e0e9e0e0e0e0e0e0e0e.jpg" 
+                 alt="The Hillside Club clubhouse, a charming Berkeley landmark with warm wood tones and Arts & Crafts architecture"
+                 onerror="this.src='https://images.unsplash.com/photo-1581092160560-1c1e428e9d65?auto=format&fit=crop&q=80&w=1200';">
+            <p style="margin-top:1rem; font-style:italic; color:#666;">Berkeley's historic Hillside Club – est. 1898</p>
+        </div>
+    </section>
+
+    <!-- Section 2: Poster board -->
+    <section id="poster">
+        <div class="poster-board">
+            <h2>What's Happening</h2>
+            <div class="poster-grid">
+                <div class="card">
+                    <h3>Upcoming Concerts</h3>
+                    <p>Monthly live music series – folk, classical, jazz. Next: Feb 15, 2026 – Fireside Acoustic Night</p>
+                    <a href="https://www.hillsideclub.org/livemusic">View full concert schedule →</a>
+                </div>
+                <div class="card">
+                    <h3>Volunteer Opportunities</h3>
+                    <p>Join our events team, garden crew, or archive preservation group. Great way to connect!</p>
+                    <p>Contact: volunteers@hillsideclub.org</p>
+                </div>
+                <div class="card">
+                    <h3>Documentary Film Series</h3>
+                    <p>"Between the Sun and the Sidewalk" – Feb–April 2026 screenings + discussions</p>
+                    <a href="https://www.eventbrite.com/o/berkeley-hillside-club-42372142193">See Eventbrite listings →</a>
+                </div>
+                <div class="card">
+                    <h3>Co-Working Days</h3>
+                    <p>Quiet work sessions in our historic hall – bring your laptop!</p>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- ========== BUTTERCUP DESTINY PAGE ========== -->
-        <div class="page" id="page-buttercup" data-page="buttercup">
-            <div class="container">
-                <div class="header">
-                    <h2 class="logo buttercup-logo">Buttercup Destiny</h2>
-                    <div class="tagline">parent org</div>
-                </div>
-
-                <div class="content">
-                    <div class="section buttercup-hero">
-                        <div class="buttercup-visual">
-                            <svg viewBox="0 0 200 200" class="buttercup-flower">
-                                <defs>
-                                    <radialGradient id="petalGrad" cx="50%" cy="50%" r="50%">
-                                        <stop offset="0%" style="stop-color:#FFE066"/>
-                                        <stop offset="100%" style="stop-color:#F0B832"/>
-                                    </radialGradient>
-                                </defs>
-                                <!-- Petals -->
-                                <ellipse cx="100" cy="60" rx="25" ry="40" fill="url(#petalGrad)" opacity="0.9"/>
-                                <ellipse cx="140" cy="85" rx="25" ry="40" fill="url(#petalGrad)" opacity="0.85" transform="rotate(72 100 100)"/>
-                                <ellipse cx="130" cy="130" rx="25" ry="40" fill="url(#petalGrad)" opacity="0.8" transform="rotate(144 100 100)"/>
-                                <ellipse cx="70" cy="130" rx="25" ry="40" fill="url(#petalGrad)" opacity="0.85" transform="rotate(216 100 100)"/>
-                                <ellipse cx="60" cy="85" rx="25" ry="40" fill="url(#petalGrad)" opacity="0.9" transform="rotate(288 100 100)"/>
-                                <!-- Center -->
-                                <circle cx="100" cy="100" r="20" fill="#CC5500"/>
-                                <circle cx="100" cy="100" r="12" fill="#8B7355"/>
-                            </svg>
-                        </div>
-                        <h3 class="section-title buttercup-title">Still in Development</h3>
-                        <p class="buttercup-description">
-                            Something is blooming. Check back soon.
-                        </p>
-                    </div>
-                </div>
+    <!-- Section 3: Become a member -->
+    <section id="join">
+        <h2 style="text-align:center;">Become a Member</h2>
+        <p style="text-align:center; max-width:700px; margin:0 auto 3rem;">Join our community supporting arts, culture, and historic preservation in the Berkeley Hills. Membership includes event access, voting rights, and more.</p>
+        
+        <form style="max-width:600px; margin:0 auto; background:white; padding:2.5rem; border-radius:12px; box-shadow:0 8px 30px rgba(0,0,0,0.1);">
+            <div style="margin-bottom:1.5rem;">
+                <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Full Name</label>
+                <input type="text" required style="width:100%; padding:0.9rem; border:1px solid #ccc; border-radius:6px;">
             </div>
+            <div style="margin-bottom:1.5rem;">
+                <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Email</label>
+                <input type="email" required style="width:100%; padding:0.9rem; border:1px solid #ccc; border-radius:6px;">
+            </div>
+            <div style="margin-bottom:1.5rem;">
+                <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Phone (optional)</label>
+                <input type="tel" style="width:100%; padding:0.9rem; border:1px solid #ccc; border-radius:6px;">
+            </div>
+            <div style="margin-bottom:2rem;">
+                <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Why are you interested in joining?</label>
+                <textarea rows="4" style="width:100%; padding:0.9rem; border:1px solid #ccc; border-radius:6px;"></textarea>
+            </div>
+            <button type="submit" style="background:var(--accent); color:white; border:none; padding:1rem 2rem; font-size:1.1rem; border-radius:8px; cursor:pointer; width:100%;">
+                Submit Application
+            </button>
+            <p style="text-align:center; margin-top:1.5rem; font-size:0.95rem; color:#555;">
+                We'll contact you within 1–2 weeks with next steps.
+            </p>
+        </form>
+    </section>
+
+    <!-- Section 4: Calendar -->
+    <section id="calendar">
+        <h2 style="text-align:center;">Calendar</h2>
+        <div class="calendar-embed" style="max-width:900px; margin:3rem auto;">
+            <!-- You can replace this with real embed code from Google Calendar, Eventbrite, or The Hillside Club site -->
+            <iframe src="https://calendar.google.com/calendar/embed?src=example%40hillsideclub.org&ctz=America%2FLos_Angeles" 
+                    style="border:0; width:100%; height:600px; border-radius:8px;" 
+                    frameborder="0" scrolling="no"></iframe>
+            <p style="text-align:center; margin-top:1rem; font-style:italic;">
+                <a href="https://www.hillsideclub.org/events">View full events page on our official site →</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- Section 5: Member login (simple reveal) -->
+    <section id="members">
+        <div class="login-prompt" id="loginPrompt">
+            <h2>Member Area</h2>
+            <p style="margin:2rem 0; font-size:1.2rem;">For current members only</p>
+            <button id="enterMembers">Enter Member Area →</button>
         </div>
 
-    </main>
-
-    <!-- Unlimited Membership Modal -->
-    <div class="modal-overlay" id="unlimitedModal">
-        <div class="booking-modal">
-            <button class="modal-close" onclick="closeModal('unlimitedModal')">&times;</button>
-            <h2 class="modal-title">Find us IRL</h2>
-<!--
-            <form id="unlimitedForm">
-                
-
+        <div id="member-area">
+            <h2>Welcome Back</h2>
+            <p>This area is password-protected in a full implementation. For now, here's a preview:</p>
             
-                <div class="form-group">
-                    <label class="form-label" for="unlimited-name">Your Name</label>
-                    <input type="text" class="form-input" id="unlimited-name" name="name" required>
-                </div>
+            <h3 style="margin-top:3rem;">Committees</h3>
+            <ul>
+                <li>Events & Programming</li>
+                <li>Building Preservation</li>
+                <li>Membership & Outreach</li>
+                <li>History & Archives</li>
+            </ul>
 
-                <div class="form-group">
-                    <label class="form-label" for="unlimited-email">Email</label>
-                    <input type="email" class="form-input" id="unlimited-email" name="email" required>
-                </div>
+            <h3>Members-Only Events</h3>
+            <ul>
+                <li>Annual Garden Party – April 2026</li>
+                <li>Private Fireside Meetings</li>
+                <li>Member Book Club</li>
+                <li>Behind-the-scenes building tours</li>
+            </ul>
 
-                <div class="form-group">
-                    <label class="form-label" for="unlimited-phone">Phone (for membership card)</label>
-                    <input type="tel" class="form-input" id="unlimited-phone" name="phone" placeholder="Optional">
-                </div>
-
-                <div class="estimate-display" style="display: block;">
-                    <div class="estimate-amount">$108/month</div>
-                    <div class="estimate-note">Unlimited drinks • Pastry discounts • Cancel anytime</div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="unlimited-source">How did you hear about us?</label>
-                    <select class="form-select" id="unlimited-source" name="source">
-                        <option value="">Select one</option>
-                        <option value="Instagram">Instagram</option>
-                        <option value="Twitter">Twitter</option>
-                        <option value="Friend">Friend</option>
-                        <option value="Visit">Visited a location</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="submit-btn">Start Membership</button>
-
-           
-            </form>
-             -->
+            <p style="margin-top:3rem;"><em>Logout / Back to public site</em></p>
         </div>
-    </div>
+    </section>
 
+</main>
 
-
-
-
-
-    <!-- Solstice Event Popup -->
-<div class="welcome-overlay" id="welcomeOverlay">
-    <div class="welcome-modal solstice-modal">
-        <button class="welcome-close" onclick="closeWelcome()">&times;</button>
-        
-        <div class="welcome-diamond solstice-diamond">
-            <svg viewBox="0 0 100 100" class="diamond-svg">
-                <circle cx="50" cy="50" r="30" fill="none" stroke="var(--rich-saffron)" stroke-width="2" opacity="0.3"/>
-                <rect class="diamond-fill" x="15" y="15" width="70" height="70" transform="rotate(45 50 50)" fill="var(--dusty-rose)"/>
-                <rect class="diamond-stroke" x="15" y="15" width="70" height="70" transform="rotate(45 50 50)" fill="none" stroke="var(--rich-saffron)" stroke-width="2"/>
-            </svg>
-        </div>
-        
-        <h2 class="welcome-title solstice-title">Winter Solstice</h2>
-        <p class="welcome-subtitle">24 hours · art · ppl</p>
-        
-        <div class="solstice-details">
-            <p class="solstice-date">Dec 20-21 · 7pm to 7pm</p>
-            <p class="solstice-location">Mox SF, 1680 Mission St</p>
-        </div>
-        
-        <p class="welcome-text">
-            Sashimi feast, bedroll stayover, tea ceremony as the sun rises, release art, create butoh dance.
-        </p>
-        
-        <div class="solstice-activities">
-            <span>feast</span>
-            <span>sleep</span>
-            <span>tea</span>
-            <span>art</span>
-            <span>dance</span>
-        </div>
-        
-        <div class="welcome-btn-group">
-            <a href="https://partiful.com/e/6bOW1d2pRlo69MYpiowR" target="_blank" class="welcome-btn primary">RSVP ($64)</a>
-            <button class="welcome-btn secondary" onclick="closeWelcome()">back to Site</button>
-        </div>
+<!-- History Corner Modal -->
+<div class="history-modal" id="historyModal">
+    <div class="history-content">
+        <span class="close-modal" id="closeHistory">&times;</span>
+        <h2>History Corner</h2>
+        <p>Founded in 1898 by a group of visionary women (including Annie Maybeck), the Hillside Club worked to preserve the natural beauty of Berkeley's hills and promote thoughtful hillside architecture.</p>
+        <p>The current clubhouse, designed by John White (brother of architect John White), became a City of Berkeley Landmark in 2004. After surviving the 1923 Berkeley Fire, the club continues to host cultural events, concerts, and community gatherings.</p>
+        <p><a href="https://www.hillsideclub.org/aboutandhistory" target="_blank">Read more on our official history page →</a></p>
     </div>
 </div>
 
-    
+<footer>
+    <p>© 2026 Hillside Club – Berkeley, California | A landmark supporting arts & culture since 1898</p>
+</footer>
 
-    <!-- Project Details Modal -->
-    <div class="modal-overlay" id="projectModal">
-        <div class="booking-modal" style="max-width: 550px;">
-            <button class="modal-close" onclick="closeProjectModal()">&times;</button>
-            <h2 class="modal-title" id="projectTitle"></h2>
-            <div id="projectContent" style="position: relative; z-index: 2;"></div>
-        </div>
-    </div>
+<script>
+    // Theme toggle
+    document.getElementById('themeToggle').addEventListener('click', () => {
+        document.body.classList.toggle('craftsman');
+        const btn = document.getElementById('themeToggle');
+        btn.textContent = document.body.classList.contains('craftsman') ? 'Modern Mode' : 'Craftsman Mode';
+    });
 
-    <!-- Accessible Form Notification (aria-live region) -->
-    <div id="formNotification" class="form-notification" role="status" aria-live="polite" aria-atomic="true"></div>
+    // History modal
+    document.getElementById('historyBtn').addEventListener('click', () => {
+        document.getElementById('historyModal').style.display = 'flex';
+    });
+    document.getElementById('closeHistory').addEventListener('click', () => {
+        document.getElementById('historyModal').style.display = 'none';
+    });
+    document.getElementById('historyModal').addEventListener('click', e => {
+        if (e.target === e.currentTarget) e.currentTarget.style.display = 'none';
+    });
 
-    <!-- Mobile Bottom Navbar -->
-    <nav class="mobile-navbar" aria-label="Mobile navigation">
-        <a href="#landing" class="mobile-nav-item" data-page="landing" aria-label="Home">
-            <span class="mobile-nav-icon icon-dash"></span>
-        </a>
-        <a href="#menu" class="mobile-nav-item" data-page="menu" aria-label="Menu">
-            <span class="mobile-nav-icon icon-equal"></span>
-        </a>
-        <a href="#subscribe" class="mobile-nav-item" data-page="subscribe" aria-label="Subscribe">
-            <svg class="mobile-nav-icon icon-diamond" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="18" height="18"></rect></svg>
-        </a>
-        <a href="#partnerships" class="mobile-nav-item" data-page="partnerships" aria-label="Partner">
-            <svg class="mobile-nav-icon icon-bronze" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="18" height="18"></rect></svg>
-        </a>
-        <a href="#buttercup" class="mobile-nav-item" data-page="buttercup" aria-label="Buttercup">
-            <svg class="mobile-nav-icon icon-yellow" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 511.995 511.995" fill="currentColor" aria-hidden="true"><path d="M507.807,200.272L262.474,12.859c-3.819-2.923-9.109-2.923-12.949,0L4.191,200.272c-3.627,2.773-5.077,7.509-3.648,11.84l93.717,281.92c1.451,4.352,5.547,7.296,10.133,7.296h303.253c4.608,0,8.683-2.944,10.091-7.296l93.717-281.92C512.885,207.803,511.413,203.046,507.807,200.272z"/></svg>
-        </a>
-    </nav>
-
-    <!-- Modular JavaScript -->
-    <script src="assets/js/theme.js"></script>
-    <script src="assets/js/page-theme.js"></script>
-    <!-- Image Lightbox -->
-    <div class="image-lightbox" id="imageLightbox">
-        <button class="lightbox-close" aria-label="Close">&times;</button>
-        <img class="lightbox-image" id="lightboxImage" src="" alt="">
-    </div>
-
-
-    
-
-    <script src="assets/js/particles.js"></script>
-    <script src="assets/js/liquid-shader.js"></script>
-    <script src="assets/js/menu-loader.js"></script>
-    <script src="assets/js/subscribe-loader.js"></script>
-   <!-- <script src="assets/js/partnership-loader.js"></script> -->
-    <script src="assets/js/drink-detail.js"></script>
-    <script src="assets/js/modals.js"></script>
-    <script src="assets/js/partners-loader.js"></script>
-    <script src="assets/js/navigation.js"></script>
-    <script src="assets/js/particle-controller.js"></script>
-
-    <script>
-document.getElementById('contactForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const form = e.target;
-    const data = new FormData(form);
-    
-    try {
-        await fetch(form.action, {
-            method: 'POST',
-            body: data,
-            headers: { 'Accept': 'application/json' }
-        });
-        
-        form.style.display = 'none';
-        document.getElementById('contactSuccess').style.display = 'block';
-        form.reset();
-    } catch (error) {
-        alert('Oops! Something went wrong. Please try again.');
-    }
-});
+    // Fake member login reveal
+    document.getElementById('enterMembers').addEventListener('click', () => {
+        document.getElementById('loginPrompt').style.display = 'none';
+        document.getElementById('member-area').style.display = 'block';
+    });
 </script>
 
-    <script>
-// Show solstice popup on first visit
-window.addEventListener('DOMContentLoaded', function() {
-    const hasVisited = localStorage.getItem('gratifiedSolsticeViewed');
-    const eventDate = new Date('2025-12-21T19:00:00');
-    const now = new Date();
-    
-    // Show popup if not viewed and event hasn't passed
-    if (!hasVisited && now < eventDate) {
-        document.getElementById('welcomeOverlay').classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-});
-
-function closeWelcome() {
-    const overlay = document.getElementById('welcomeOverlay');
-    overlay.classList.remove('active');
-    document.body.style.overflow = '';
-    localStorage.setItem('gratifiedSolsticeViewed', 'true');
-}
-
-// Reopen popup when clicking the diamond button
-document.getElementById('solsticeToggle').addEventListener('click', function() {
-    document.getElementById('welcomeOverlay').classList.add('active');
-    document.body.style.overflow = 'hidden';
-});
-
-// Close on escape key
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        const overlay = document.getElementById('welcomeOverlay');
-        if (overlay.classList.contains('active')) {
-            closeWelcome();
-        }
-    }
-});
-
-// Close on backdrop click
-document.getElementById('welcomeOverlay').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeWelcome();
-    }
-});
-</script>
-</body>
 </body>
 </html>
