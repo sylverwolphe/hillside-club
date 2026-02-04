@@ -3,1065 +3,340 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Hillside Club - Berkeley's Creative Sanctuary</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="The Hillside Club – Supporting community, culture, and the arts in Berkeley since 1898.">
+    <title>Hillside Club | Berkeley Landmark Since 1898</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- Default: clean readable sans + slab -->
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Craftsman/Arts & Crafts alternate: more vintage serif/slab feel -->
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=EB+Garamond:wght@500;700&family=Playfair+Display+SC&display=swap" rel="stylesheet">
     <style>
         :root {
-            --ochre: #D4A373;
-            --sage: #87A878;
-            --terracotta: #E07A5F;
-            --deep-teal: #3D5A6C;
-            --cream: #F2E8CF;
-            --charcoal: #2C3639;
+            --bg: #f8f5f0;
+            --text: #2d2a24;
+            --accent: #8b6f47;     /* warm wood/bronze */
+            --accent-dark: #5c4528;
+            --border: #d4c9b0;
+            --font-body: 'Libre Franklin', system-ui, sans-serif;
+            --font-heading: 'Roboto Slab', serif;
         }
-        
+        body.craftsman {
+            --bg: #fdf8f0;
+            --text: #3f2a1d;
+            --accent: #a67c52;
+            --accent-dark: #6b4e2f;
+            --border: #c19a6b;
+            --font-body: 'Crimson Text', Georgia, serif;
+            --font-heading: 'Playfair Display SC', 'EB Garamond', serif;
+            background: url('https://images.unsplash.com/photo-1517999144096-3a4a4d9d7e5c?auto=format&fit=crop&q=60') center/cover fixed sepia(0.15) brightness(0.98);
+            background-attachment: fixed;
+        }
         body {
-            font-family: 'Space Grotesk', sans-serif;
-            background-color: var(--cream);
-            color: var(--charcoal);
-            overflow-x: hidden;
+            margin: 0;
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
         }
-        
-        .serif {
-            font-family: 'Crimson Pro', serif;
+        header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(248,245,240,0.92);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border);
         }
-        
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-dark);
+            text-decoration: none;
         }
-        ::-webkit-scrollbar-track {
-            background: var(--cream);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--ochre);
+        .controls button {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.5rem 1rem;
+            margin-left: 1rem;
+            cursor: pointer;
             border-radius: 4px;
+            font-family: var(--font-heading);
         }
-        
-        /* Cut-out Paper Effect */
-        .paper-cut {
-            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.15));
-            transition: transform 0.3s ease;
+        .controls button:hover { background: var(--accent); color: white; }
+        main {
+            padding-top: 90px;
+            max-width: 1100px;
+            margin: 0 auto;
         }
-        .paper-cut:hover {
-            transform: translateY(-5px) rotate(1deg);
+        section {
+            padding: 5rem 2rem;
+            min-height: 60vh;
+            border-bottom: 1px solid var(--border);
         }
-        
-        /* Hand-drawn border effect */
-        .hand-drawn {
-            border: 3px solid var(--charcoal);
-            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+        h1, h2 {
+            font-family: var(--font-heading);
+            color: var(--accent-dark);
+            margin-top: 0;
         }
-        
-        /* Icon Navigation */
-        .nav-icon {
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-        .nav-icon:hover {
-            transform: scale(1.2) rotate(5deg);
-        }
-        .nav-icon.active {
-            transform: scale(1.3) rotate(0deg);
-            filter: drop-shadow(0 0 20px var(--terracotta));
-        }
-        
-        /* Section Transitions */
-        .section {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease-out;
-            display: none;
-        }
-        .section.active {
-            opacity: 1;
-            transform: translateY(0);
-            display: block;
-        }
-        
-        /* Torn Paper Effect */
-        .torn-paper {
+        .floating-club {
             position: relative;
-            background: white;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin: 3rem 0 6rem;
         }
-        .torn-paper::before {
-            content: "";
-            position: absolute;
-            top: -10px;
-            left: 0;
-            right: 0;
-            height: 20px;
-            background: linear-gradient(45deg, transparent 33.333%, white 33.333%, white 66.667%, transparent 66.667%),
-                        linear-gradient(-45deg, transparent 33.333%, white 33.333%, white 66.667%, transparent 66.667%);
-            background-size: 20px 40px;
-            background-position: 0 -20px;
+        .floating-club img {
+            max-width: 90%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            animation: float 14s ease-in-out infinite;
         }
-        
-        /* Push Pin Effect */
-        .push-pin {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: radial-gradient(circle at 30% 30%, #ff6b6b, #c92a2a);
-            border-radius: 50%;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-            z-index: 10;
-        }
-        .push-pin::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 4px;
-            height: 4px;
-            background: rgba(255,255,255,0.6);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-        }
-        
-        /* Polaroid Style */
-        .polaroid {
-            background: white;
-            padding: 15px 15px 40px 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transform: rotate(-2deg);
-            transition: transform 0.3s ease;
-        }
-        .polaroid:hover {
-            transform: rotate(0deg) scale(1.05);
-        }
-        
-        /* String Lights Animation */
-        @keyframes twinkle {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
-        }
-        .twinkle {
-            animation: twinkle 2s infinite;
-        }
-        
-        /* Cork Board Texture */
-        .cork-board {
-            background-color: #d4a574;
-            background-image: 
-                radial-gradient(circle at 20% 50%, rgba(0,0,0,0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(0,0,0,0.05) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(0,0,0,0.03) 0%, transparent 50%);
-            box-shadow: inset 0 0 100px rgba(0,0,0,0.2);
-        }
-        
-        /* Floating Animation */
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(2deg); }
+            0%,100% { transform: translateY(0) rotate(0deg); }
+            50%     { transform: translateY(-30px) rotate(1.5deg); }
         }
-        .float {
-            animation: float 6s ease-in-out infinite;
+        .poster-board {
+            background: #fffef8;
+            border: 2px dashed var(--accent);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(139,111,71,0.12);
         }
-        
-        /* Glitch Effect for Headers */
-        .glitch {
+        .poster-board h2 { text-align: center; margin-bottom: 2rem; }
+        .poster-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+        .calendar-embed {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        /* Very basic member gate – real auth would need backend */
+        #member-area { display: none; padding: 3rem; background: #fffef8; border: 2px solid var(--accent); border-radius: 12px; }
+        .login-prompt {
+            text-align: center;
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #fdf8f0, #f0e8d8);
+            border-radius: 12px;
+        }
+        .login-prompt button {
+            font-size: 1.4rem;
+            padding: 1rem 2.5rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .login-prompt button:hover { background: var(--accent-dark); }
+        .history-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .history-content {
+            background: white;
+            max-width: 700px;
+            padding: 2.5rem;
+            border-radius: 12px;
             position: relative;
         }
-        .glitch::before,
-        .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        .glitch::before {
-            left: 2px;
-            text-shadow: -1px 0 var(--terracotta);
-            clip: rect(24px, 550px, 90px, 0);
-            animation: glitch-anim-2 3s infinite linear alternate-reverse;
-        }
-        .glitch::after {
-            left: -2px;
-            text-shadow: -1px 0 var(--deep-teal);
-            clip: rect(85px, 550px, 140px, 0);
-            animation: glitch-anim 2.5s infinite linear alternate-reverse;
-        }
-        @keyframes glitch-anim {
-            0% { clip: rect(10px, 9999px, 85px, 0); }
-            20% { clip: rect(65px, 9999px, 99px, 0); }
-            40% { clip: rect(25px, 9999px, 145px, 0); }
-            60% { clip: rect(85px, 9999px, 40px, 0); }
-            80% { clip: rect(120px, 9999px, 80px, 0); }
-            100% { clip: rect(45px, 9999px, 60px, 0); }
-        }
-        @keyframes glitch-anim-2 {
-            0% { clip: rect(65px, 9999px, 99px, 0); }
-            20% { clip: rect(25px, 9999px, 145px, 0); }
-            40% { clip: rect(85px, 9999px, 40px, 0); }
-            60% { clip: rect(120px, 9999px, 80px, 0); }
-            80% { clip: rect(45px, 9999px, 60px, 0); }
-            100% { clip: rect(10px, 9999px, 85px, 0); }
-        }
-        
-        /* Tape Effect */
-        .tape {
-            position: absolute;
-            width: 100px;
-            height: 30px;
-            background: rgba(255,255,255,0.6);
-            transform: rotate(-45deg);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-        }
-        
-        /* Custom Cursor */
-        .custom-cursor {
-            cursor: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='16' cy='16' r='10' fill='%23E07A5F' fill-opacity='0.5'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%232C3639'/%3E%3C/svg%3E") 16 16, auto;
+        .close-modal { position: absolute; top: 1rem; right: 1.5rem; font-size: 2rem; cursor: pointer; }
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #777;
+            font-size: 0.95rem;
         }
     </style>
 </head>
-<body class="custom-cursor">
+<body>
 
-    <!-- Fixed Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-[#F2E8CF]/90 backdrop-blur-md border-b-2 border-[#2C3639]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex-shrink-0 flex items-center gap-3">
-                    <div class="w-10 h-10 bg-[#E07A5F] rounded-full flex items-center justify-center hand-drawn">
-                        <span class="text-white font-bold text-xl">H</span>
-                    </div>
-                    <span class="font-bold text-2xl tracking-tight text-[#2C3639]">hillside.club</span>
+<header>
+    <a href="#" class="logo">Hillside Club</a>
+    <div class="controls">
+        <button id="historyBtn">History Corner</button>
+        <button id="themeToggle">Craftsman Mode</button>
+    </div>
+</header>
+
+<main>
+
+    <!-- Section 1: Cute floating image -->
+    <section style="text-align:center; padding-top: 2rem;">
+        <div class="floating-club">
+            <img src="https://www.hillsideclub.org/_files/ugd/0e0e4d_3d8b0e6e6f2b4e0e9e0e0e0e0e0e0e0e.jpg" 
+                 alt="The Hillside Club clubhouse, a charming Berkeley landmark with warm wood tones and Arts & Crafts architecture"
+                 onerror="this.src='https://images.unsplash.com/photo-1581092160560-1c1e428e9d65?auto=format&fit=crop&q=80&w=1200';">
+            <p style="margin-top:1rem; font-style:italic; color:#666;">Berkeley's historic Hillside Club – est. 1898</p>
+        </div>
+    </section>
+
+    <!-- Section 2: Poster board -->
+    <section id="poster">
+        <div class="poster-board">
+            <h2>What's Happening</h2>
+            <div class="poster-grid">
+                <div class="card">
+                    <h3>Upcoming Concerts</h3>
+                    <p>Monthly live music series – folk, classical, jazz. Next: Feb 15, 2026 – Fireside Acoustic Night</p>
+                    <a href="https://www.hillsideclub.org/livemusic">View full concert schedule →</a>
                 </div>
-                
-                <!-- 5 Section Icons -->
-                <div class="flex items-center gap-8">
-                    <button onclick="showSection('home')" class="nav-icon group relative" id="nav-home">
-                        <div class="w-12 h-12 bg-[#D4A373] rounded-2xl flex items-center justify-center hand-drawn group-hover:bg-[#E07A5F] transition-colors">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-                            </svg>
-                        </div>
-                        <span class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Clubhouse</span>
-                    </button>
-                    
-                    <button onclick="showSection('posters')" class="nav-icon group relative" id="nav-posters">
-                        <div class="w-12 h-12 bg-[#87A878] rounded-2xl flex items-center justify-center hand-drawn group-hover:bg-[#E07A5F] transition-colors">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
-                            </svg>
-                        </div>
-                        <span class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Posters</span>
-                    </button>
-                    
-                    <button onclick="showSection('membership')" class="nav-icon group relative" id="nav-membership">
-                        <div class="w-12 h-12 bg-[#3D5A6C] rounded-2xl flex items-center justify-center hand-drawn group-hover:bg-[#E07A5F] transition-colors">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                            </svg>
-                        </div>
-                        <span class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Join</span>
-                    </button>
-                    
-                    <button onclick="showSection('calendar')" class="nav-icon group relative" id="nav-calendar">
-                        <div class="w-12 h-12 bg-[#D4A373] rounded-2xl flex items-center justify-center hand-drawn group-hover:bg-[#E07A5F] transition-colors">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                            </svg>
-                        </div>
-                        <span class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Calendar</span>
-                    </button>
-                    
-                    <button onclick="showSection('members')" class="nav-icon group relative" id="nav-members">
-                        <div class="w-12 h-12 bg-[#E07A5F] rounded-2xl flex items-center justify-center hand-drawn group-hover:bg-[#2C3639] transition-colors">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                            </svg>
-                        </div>
-                        <span class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Members</span>
-                    </button>
+                <div class="card">
+                    <h3>Volunteer Opportunities</h3>
+                    <p>Join our events team, garden crew, or archive preservation group. Great way to connect!</p>
+                    <p>Contact: volunteers@hillsideclub.org</p>
+                </div>
+                <div class="card">
+                    <h3>Documentary Film Series</h3>
+                    <p>"Between the Sun and the Sidewalk" – Feb–April 2026 screenings + discussions</p>
+                    <a href="https://www.eventbrite.com/o/berkeley-hillside-club-42372142193">See Eventbrite listings →</a>
+                </div>
+                <div class="card">
+                    <h3>Co-Working Days</h3>
+                    <p>Quiet work sessions in our historic hall – bring your laptop!</p>
                 </div>
             </div>
         </div>
-    </nav>
+    </section>
 
-    <!-- Main Content -->
-    <main class="pt-20 min-h-screen">
-
-        <!-- SECTION 1: LANDING / CLUBHOUSE -->
-        <section id="home" class="section active relative min-h-screen flex items-center justify-center overflow-hidden">
-            <!-- Background Elements -->
-            <div class="absolute inset-0 z-0">
-                <div class="absolute top-20 left-10 w-64 h-64 bg-[#D4A373] rounded-full mix-blend-multiply filter blur-xl opacity-30 float"></div>
-                <div class="absolute bottom-20 right-10 w-96 h-96 bg-[#87A878] rounded-full mix-blend-multiply filter blur-xl opacity-30 float" style="animation-delay: 2s;"></div>
-                <div class="absolute top-1/2 left-1/2 w-80 h-80 bg-[#E07A5F] rounded-full mix-blend-multiply filter blur-xl opacity-30 float" style="animation-delay: 4s;"></div>
-            </div>
-
-            <div class="relative z-10 max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <!-- Left: Text Content -->
-                <div class="space-y-8">
-                    <div class="inline-block bg-[#E07A5F] text-white px-4 py-1 rounded-full text-sm font-bold transform -rotate-2">
-                        Est. 1898 • Berkeley, CA
-                    </div>
-                    <h1 class="text-6xl lg:text-8xl font-bold leading-none text-[#2C3639] glitch" data-text="CHANGE THE WORLD">
-                        CHANGE THE<br>
-                        <span class="text-[#E07A5F]">WORLD</span>
-                    </h1>
-                    <p class="text-xl text-[#2C3639]/80 serif italic max-w-lg">
-                        "You're just never sure how." — The Hillside Club, where Berkeley's artists, activists, and architects have gathered for 125+ years.
-                    </p>
-                    <div class="flex gap-4">
-                        <button onclick="showSection('membership')" class="bg-[#2C3639] text-white px-8 py-4 rounded-full font-bold text-lg hand-drawn hover:bg-[#E07A5F] transition-colors transform hover:scale-105">
-                            Join the Chaos
-                        </button>
-                        <button onclick="showSection('posters')" class="bg-transparent border-3 border-[#2C3639] text-[#2C3639] px-8 py-4 rounded-full font-bold text-lg hand-drawn hover:bg-[#2C3639] hover:text-white transition-all">
-                            See What's On
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Right: Cut-out Clubhouse Illustration -->
-                <div class="relative">
-                    <div class="paper-cut relative">
-                        <!-- SVG Clubhouse Illustration -->
-                        <svg viewBox="0 0 600 500" class="w-full h-auto drop-shadow-2xl" style="filter: drop-shadow(0 20px 40px rgba(0,0,0,0.2));">
-                            <!-- Background Hill -->
-                            <path d="M 50 400 Q 300 350 550 400 L 550 500 L 50 500 Z" fill="#87A878" opacity="0.6"/>
-                            
-                            <!-- Main House Body -->
-                            <rect x="150" y="200" width="300" height="200" fill="#F2E8CF" stroke="#2C3639" stroke-width="4"/>
-                            
-                            <!-- Roof -->
-                            <path d="M 130 200 L 300 80 L 470 200 Z" fill="#D4A373" stroke="#2C3639" stroke-width="4"/>
-                            
-                            <!-- Chimney -->
-                            <rect x="380" y="120" width="40" height="60" fill="#E07A5F" stroke="#2C3639" stroke-width="3"/>
-                            <ellipse cx="400" cy="120" rx="20" ry="8" fill="#2C3639"/>
-                            
-                            <!-- Smoke -->
-                            <circle cx="400" cy="100" r="15" fill="#2C3639" opacity="0.3"/>
-                            <circle cx="410" cy="80" r="20" fill="#2C3639" opacity="0.2"/>
-                            <circle cx="420" cy="55" r="25" fill="#2C3639" opacity="0.1"/>
-                            
-                            <!-- Porch -->
-                            <rect x="140" y="300" width="320" height="20" fill="#3D5A6C" stroke="#2C3639" stroke-width="3"/>
-                            <rect x="160" y="320" width="20" height="80" fill="#F2E8CF" stroke="#2C3639" stroke-width="3"/>
-                            <rect x="220" y="320" width="20" height="80" fill="#F2E8CF" stroke="#2C3639" stroke-width="3"/>
-                            <rect x="360" y="320" width="20" height="80" fill="#F2E8CF" stroke="#2C3639" stroke-width="3"/>
-                            <rect x="420" y="320" width="20" height="80" fill="#F2E8CF" stroke="#2C3639" stroke-width="3"/>
-                            
-                            <!-- Windows -->
-                            <rect x="180" y="240" width="60" height="80" fill="#3D5A6C" stroke="#2C3639" stroke-width="3"/>
-                            <line x1="210" y1="240" x2="210" y2="320" stroke="#2C3639" stroke-width="2"/>
-                            <line x1="180" y1="280" x2="240" y2="280" stroke="#2C3639" stroke-width="2"/>
-                            
-                            <rect x="360" y="240" width="60" height="80" fill="#3D5A6C" stroke="#2C3639" stroke-width="3"/>
-                            <line x1="390" y1="240" x2="390" y2="320" stroke="#2C3639" stroke-width="2"/>
-                            <line x1="360" y1="280" x2="420" y2="280" stroke="#2C3639" stroke-width="2"/>
-                            
-                            <!-- Attic Window -->
-                            <circle cx="300" cy="160" r="30" fill="#3D5A6C" stroke="#2C3639" stroke-width="3"/>
-                            
-                            <!-- Door -->
-                            <rect x="270" y="280" width="60" height="120" fill="#E07A5F" stroke="#2C3639" stroke-width="3"/>
-                            <circle cx="320" cy="340" r="5" fill="#2C3639"/>
-                            
-                            <!-- Trees -->
-                            <circle cx="100" cy="350" r="60" fill="#87A878" stroke="#2C3639" stroke-width="3"/>
-                            <circle cx="80" cy="300" r="40" fill="#87A878" stroke="#2C3639" stroke-width="3"/>
-                            <rect x="90" y="380" width="20" height="60" fill="#D4A373" stroke="#2C3639" stroke-width="3"/>
-                            
-                            <circle cx="500" cy="360" r="50" fill="#87A878" stroke="#2C3639" stroke-width="3"/>
-                            <rect x="490" y="390" width="20" height="50" fill="#D4A373" stroke="#2C3639" stroke-width="3"/>
-                            
-                            <!-- String Lights -->
-                            <path d="M 50 250 Q 150 300 300 280 Q 450 260 550 300" fill="none" stroke="#2C3639" stroke-width="2"/>
-                            <circle cx="100" cy="272" r="8" fill="#F2E8CF" stroke="#2C3639" stroke-width="2" class="twinkle"/>
-                            <circle cx="200" cy="285" r="8" fill="#F2E8CF" stroke="#2C3639" stroke-width="2" class="twinkle" style="animation-delay: 0.5s"/>
-                            <circle cx="300" cy="280" r="8" fill="#F2E8CF" stroke="#2C3639" stroke-width="2" class="twinkle" style="animation-delay: 1s"/>
-                            <circle cx="400" cy="275" r="8" fill="#F2E8CF" stroke="#2C3639" stroke-width="2" class="twinkle" style="animation-delay: 1.5s"/>
-                            <circle cx="500" cy="290" r="8" fill="#F2E8CF" stroke="#2C3639" stroke-width="2" class="twinkle" style="animation-delay: 2s"/>
-                        </svg>
-                        
-                        <!-- Decorative Elements -->
-                        <div class="absolute -top-4 -right-4 bg-[#E07A5F] text-white px-4 py-2 rounded-lg transform rotate-12 font-bold shadow-lg">
-                            Open to Ideas!
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Scroll Indicator -->
-            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-                <svg class="w-6 h-6 text-[#2C3639]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                </svg>
-            </div>
-        </section>
-
-        <!-- SECTION 2: POSTER BOARD -->
-        <section id="posters" class="section cork-board min-h-screen p-8 relative">
-            <div class="max-w-7xl mx-auto">
-                <h2 class="text-5xl font-bold text-[#2C3639] mb-12 text-center bg-[#F2E8CF] inline-block px-8 py-4 hand-drawn transform -rotate-1 mx-auto block w-fit">
-                    What's Pinned Up
-                </h2>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Event Poster 1 -->
-                    <div class="polaroid relative transform rotate-2 hover:rotate-0 transition-transform cursor-pointer group">
-                        <div class="push-pin -top-3 left-1/2 transform -translate-x-1/2"></div>
-                        <div class="bg-gradient-to-br from-[#E07A5F] to-[#D4A373] h-64 flex items-center justify-center hand-drawn mb-4 overflow-hidden relative">
-                            <div class="absolute inset-0 opacity-20" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.5) 35px, rgba(255,255,255,.5) 70px);"></div>
-                            <div class="text-center text-white z-10 p-4">
-                                <div class="text-6xl mb-2">🎭</div>
-                                <h3 class="text-2xl font-bold">Shakespeare in the Park</h3>
-                                <p class="text-sm mt-2">March 15 • 7PM</p>
-                            </div>
-                        </div>
-                        <p class="text-[#2C3639] font-handwriting text-lg">"The course of true love never did run smooth" — especially in Berkeley!</p>
-                        <div class="mt-4 flex gap-2">
-                            <span class="bg-[#87A878] text-white text-xs px-2 py-1 rounded-full">Theater</span>
-                            <span class="bg-[#3D5A6C] text-white text-xs px-2 py-1 rounded-full">Free</span>
-                        </div>
-                    </div>
-
-                    <!-- Event Poster 2 -->
-                    <div class="polaroid relative transform -rotate-1 hover:rotate-0 transition-transform cursor-pointer group">
-                        <div class="push-pin -top-3 left-1/2 transform -translate-x-1/2"></div>
-                        <div class="bg-gradient-to-br from-[#3D5A6C] to-[#87A878] h-64 flex items-center justify-center hand-drawn mb-4 overflow-hidden relative">
-                            <div class="text-center text-white z-10 p-4">
-                                <div class="text-6xl mb-2">🌱</div>
-                                <h3 class="text-2xl font-bold">Urban Gardening Workshop</h3>
-                                <p class="text-sm mt-2">Every Saturday • 10AM</p>
-                            </div>
-                        </div>
-                        <p class="text-[#2C3639] font-handwriting text-lg">Turn your fire escape into a food forest. Radical self-sufficiency starts here.</p>
-                        <div class="mt-4 flex gap-2">
-                            <span class="bg-[#D4A373] text-white text-xs px-2 py-1 rounded-full">Workshop</span>
-                            <span class="bg-[#E07A5F] text-white text-xs px-2 py-1 rounded-full">Hands-on</span>
-                        </div>
-                    </div>
-
-                    <!-- Volunteer Opportunity -->
-                    <div class="polaroid relative transform rotate-1 hover:rotate-0 transition-transform cursor-pointer group">
-                        <div class="push-pin -top-3 left-1/2 transform -translate-x-1/2"></div>
-                        <div class="bg-gradient-to-br from-[#D4A373] to-[#E07A5F] h-64 flex items-center justify-center hand-drawn mb-4 overflow-hidden relative">
-                            <div class="absolute top-4 right-4 bg-red-500 text-white text-xs font-bold px-2 py-1 transform rotate-12">URGENT</div>
-                            <div class="text-center text-white z-10 p-4">
-                                <div class="text-6xl mb-2">🔨</div>
-                                <h3 class="text-2xl font-bold">Historic Restoration Team</h3>
-                                <p class="text-sm mt-2">Help save our 1898 windows!</p>
-                            </div>
-                        </div>
-                        <p class="text-[#2C3639] font-handwriting text-lg">Bring your tools and your stories. Pizza provided. Skills taught.</p>
-                        <div class="mt-4 flex gap-2">
-                            <span class="bg-[#2C3639] text-white text-xs px-2 py-1 rounded-full">Volunteer</span>
-                            <span class="bg-[#87A878] text-white text-xs px-2 py-1 rounded-full">Pizza!</span>
-                        </div>
-                    </div>
-
-                    <!-- Capital Campaign -->
-                    <div class="polaroid relative transform -rotate-2 hover:rotate-0 transition-transform cursor-pointer group lg:col-span-2">
-                        <div class="push-pin -top-3 left-1/2 transform -translate-x-1/2"></div>
-                        <div class="bg-[#2C3639] h-64 flex items-center justify-center hand-drawn mb-4 overflow-hidden relative">
-                            <div class="grid grid-cols-2 gap-4 p-6 w-full">
-                                <div class="text-white">
-                                    <h3 class="text-3xl font-bold mb-2">The Next 125 Years</h3>
-                                    <p class="text-[#D4A373] mb-4">Capital Campaign 2024</p>
-                                    <div class="w-full bg-[#F2E8CF]/20 rounded-full h-4 mb-2">
-                                        <div class="bg-[#E07A5F] h-4 rounded-full" style="width: 65%"></div>
-                                    </div>
-                                    <p class="text-sm">$650K raised of $1M goal</p>
-                                </div>
-                                <div class="flex items-center justify-center">
-                                    <div class="text-8xl">🏛️</div>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="text-[#2C3639] font-handwriting text-lg">Help us earthquake-retrofit this beautiful beast and add accessible entrances. Every dollar is a brick in the future.</p>
-                    </div>
-
-                    <!-- Open Mic -->
-                    <div class="polaroid relative transform rotate-3 hover:rotate-0 transition-transform cursor-pointer group">
-                        <div class="push-pin -top-3 left-1/2 transform -translate-x-1/2"></div>
-                        <div class="bg-gradient-to-br from-purple-600 to-pink-500 h-64 flex items-center justify-center hand-drawn mb-4 overflow-hidden relative">
-                            <div class="text-center text-white z-10 p-4">
-                                <div class="text-6xl mb-2">🎤</div>
-                                <h3 class="text-2xl font-bold">Open Mic Night</h3>
-                                <p class="text-sm mt-2">First Friday • 8PM</p>
-                            </div>
-                        </div>
-                        <p class="text-[#2C3639] font-handwriting text-lg">Poetry, music, manifestos, stand-up. Bring your voice or just your ears.</p>
-                    </div>
-                </div>
-
-                <!-- Add New Poster Button -->
-                <div class="mt-12 text-center">
-                    <button class="bg-[#F2E8CF] border-4 border-dashed border-[#2C3639] text-[#2C3639] px-8 py-4 rounded-2xl font-bold text-xl hover:bg-[#2C3639] hover:text-white transition-all transform hover:scale-105">
-                        + Pin Your Event Here
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECTION 3: MEMBERSHIP -->
-        <section id="membership" class="section min-h-screen bg-[#F2E8CF] p-8 relative overflow-hidden">
-            <!-- Background Pattern -->
-            <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(#2C3639 1px, transparent 1px); background-size: 20px 20px;"></div>
-            
-            <div class="max-w-6xl mx-auto relative z-10">
-                <div class="text-center mb-16">
-                    <h2 class="text-6xl font-bold text-[#2C3639] mb-4">Join the Club</h2>
-                    <p class="text-2xl serif italic text-[#2C3639]/70">"Membership is not a transaction, it's a transformation"</p>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-                    <!-- Membership Info -->
-                    <div class="space-y-8">
-                        <div class="bg-white p-8 hand-drawn transform -rotate-1 hover:rotate-0 transition-transform">
-                            <h3 class="text-3xl font-bold text-[#E07A5F] mb-4">What You Get</h3>
-                            <ul class="space-y-4 text-lg">
-                                <li class="flex items-start gap-3">
-                                    <span class="text-2xl">🔑</span>
-                                    <span>Keys to a 125-year-old Arts & Crafts masterpiece</span>
-                                </li>
-                                <li class="flex items-start gap-3">
-                                    <span class="text-2xl">🎉</span>
-                                    <span>Host your wildest ideas in our Great Hall (members get priority + discount)</span>
-                                </li>
-                                <li class="flex items-start gap-3">
-                                    <span class="text-2xl">👥</span>
-                                    <span>Access to the legendary Member Directory (Berkeley's who's who since 1898)</span>
-                                </li>
-                                <li class="flex items-start gap-3">
-                                    <span class="text-2xl">🗳️</span>
-                                    <span>Voting rights on club direction, preservation, and which plants to save</span>
-                                </li>
-                                <li class="flex items-start gap-3">
-                                    <span class="text-2xl">☕</span>
-                                    <span>Unlimited coffee during work hours (fair trade, obviously)</span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="bg-[#87A878] text-white p-8 hand-drawn transform rotate-1 hover:rotate-0 transition-transform">
-                            <h3 class="text-2xl font-bold mb-4">Membership Types</h3>
-                            <div class="space-y-4">
-                                <div class="border-b border-white/30 pb-2">
-                                    <div class="flex justify-between items-center">
-                                        <span class="font-bold">Individual</span>
-                                        <span class="text-2xl">$150/yr</span>
-                                    </div>
-                                    <p class="text-sm opacity-90">One person, full access</p>
-                                </div>
-                                <div class="border-b border-white/30 pb-2">
-                                    <div class="flex justify-between items-center">
-                                        <span class="font-bold">Household</span>
-                                        <span class="text-2xl">$250/yr</span>
-                                    </div>
-                                    <p class="text-sm opacity-90">Everyone at your address</p>
-                                </div>
-                                <div class="border-b border-white/30 pb-2">
-                                    <div class="flex justify-between items-center">
-                                        <span class="font-bold">Student/Artist</span>
-                                        <span class="text-2xl">$75/yr</span>
-                                    </div>
-                                    <p class="text-sm opacity-90">We remember being broke</p>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between items-center">
-                                        <span class="font-bold">Patron</span>
-                                        <span class="text-2xl">$500+/yr</span>
-                                    </div>
-                                    <p class="text-sm opacity-90">Keep the lights on (literally)</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Application Form -->
-                    <div class="bg-white p-8 hand-drawn relative">
-                        <div class="tape -top-6 left-1/2 transform -translate-x-1/2"></div>
-                        <h3 class="text-3xl font-bold text-[#2C3639] mb-6 text-center">Application</h3>
-                        
-                        <form class="space-y-6" onsubmit="event.preventDefault(); alert('Welcome to the revolution! Check your email.');">
-                            <div>
-                                <label class="block text-sm font-bold mb-2 text-[#2C3639]">Full Name</label>
-                                <input type="text" class="w-full border-2 border-[#2C3639] rounded-lg p-3 focus:outline-none focus:border-[#E07A5F] bg-[#F2E8CF]/30" placeholder="Your government name">
-                            </div>
-                            
-                            <div>
-                                <label class="block text-sm font-bold mb-2 text-[#2C3639]">Email</label>
-                                <input type="email" class="w-full border-2 border-[#2C3639] rounded-lg p-3 focus:outline-none focus:border-[#E07A5F] bg-[#F2E8CF]/30" placeholder="you@berkeley.edu">
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-bold mb-2 text-[#2C3639]">How will you change the world?</label>
-                                <textarea rows="3" class="w-full border-2 border-[#2C3639] rounded-lg p-3 focus:outline-none focus:border-[#E07A5F] bg-[#F2E8CF]/30" placeholder="Be specific. Be ambitious. Be Berkeley."></textarea>
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-bold mb-2 text-[#2C3639]">Membership Type</label>
-                                <select class="w-full border-2 border-[#2C3639] rounded-lg p-3 focus:outline-none focus:border-[#E07A5F] bg-[#F2E8CF]/30">
-                                    <option>Individual ($150)</option>
-                                    <option>Household ($250)</option>
-                                    <option>Student/Artist ($75)</option>
-                                    <option>Patron ($500+)</option>
-                                </select>
-                            </div>
-
-                            <div class="flex items-start gap-2">
-                                <input type="checkbox" id="commitment" class="mt-1 w-5 h-5 border-2 border-[#2C3639] rounded">
-                                <label for="commitment" class="text-sm text-[#2C3639]">
-                                    I commit to attending at least one event per year and respecting the 1898 vibes of this sacred space.
-                                </label>
-                            </div>
-
-                            <button type="submit" class="w-full bg-[#E07A5F] text-white font-bold py-4 rounded-lg hand-drawn hover:bg-[#2C3639] transition-colors text-xl transform hover:scale-105">
-                                Submit Application
-                            </button>
-
-                            <p class="text-xs text-center text-[#2C3639]/60 mt-4">
-                                Applications reviewed monthly by the membership committee. 
-                                <br>Questions? Email membership@hillside.club
-                            </p>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECTION 4: CALENDAR -->
-        <section id="calendar" class="section min-h-screen bg-[#2C3639] text-[#F2E8CF] p-8">
-            <div class="max-w-7xl mx-auto">
-                <h2 class="text-5xl font-bold mb-8 text-center glitch" data-text="WHAT'S NEXT">WHAT'S NEXT</h2>
-                
-                <!-- NextGen Calendar Interface -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <!-- Timeline View -->
-                    <div class="lg:col-span-2 space-y-6">
-                        <div class="flex justify-between items-center mb-6">
-                            <button class="text-[#E07A5F] hover:text-white transition-colors">
-                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                            </button>
-                            <h3 class="text-3xl font-bold text-[#D4A373]">February 2026</h3>
-                            <button class="text-[#E07A5F] hover:text-white transition-colors">
-                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                            </button>
-                        </div>
-
-                        <!-- Event Cards -->
-                        <div class="space-y-4">
-                            <div class="bg-[#F2E8CF] text-[#2C3639] p-6 rounded-2xl hand-drawn transform hover:scale-[1.02] transition-transform cursor-pointer group">
-                                <div class="flex justify-between items-start">
-                                    <div>
-                                        <div class="text-[#E07A5F] font-bold text-sm mb-1">TODAY • 7:00 PM</div>
-                                        <h4 class="text-2xl font-bold mb-2 group-hover:text-[#E07A5F] transition-colors">Board Game Night</h4>
-                                        <p class="text-[#2C3639]/70">Bring your Catan, your chess, or your weird indie card game. Snacks provided.</p>
-                                    </div>
-                                    <div class="bg-[#87A878] text-white w-16 h-16 rounded-xl flex flex-col items-center justify-center flex-shrink-0">
-                                        <span class="text-xs font-bold">FEB</span>
-                                        <span class="text-2xl font-bold">4</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="bg-[#3D5A6C] text-[#F2E8CF] p-6 rounded-2xl hand-drawn transform hover:scale-[1.02] transition-transform cursor-pointer group">
-                                <div class="flex justify-between items-start">
-                                    <div>
-                                        <div class="text-[#D4A373] font-bold text-sm mb-1">SATURDAY • 10:00 AM</div>
-                                        <h4 class="text-2xl font-bold mb-2 group-hover:text-[#D4A373] transition-colors">Yoga in the Garden</h4>
-                                        <p class="text-[#F2E8CF]/70">All levels welcome. Bring a mat. Donation based.</p>
-                                    </div>
-                                    <div class="bg-[#D4A373] text-[#2C3639] w-16 h-16 rounded-xl flex flex-col items-center justify-center flex-shrink-0">
-                                        <span class="text-xs font-bold">FEB</span>
-                                        <span class="text-2xl font-bold">7</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="bg-[#D4A373] text-[#2C3639] p-6 rounded-2xl hand-drawn transform hover:scale-[1.02] transition-transform cursor-pointer group">
-                                <div class="flex justify-between items-start">
-                                    <div>
-                                        <div class="text-[#2C3639]/70 font-bold text-sm mb-1">NEXT WEEK • 6:00 PM</div>
-                                        <h4 class="text-2xl font-bold mb-2 group-hover:text-white transition-colors">Town Hall: The Future of the Club</h4>
-                                        <p class="text-[#2C3639]/70">Members only. Voice your vision. Pizza will be present.</p>
-                                    </div>
-                                    <div class="bg-[#2C3639] text-[#F2E8CF] w-16 h-16 rounded-xl flex flex-col items-center justify-center flex-shrink-0">
-                                        <span class="text-xs font-bold">FEB</span>
-                                        <span class="text-2xl font-bold">12</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="bg-[#87A878] text-white p-6 rounded-2xl hand-drawn transform hover:scale-[1.02] transition-transform cursor-pointer group">
-                                <div class="flex justify-between items-start">
-                                    <div>
-                                        <div class="text-[#F2E8CF] font-bold text-sm mb-1">FEB 14 • 8:00 PM</div>
-                                        <h4 class="text-2xl font-bold mb-2 group-hover:text-[#2C3639] transition-colors">Anti-Valentine's Day Party</h4>
-                                        <p class="text-[#F2E8CF]/90">Celebrate platonic love, self-love, and the abolition of capitalism. BYOB.</p>
-                                    </div>
-                                    <div class="bg-[#E07A5F] text-white w-16 h-16 rounded-xl flex flex-col items-center justify-center flex-shrink-0">
-                                        <span class="text-xs font-bold">FEB</span>
-                                        <span class="text-2xl font-bold">14</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sidebar: Filters & Quick Add -->
-                    <div class="space-y-6">
-                        <div class="bg-[#F2E8CF] text-[#2C3639] p-6 rounded-2xl hand-drawn">
-                            <h4 class="font-bold text-xl mb-4">Filter by Vibe</h4>
-                            <div class="space-y-2">
-                                <label class="flex items-center gap-3 cursor-pointer hover:text-[#E07A5F] transition-colors">
-                                    <input type="checkbox" checked class="w-5 h-5 rounded border-2 border-[#2C3639]">
-                                    <span>🎭 Arts & Culture</span>
-                                </label>
-                                <label class="flex items-center gap-3 cursor-pointer hover:text-[#E07A5F] transition-colors">
-                                    <input type="checkbox" checked class="w-5 h-5 rounded border-2 border-[#2C3639]">
-                                    <span>🔨 Volunteer</span>
-                                </label>
-                                <label class="flex items-center gap-3 cursor-pointer hover:text-[#E07A5F] transition-colors">
-                                    <input type="checkbox" checked class="w-5 h-5 rounded border-2 border-[#2C3639]">
-                                    <span>🎉 Social</span>
-                                </label>
-                                <label class="flex items-center gap-3 cursor-pointer hover:text-[#E07A5F] transition-colors">
-                                    <input type="checkbox" class="w-5 h-5 rounded border-2 border-[#2C3639]">
-                                    <span>👔 Board Meetings</span>
-                                </label>
-                                <label class="flex items-center gap-3 cursor-pointer hover:text-[#E07A5F] transition-colors">
-                                    <input type="checkbox" checked class="w-5 h-5 rounded border-2 border-[#2C3639]">
-                                    <span>🌱 Workshops</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="bg-[#E07A5F] text-white p-6 rounded-2xl hand-drawn">
-                            <h4 class="font-bold text-xl mb-4">Add to Calendar</h4>
-                            <p class="mb-4 text-sm">Sync with your digital life (if you must):</p>
-                            <div class="space-y-2">
-                                <button class="w-full bg-white text-[#E07A5F] py-2 rounded-lg font-bold hover:bg-[#2C3639] hover:text-white transition-colors">
-                                    Google Calendar
-                                </button>
-                                <button class="w-full bg-white text-[#E07A5F] py-2 rounded-lg font-bold hover:bg-[#2C3639] hover:text-white transition-colors">
-                                    iCal / Outlook
-                                </button>
-                                <button class="w-full bg-white text-[#E07A5F] py-2 rounded-lg font-bold hover:bg-[#2C3639] hover:text-white transition-colors">
-                                    Subscribe to RSS
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="bg-[#3D5A6C] p-6 rounded-2xl hand-drawn text-center">
-                            <div class="text-4xl mb-2">📅</div>
-                            <p class="text-sm text-[#F2E8CF]/80">Want to host something?</p>
-                            <button class="mt-2 text-[#D4A373] font-bold hover:text-white transition-colors">Request a Date →</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECTION 5: MEMBER-ONLY AREA -->
-        <section id="members" class="section min-h-screen bg-[#D4A373] p-8 relative">
-            <!-- Login Overlay (shown by default, hidden when "logged in") -->
-            <div id="login-overlay" class="fixed inset-0 bg-[#2C3639]/95 z-50 flex items-center justify-center p-4">
-                <div class="bg-[#F2E8CF] p-8 md:p-12 rounded-3xl hand-drawn max-w-md w-full text-center relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#E07A5F] via-[#D4A373] to-[#87A878]"></div>
-                    <div class="text-6xl mb-4">🔐</div>
-                    <h2 class="text-3xl font-bold text-[#2C3639] mb-2">Members Only</h2>
-                    <p class="text-[#2C3639]/70 mb-8">Enter the sacred texts and committee deliberations.</p>
-                    
-                    <form onsubmit="event.preventDefault(); document.getElementById('login-overlay').style.display='none';" class="space-y-4">
-                        <input type="email" placeholder="member@hillside.club" class="w-full border-2 border-[#2C3639] rounded-lg p-3 text-center focus:outline-none focus:border-[#E07A5F]">
-                        <input type="password" placeholder="••••••••" class="w-full border-2 border-[#2C3639] rounded-lg p-3 text-center focus:outline-none focus:border-[#E07A5F]">
-                        <button type="submit" class="w-full bg-[#E07A5F] text-white font-bold py-3 rounded-lg hand-drawn hover:bg-[#2C3639] transition-colors">
-                            Unlock the Clubhouse
-                        </button>
-                    </form>
-                    
-                    <p class="mt-6 text-sm text-[#2C3639]/60">
-                        <a href="#" class="underline hover:text-[#E07A5F]">Forgot password?</a> • 
-                        <a href="#" class="underline hover:text-[#E07A5F]">Not a member yet?</a>
-                    </p>
-                </div>
-            </div>
-
-            <div class="max-w-7xl mx-auto">
-                <div class="flex justify-between items-center mb-12">
-                    <h2 class="text-5xl font-bold text-[#2C3639]">The Back Room</h2>
-                    <button onclick="document.getElementById('login-overlay').style.display='flex'" class="bg-[#2C3639] text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#E07A5F] transition-colors">
-                        Log Out
-                    </button>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Committee Details -->
-                    <div class="bg-[#F2E8CF] p-6 rounded-2xl hand-drawn transform hover:-translate-y-2 transition-transform cursor-pointer group">
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="w-12 h-12 bg-[#87A878] rounded-full flex items-center justify-center text-2xl">🏛️</div>
-                            <div>
-                                <h3 class="font-bold text-xl text-[#2C3639]">Committees</h3>
-                                <p class="text-sm text-[#2C3639]/60">Get involved in the gears</p>
-                            </div>
-                        </div>
-                        <ul class="space-y-2 text-sm">
-                            <li class="flex justify-between items-center py-2 border-b border-[#2C3639]/10">
-                                <span>Buildings & Grounds</span>
-                                <span class="bg-[#E07A5F] text-white text-xs px-2 py-1 rounded-full">3 open</span>
-                            </li>
-                            <li class="flex justify-between items-center py-2 border-b border-[#2C3639]/10">
-                                <span>Programming</span>
-                                <span class="bg-[#3D5A6C] text-white text-xs px-2 py-1 rounded-full">1 open</span>
-                            </li>
-                            <li class="flex justify-between items-center py-2 border-b border-[#2C3639]/10">
-                                <span>Membership</span>
-                                <span class="bg-[#87A878] text-white text-xs px-2 py-1 rounded-full">Full</span>
-                            </li>
-                            <li class="flex justify-between items-center py-2">
-                                <span>Finance</span>
-                                <span class="bg-[#D4A373] text-white text-xs px-2 py-1 rounded-full">2 open</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- President's Letter -->
-                    <div class="bg-[#F2E8CF] p-6 rounded-2xl hand-drawn transform hover:-translate-y-2 transition-transform cursor-pointer group lg:col-span-2">
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="w-12 h-12 bg-[#E07A5F] rounded-full flex items-center justify-center text-2xl">✉️</div>
-                            <div>
-                                <h3 class="font-bold text-xl text-[#2C3639]">President's Letter</h3>
-                                <p class="text-sm text-[#2C3639]/60">February 2026 • Sarah Chen</p>
-                            </div>
-                        </div>
-                        <div class="serif text-[#2C3639]/80 space-y-3 line-clamp-4">
-                            <p class="italic">Dear Fellow Hillsiders,</p>
-                            <p>This month marks the beginning of our capital campaign's final phase. I stand in the Great Hall typing this, looking at the original 1898 beams above us, and I'm struck by how many generations have stood exactly where I'm standing...</p>
-                            <p>We need $350K more to complete the seismic retrofit. I know that's a lot, but I've seen this community do impossible things before. Remember when we restored the stained glass in 2019? We were $20K short until someone found that grant...</p>
-                        </div>
-                        <button class="mt-4 text-[#E07A5F] font-bold hover:underline">Read Full Letter →</button>
-                    </div>
-
-                    <!-- Survey Reports -->
-                    <div class="bg-[#F2E8CF] p-6 rounded-2xl hand-drawn transform hover:-translate-y-2 transition-transform cursor-pointer group">
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="w-12 h-12 bg-[#3D5A6C] rounded-full flex items-center justify-center text-2xl">📊</div>
-                            <div>
-                                <h3 class="font-bold text-xl text-[#2C3639]">Survey Data</h3>
-                                <p class="text-sm text-[#2C3639]/60">2025 Member Survey Results</p>
-                            </div>
-                        </div>
-                        <div class="space-y-3">
-                            <div>
-                                <div class="flex justify-between text-sm mb-1">
-                                    <span>Satisfaction</span>
-                                    <span class="font-bold">94%</span>
-                                </div>
-                                <div class="w-full bg-[#2C3639]/10 rounded-full h-2">
-                                    <div class="bg-[#87A878] h-2 rounded-full" style="width: 94%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between text-sm mb-1">
-                                    <span>Event Attendance</span>
-                                    <span class="font-bold">68%</span>
-                                </div>
-                                <div class="w-full bg-[#2C3639]/10 rounded-full h-2">
-                                    <div class="bg-[#D4A373] h-2 rounded-full" style="width: 68%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between text-sm mb-1">
-                                    <span>Would Recommend</span>
-                                    <span class="font-bold">98%</span>
-                                </div>
-                                <div class="w-full bg-[#2C3639]/10 rounded-full h-2">
-                                    <div class="bg-[#E07A5F] h-2 rounded-full" style="width: 98%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="mt-4 text-[#3D5A6C] font-bold hover:underline text-sm">Download Full Report (PDF)</button>
-                    </div>
-
-                    <!-- Forum Preview (Future) -->
-                    <div class="bg-[#2C3639] text-[#F2E8CF] p-6 rounded-2xl hand-drawn transform hover:-translate-y-2 transition-transform cursor-pointer group lg:col-span-2 relative overflow-hidden">
-                        <div class="absolute top-0 right-0 bg-[#E07A5F] text-white text-xs font-bold px-3 py-1 rounded-bl-lg">COMING SOON</div>
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="w-12 h-12 bg-[#F2E8CF] text-[#2C3639] rounded-full flex items-center justify-center text-2xl">💬</div>
-                            <div>
-                                <h3 class="font-bold text-xl">The Parlor (Forum)</h3>
-                                <p class="text-sm text-[#F2E8CF]/60">Our own digital living room</p>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                            <div class="bg-[#F2E8CF]/10 p-3 rounded-lg">
-                                <div class="font-bold text-[#D4A373] mb-1">General Chat</div>
-                                <p class="text-xs text-[#F2E8CF]/70">142 members • 23 new today</p>
-                            </div>
-                            <div class="bg-[#F2E8CF]/10 p-3 rounded-lg">
-                                <div class="font-bold text-[#87A878] mb-1">Classifieds</div>
-                                <p class="text-xs text-[#F2E8CF]/70">Tools, rides, recommendations</p>
-                            </div>
-                            <div class="bg-[#F2E8CF]/10 p-3 rounded-lg">
-                                <div class="font-bold text-[#E07A5F] mb-1">Lost & Found</div>
-                                <p class="text-xs text-[#F2E8CF]/70">That sweater from the solstice party</p>
-                            </div>
-                        </div>
-                        <div class="mt-4 p-3 bg-[#F2E8CF]/5 rounded-lg border border-dashed border-[#F2E8CF]/30">
-                            <p class="text-sm text-center text-[#F2E8CF]/60">"We're building this from scratch. Want to help beta test?"</p>
-                        </div>
-                    </div>
-
-                    <!-- Quick Links -->
-                    <div class="bg-[#F2E8CF] p-6 rounded-2xl hand-drawn">
-                        <h3 class="font-bold text-xl text-[#2C3639] mb-4">Quick Links</h3>
-                        <ul class="space-y-2">
-                            <li><a href="#" class="text-[#2C3639] hover:text-[#E07A5F] transition-colors flex items-center gap-2">📋 Bylaws (PDF)</a></li>
-                            <li><a href="#" class="text-[#2C3639] hover:text-[#E07A5F] transition-colors flex items-center gap-2">📅 Meeting Minutes</a></li>
-                            <li><a href="#" class="text-[#2C3639] hover:text-[#E07A5F] transition-colors flex items-center gap-2">💰 Budget 2026</a></li>
-                            <li><a href="#" class="text-[#2C3639] hover:text-[#E07A5F] transition-colors flex items-center gap-2">📞 Member Directory</a></li>
-                            <li><a href="#" class="text-[#2C3639] hover:text-[#E07A5F] transition-colors flex items-center gap-2">🔧 Maintenance Requests</a></li>
-                            <li><a href="#" class="text-[#2C3639] hover:text-[#E07A5F] transition-colors flex items-center gap-2">🎪 Event Proposal Form</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-[#2C3639] text-[#F2E8CF] py-12 border-t-4 border-[#E07A5F]">
-        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div class="space-y-4">
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 bg-[#E07A5F] rounded-full flex items-center justify-center hand-drawn">
-                        <span class="text-white font-bold">H</span>
-                    </div>
-                    <span class="font-bold text-xl">hillside.club</span>
-                </div>
-                <p class="text-sm text-[#F2E8CF]/70">2286 Cedar Street<br>Berkeley, CA 94709</p>
-            </div>
-            
-            <div>
-                <h4 class="font-bold mb-4 text-[#D4A373]">Explore</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="#" onclick="showSection('home')" class="hover:text-[#E07A5F] transition-colors">Home</a></li>
-                    <li><a href="#" onclick="showSection('posters')" class="hover:text-[#E07A5F] transition-colors">Events</a></li>
-                    <li><a href="#" onclick="showSection('membership')" class="hover:text-[#E07A5F] transition-colors">Join</a></li>
-                    <li><a href="#" onclick="showSection('calendar')" class="hover:text-[#E07A5F] transition-colors">Calendar</a></li>
-                </ul>
-            </div>
-            
-            <div>
-                <h4 class="font-bold mb-4 text-[#D4A373]">Connect</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="hover:text-[#E07A5F] transition-colors">Instagram</a></li>
-                    <li><a href="#" class="hover:text-[#E07A5F] transition-colors">Newsletter</a></li>
-                    <li><a href="#" class="hover:text-[#E07A5F] transition-colors">Contact</a></li>
-                    <li><a href="#" class="hover:text-[#E07A5F] transition-colors">Donate</a></li>
-                </ul>
-            </div>
-            
-            <div>
-                <h4 class="font-bold mb-4 text-[#D4A373]">Legal Stuff</h4>
-                <ul class="space-y-2 text-sm text-[#F2E8CF]/70">
-                    <li>© 2026 The Hillside Club</li>
-                    <li>501(c)(3) Non-Profit</li>
-                    <li>Tax ID: 94-1234567</li>
-                    <li class="mt-4 text-[#E07A5F]">Made with chaos in Berkeley 🌉</li>
-                </ul>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Section Navigation
-        function showSection(sectionId) {
-            // Hide all sections
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-                setTimeout(() => {
-                    if (!section.classList.contains('active')) {
-                        section.style.display = 'none';
-                    }
-                }, 600);
-            });
-            
-            // Show target section
-            const target = document.getElementById(sectionId);
-            target.style.display = 'block';
-            setTimeout(() => {
-                target.classList.add('active');
-            }, 10);
-            
-            // Update nav icons
-            document.querySelectorAll('.nav-icon').forEach(icon => {
-                icon.classList.remove('active');
-            });
-            document.getElementById('nav-' + sectionId).classList.add('active');
-            
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            showSection('home');
-        });
-
-        // Random rotation for polaroids on load
-        document.querySelectorAll('.polaroid').forEach((el, i) => {
-            const randomRot = (Math.random() - 0.5) * 6;
-            el.style.transform = `rotate(${randomRot}deg)`;
-        });
-
-        // Easter egg: Konami code
-        let konami = [];
-        const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    <!-- Section 3: Become a member -->
+    <section id="join">
+        <h2 style="text-align:center;">Become a Member</h2>
+        <p style="text-align:center; max-width:700px; margin:0 auto 3rem;">Join our community supporting arts, culture, and historic preservation in the Berkeley Hills. Membership includes event access, voting rights, and more.</p>
         
-        document.addEventListener('keydown', (e) => {
-            konami.push(e Here's your complete, single-file website for hillside.club! This is a wild, Berkeley-energy single-page application with 5 icon-navigated sections, just like you requested.
+        <form style="max-width:600px; margin:0 auto; background:white; padding:2.5rem; border-radius:12px; box-shadow:0 8px 30px rgba(0,0,0,0.1);">
+            <div style="margin-bottom:1.5rem;">
+                <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Full Name</label>
+                <input type="text" required style="width:100%; padding:0.9rem; border:1px solid #ccc; border-radius:6px;">
+            </div>
+            <div style="margin-bottom:1.5rem;">
+                <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Email</label>
+                <input type="email" required style="width:100%; padding:0.9rem; border:1px solid #ccc; border-radius:6px;">
+            </div>
+            <div style="margin-bottom:1.5rem;">
+                <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Phone (optional)</label>
+                <input type="tel" style="width:100%; padding:0.9rem; border:1px solid #ccc; border-radius:6px;">
+            </div>
+            <div style="margin-bottom:2rem;">
+                <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Why are you interested in joining?</label>
+                <textarea rows="4" style="width:100%; padding:0.9rem; border:1px solid #ccc; border-radius:6px;"></textarea>
+            </div>
+            <button type="submit" style="background:var(--accent); color:white; border:none; padding:1rem 2rem; font-size:1.1rem; border-radius:8px; cursor:pointer; width:100%;">
+                Submit Application
+            </button>
+            <p style="text-align:center; margin-top:1.5rem; font-size:0.95rem; color:#555;">
+                We'll contact you within 1–2 weeks with next steps.
+            </p>
+        </form>
+    </section>
 
-## What's Inside:
+    <!-- Section 4: Calendar -->
+    <section id="calendar">
+        <h2 style="text-align:center;">Calendar</h2>
+        <div class="calendar-embed" style="max-width:900px; margin:3rem auto;">
+            <!-- You can replace this with real embed code from Google Calendar, Eventbrite, or The Hillside Club site -->
+            <iframe src="https://calendar.google.com/calendar/embed?src=example%40hillsideclub.org&ctz=America%2FLos_Angeles" 
+                    style="border:0; width:100%; height:600px; border-radius:8px;" 
+                    frameborder="0" scrolling="no"></iframe>
+            <p style="text-align:center; margin-top:1rem; font-style:italic;">
+                <a href="https://www.hillsideclub.org/events">View full events page on our official site →</a>
+            </p>
+        </div>
+    </section>
 
-**🏠 Section 1: Clubhouse (Landing)**
-- Large SVG cut-out illustration of the 1898 clubhouse with animated smoke, string lights, and trees
-- "Change the World" glitch-effect header (the Berkeley way)
-- Floating animations and gradient orbs in the background
+    <!-- Section 5: Member login (simple reveal) -->
+    <section id="members">
+        <div class="login-prompt" id="loginPrompt">
+            <h2>Member Area</h2>
+            <p style="margin:2rem 0; font-size:1.2rem;">For current members only</p>
+            <button id="enterMembers">Enter Member Area →</button>
+        </div>
 
-**📌 Section 2: Poster Board**
-- Cork board texture background with push pins
-- Polaroid-style event cards with random rotations
-- Torn paper effects and "tape" holding things up
-- Categories: Events, Volunteer Ops, Capital Campaign
+        <div id="member-area">
+            <h2>Welcome Back</h2>
+            <p>This area is password-protected in a full implementation. For now, here's a preview:</p>
+            
+            <h3 style="margin-top:3rem;">Committees</h3>
+            <ul>
+                <li>Events & Programming</li>
+                <li>Building Preservation</li>
+                <li>Membership & Outreach</li>
+                <li>History & Archives</li>
+            </ul>
 
-**🤝 Section 3: Membership**
-- Hand-drawn form with "tape" holding it to the page
-- Membership tiers with Berkeley pricing (Student/Artist rate!)
-- "How will you change the world?" application question
+            <h3>Members-Only Events</h3>
+            <ul>
+                <li>Annual Garden Party – April 2026</li>
+                <li>Private Fireside Meetings</li>
+                <li>Member Book Club</li>
+                <li>Behind-the-scenes building tours</li>
+            </ul>
 
-**📅 Section 4: Calendar (NextGen)**
-- Dark mode timeline view with color-coded event cards
-- "Filter by Vibe" instead of boring categories
-- Google/Outlook/RSS integration buttons
-- Visual date badges instead of grid calendar
+            <p style="margin-top:3rem;"><em>Logout / Back to public site</em></p>
+        </div>
+    </section>
 
-**🔐 Section 5: Member-Only Area**
-- Login overlay (click "Unlock" to enter)
-- Committee openings with availability badges
-- President's letter excerpt
-- Survey data visualization
-- **Forum preview** showing the future "Parlor" discussion boards
+</main>
 
-## Special Features:
-- **5 Icon Navigation** (fixed top bar) just like gratified.com
-- **Hand-drawn aesthetic** with organic borders and paper textures
-- **Responsive design** works on mobile
-- **No external dependencies** except Tailwind CDN and Google Fonts
-- **Easter egg**: Try the Konami code (↑↑↓↓←→←→BA) for a surprise!
+<!-- History Corner Modal -->
+<div class="history-modal" id="historyModal">
+    <div class="history-content">
+        <span class="close-modal" id="closeHistory">&times;</span>
+        <h2>History Corner</h2>
+        <p>Founded in 1898 by a group of visionary women (including Annie Maybeck), the Hillside Club worked to preserve the natural beauty of Berkeley's hills and promote thoughtful hillside architecture.</p>
+        <p>The current clubhouse, designed by John White (brother of architect John White), became a City of Berkeley Landmark in 2004. After surviving the 1923 Berkeley Fire, the club continues to host cultural events, concerts, and community gatherings.</p>
+        <p><a href="https://www.hillsideclub.org/aboutandhistory" target="_blank">Read more on our official history page →</a></p>
+    </div>
+</div>
 
-The design captures that unique Berkeley energy—revolutionary, artistic, slightly chaotic, but deeply community-focused. The color palette draws from Arts & Crafts movement ochres and teals with modern accents.
+<footer>
+    <p>© 2026 Hillside Club – Berkeley, California | A landmark supporting arts & culture since 1898</p>
+</footer>
 
-Save this as `index.html` and open it in any browser. All functionality is ready to flesh out—just add your backend endpoints where the form submits and alert() dialogs are!
+<script>
+    // Theme toggle
+    document.getElementById('themeToggle').addEventListener('click', () => {
+        document.body.classList.toggle('craftsman');
+        const btn = document.getElementById('themeToggle');
+        btn.textContent = document.body.classList.contains('craftsman') ? 'Modern Mode' : 'Craftsman Mode';
+    });
+
+    // History modal
+    document.getElementById('historyBtn').addEventListener('click', () => {
+        document.getElementById('historyModal').style.display = 'flex';
+    });
+    document.getElementById('closeHistory').addEventListener('click', () => {
+        document.getElementById('historyModal').style.display = 'none';
+    });
+    document.getElementById('historyModal').addEventListener('click', e => {
+        if (e.target === e.currentTarget) e.currentTarget.style.display = 'none';
+    });
+
+    // Fake member login reveal
+    document.getElementById('enterMembers').addEventListener('click', () => {
+        document.getElementById('loginPrompt').style.display = 'none';
+        document.getElementById('member-area').style.display = 'block';
+    });
+</script>
+
+</body>
+</html>
