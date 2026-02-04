@@ -1,0 +1,52 @@
+name: Update Substack Feed
+
+on:
+  schedule:
+  workflow_dispatch:
+
+jobs:
+  fetch-feed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Fetch Substack feed
+        run: curl -s "https://gratifiedwegrow.substack.com/feed" > feed.xml
+
+      - name: Convert feed to JSON safely
+        run: |
+          npm install cheerio
+          node -e "
+            const fs = require('fs');
+            const cheerio = require('cheerio');
+
+            let xml = fs.readFileSync('feed.xml', 'utf8');
+
+            // Quick sanitization of common broken entities
+            xml = xml.replace(/&(?!amp;|lt;|gt;|quot;|apos;)/g, '&amp;');
+
+            const $ = cheerio.load(xml, { xmlMode: true });
+            const items = [];
+            $('item').slice(0,3).each((i, el) => {
+              items.push({
+                title: $(el).find('title').text(),
+                link: $(el).find('link').text(),
+                date: $(el).find('pubDate').text()
+              });
+            });
+
+            fs.writeFileSync('latest-posts.json', JSON.stringify(items, null, 2));
+          "
+
+      - name: Commit updated feed JSON
+        run: |
+          git config --local user.name "github-actions"
+          git config --local user.email "github-actions@github.com"
+          git add latest-posts.json
+          git commit -m "Update Substack feed" || echo "No changes"
+          git push

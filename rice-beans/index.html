@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gratified - Rice & Beans Signup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #fafaf9;
+            color: #1c1917;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        
+        .header h1 {
+            font-size: 48px;
+            font-weight: 300;
+            letter-spacing: -0.025em;
+        }
+        
+        .header .subtitle {
+            font-size: 18px;
+            color: #57534e;
+            margin-top: 8px;
+        }
+        
+        .header .subtext {
+            font-size: 14px;
+            color: #78716c;
+            margin-top: 4px;
+        }
+        
+        .header .price {
+            font-size: 16px;
+            font-weight: 400;
+            color: #292524;
+            margin-top: 16px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            font-size: 20px;
+            font-weight: 400;
+            margin-bottom: 16px;
+        }
+        
+        select, input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid #d6d3d1;
+            background: white;
+            font-size: 16px;
+            font-family: inherit;
+        }
+        
+        select:focus, input:focus {
+            outline: none;
+            border-color: #292524;
+        }
+        
+        .name-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        input[type="number"] {
+            width: 96px;
+        }
+        
+        .plus-container {
+            margin-top: 16px;
+            display: none;
+        }
+        
+        .plus-container label {
+            display: block;
+            font-size: 14px;
+            color: #57534e;
+            margin-bottom: 8px;
+        }
+        
+        .days-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        .day-card {
+            padding: 24px;
+            border: 1px solid #e7e5e4;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            touch-action: manipulation;
+        }
+        
+        .day-card:hover {
+            border-color: #a8a29e;
+        }
+        
+        .day-card.selected {
+            border-color: #292524;
+            background-color: #f5f5f4;
+        }
+        
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+        
+        .day-title {
+            font-size: 18px;
+            font-weight: 400;
+        }
+        
+        .day-menu {
+            font-size: 14px;
+            color: #57534e;
+            margin-top: 4px;
+        }
+        
+        .day-count {
+            font-size: 14px;
+            color: #78716c;
+        }
+        
+        .signups-section {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #e7e5e4;
+        }
+        
+        .signups-label {
+            font-size: 12px;
+            color: #78716c;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+        
+        .signups-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 14px;
+            color: #44403c;
+        }
+        
+        .empty-state {
+            font-size: 14px;
+            color: #78716c;
+            font-style: italic;
+            margin-top: 8px;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            background: #292524;
+            color: white;
+            padding: 16px 24px;
+            font-size: 18px;
+            font-weight: 400;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: none;
+        }
+        
+        .submit-btn:hover:not(:disabled) {
+            background: #1c1917;
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #78716c;
+            font-style: italic;
+        }
+        
+          .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            z-index: 50;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 32px;
+            max-width: 448px;
+            width: 100%;
+            border-radius: 4px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .modal h3 {
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 24px;
+        }
+        
+        .summary-box {
+            margin-bottom: 24px;
+            padding: 16px;
+            border: 1px solid #e7e5e4;
+            background: #fafaf9;
+        }
+        
+        .summary-name {
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+        
+        .summary-meals {
+            font-size: 14px;
+            color: #57534e;
+        }
+        
+        .venmo-section {
+            margin-bottom: 24px;
+        }
+        
+        .venmo-label {
+            font-size: 14px;
+            color: #57534e;
+            margin-bottom: 8px;
+        }
+        
+        .venmo-link {
+            color: #292524;
+            font-weight: 400;
+            font-size: 18px;
+            text-decoration: underline;
+        }
+        
+        .venmo-link:hover {
+            color: #44403c;
+        }
+        
+        .venmo-note {
+            font-size: 12px;
+            color: #78716c;
+            margin-top: 8px;
+        }
+        
+        .checkbox-container {
+            margin-bottom: 24px;
+            padding: 16px;
+            border: 1px solid #e7e5e4;
+            background: #fafaf9;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: start;
+            cursor: pointer;
+        }
+        
+        .checkbox-label input[type="checkbox"] {
+            margin-top: 4px;
+            margin-right: 12px;
+            width: auto;
+        }
+        
+        .checkbox-text {
+            font-size: 14px;
+            color: #44403c;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .modal-btn {
+            width: 100%;
+            padding: 16px 24px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .modal-btn.primary {
+            background: #292524;
+            color: white;
+        }
+        
+        .modal-btn.primary:hover:not(:disabled) {
+            background: #1c1917;
+        }
+        
+        .modal-btn.primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .modal-btn.secondary {
+            background: white;
+            color: #292524;
+            border: 1px solid #d6d3d1;
+        }
+        
+        .modal-btn.secondary:hover {
+            background: #fafaf9;
+        }
+        
+        @media (max-height: 700px) {
+            .modal-content {
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>gratified</h1>
+            <p class="subtitle">daily instapot lunch • served at 1pm</p>
+            <p class="subtext">rice • beans • veg</p>
+            <p class="price">$4 bottomless</p>
+        </div>
+
+        <div class="section">
+            <h2>Your Name</h2>
+            <div class="name-group">
+                <select id="existingName" aria-label="Select existing name">
+                    <option value="">Select existing name</option>
+                </select>
+                <input
+                    type="text"
+                    id="newName"
+                    placeholder="Or type new name..."
+                    aria-label="Enter new name"
+                    maxlength="50"
+                />
+            </div>
+            <div class="plus-container" id="plusContainer">
+                <label for="plusOne">+ companions / org seats (each $4/day)</label>
+                <input type="number" id="plusOne" min="0" max="5" value="0" aria-label="Number of additional people" />
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Select Days</h2>
+            <div id="daysList" class="days-list">
+                <div class="loading">Loading days & signups...</div>
+            </div>
+        </div>
+
+        <button id="submitBtn" class="submit-btn" disabled>
+            Continue to Venmo
+        </button>
+    </div>
+
+    <!-- Confirmation Modal (unchanged structure, minor text tweaks) -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <h3>Confirm & Pay</h3>
+            
+            <div class="summary-box">
+                <div id="confirmSummary" class="summary-name"></div>
+                <div id="confirmMeals" class="summary-meals"></div>
+            </div>
+
+            <div class="venmo-section">
+                <div class="venmo-label">Pay via Venmo</div>
+                <a href="#" target="_blank" id="venmoLink" class="venmo-link">
+                    @gratifiedwegrow
+                </a>
+                <div class="venmo-note">Please include your name + date(s) in the note</div>
+            </div>
+
+            <div class="checkbox-container">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="paymentCheckbox" aria-label="Confirm payment sent">
+                    <span class="checkbox-text">
+                        I confirm I have sent $<span id="totalAmount">0</span> to @gratifiedwegrow 
+                        with my name and dates in the note
+                    </span>
+                </label>
+            </div>
+
+            <div class="modal-buttons">
+                <button id="confirmPaid" class="modal-btn primary" disabled>
+                    I've Sent the Payment
+                </button>
+                <button id="cancelBtn" class="modal-btn secondary">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getDatabase, ref, onValue, set, push } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAzNA4a611ePbI6BknQz-mlwOtAVBwSmbc",
+            authDomain: "rice-beans.firebaseapp.com",
+            databaseURL: "https://rice-beans-default-rtdb.firebaseio.com",
+            projectId: "rice-beans",
+            storageBucket: "rice-beans.firebasestorage.app",
+            messagingSenderId: "451578694170",
+            appId: "1:451578694170:web:debfefb12780121aa35fa3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        const menus = {
+            Monday:    { veggie: 'Broccoli',     spice: 'garlic & cumin' },
+            Tuesday:   { veggie: 'Bell Peppers', spice: 'paprika & oregano' },
+            Wednesday: { veggie: 'Carrots',      spice: 'ginger & turmeric' },
+            Thursday:  { veggie: 'Eggplant',     spice: 'basil & red pepper' },
+            Friday:    { veggie: 'Kale',         spice: 'lemon & thyme' },
+            Saturday:  { veggie: 'Corn',         spice: 'lime & chili' },
+            Sunday:    { veggie: 'Sweet Potato', spice: 'cinnamon & nutmeg' }
+        };
+
+        function generateDays() {
+            const days = [];
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            for (let i = 0; i < 14; i++) {
+                const date = new Date(today);
+                date.setDate(today.getDate() + i);
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                
+                days.push({
+                    date: `${year}-${month}-${day}`,
+                    dayName: date.toLocaleDateString('en-US', { weekday: 'long' }),
+                    dateStr: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+                });
+            }
+            return days;
+        }
+
+        const days = generateDays();
+        let allSignups = {};
+        let selectedDays = [];
+        let allNames = new Set();
+        let isSubmitting = false;
+
+        const signupsRef = ref(database, 'signups');
+
+        onValue(signupsRef, (snapshot) => {
+            allSignups = snapshot.val() || {};
+            allNames.clear();
+            Object.values(allSignups).forEach(day => {
+                if (day) Object.values(day).forEach(s => allNames.add(s.name.trim()));
+            });
+            updateNameDropdown();
+            renderDays();
+        });
+
+        function updateNameDropdown() {
+            const select = document.getElementById('existingName');
+            const currentVal = select.value;
+            select.innerHTML = '<option value="">Select existing name</option>';
+            [...allNames].sort((a,b) => a.localeCompare(b)).forEach(name => {
+                const opt = document.createElement('option');
+                opt.value = name;
+                opt.textContent = name;
+                select.appendChild(opt);
+            });
+            if (currentVal && allNames.has(currentVal)) select.value = currentVal;
+        }
+
+        function getCurrentName() {
+            const newName = document.getElementById('newName').value.trim();
+            const existing = document.getElementById('existingName').value.trim();
+            const name = newName || existing;
+            return (name.length >= 2 && name.length <= 50) ? name : null;
+        }
+
+        function isAlreadySignedUp(date, name) {
+            const daySignups = allSignups[date] || {};
+            return Object.values(daySignups).some(s => 
+                s.name.trim().toLowerCase() === name.trim().toLowerCase()
+            );
+        }
+
+        function renderDays() {
+            const container = document.getElementById('daysList');
+            container.innerHTML = '';
+
+            if (Object.keys(allSignups).length === 0 && selectedDays.length === 0) {
+                // Optional: keep a nice empty state if no data loaded yet
+            }
+
+            days.forEach(day => {
+                const menu = menus[day.dayName] || { veggie: 'Surprise veggie', spice: 'house spices' };
+                const isSelected = selectedDays.includes(day.date);
+                const daySignups = allSignups[day.date] || {};
+                const signupList = Object.values(daySignups);
+                const totalPeople = signupList.reduce((sum, s) => sum + 1 + (s.plus || 0), 0);
+
+                const dayDiv = document.createElement('div');
+                dayDiv.className = `day-card ${isSelected ? 'selected' : ''}`;
+                dayDiv.tabIndex = 0;
+                dayDiv.role = 'button';
+                dayDiv.setAttribute('aria-pressed', isSelected);
+                dayDiv.setAttribute('aria-label', `Toggle signup for ${day.dayName} ${day.dateStr}. ${menu.veggie} with ${menu.spice}. ${totalPeople} signed up.`);
+
+                let signupsHTML = signupList.length > 0 
+                    ? `
+                        <div class="signups-section">
+                            <div class="signups-label">Who's eating:</div>
+                            <div class="signups-list">
+                                ${signupList.map(s => `<div>${s.name}${s.plus > 0 ? ` +${s.plus}` : ''}</div>`).join('')}
+                            </div>
+                        </div>
+                      `
+                    : '<div class="empty-state">Be the first!</div>';
+
+                dayDiv.innerHTML = `
+                    <div class="day-header">
+                        <div>
+                            <div class="day-title">${day.dayName}, ${day.dateStr}</div>
+                            <div class="day-menu">${menu.veggie} • ${menu.spice}</div>
+                        </div>
+                        ${totalPeople > 0 ? `<div class="day-count">${totalPeople} signed up</div>` : ''}
+                    </div>
+                    ${signupsHTML}
+                `;
+
+                const toggle = () => {
+                    const name = getCurrentName();
+                    if (!name) {
+                        alert('Please enter or select a name first (2–50 characters)');
+                        return;
+                    }
+                    if (!isSelected && isAlreadySignedUp(day.date, name)) {
+                        alert(`You're already signed up for ${day.dateStr}!`);
+                        return;
+                    }
+                    if (isSelected) {
+                        selectedDays = selectedDays.filter(d => d !== day.date);
+                    } else {
+                        selectedDays.push(day.date);
+                        selectedDays.sort(); // keep chronological
+                    }
+                    renderDays();
+                    updateSubmitButton();
+                };
+
+                dayDiv.addEventListener('click', toggle);
+                dayDiv.addEventListener('keydown', e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggle();
+                    }
+                });
+
+                container.appendChild(dayDiv);
+            });
+        }
+
+        function updateSubmitButton() {
+            const name = getCurrentName();
+            const btn = document.getElementById('submitBtn');
+            btn.style.display = (selectedDays.length > 0 && name) ? 'block' : 'none';
+            btn.disabled = !(selectedDays.length > 0 && name);
+        }
+
+        function updatePlusVisibility() {
+            document.getElementById('plusContainer').style.display = getCurrentName() ? 'block' : 'none';
+        }
+
+        // Name input handlers
+        const nameInputs = ['newName', 'existingName'];
+        nameInputs.forEach(id => {
+            document.getElementById(id).addEventListener(id === 'newName' ? 'input' : 'change', () => {
+                if (id === 'newName') document.getElementById('existingName').value = '';
+                if (id === 'existingName') document.getElementById('newName').value = '';
+                updatePlusVisibility();
+                updateSubmitButton();
+            });
+        });
+
+        document.getElementById('submitBtn').addEventListener('click', () => {
+            const name = getCurrentName();
+            if (!name) return;
+
+            const plus = parseInt(document.getElementById('plusOne').value) || 0;
+            const totalPeople = 1 + plus;
+            const totalDays = selectedDays.length;
+            const amount = totalPeople * totalDays * 4;
+
+            document.getElementById('confirmSummary').textContent = 
+                `${name}${plus > 0 ? ` + ${plus} companion${plus > 1 ? 's' : ''}` : ''}`;
+            document.getElementById('confirmMeals').textContent = 
+                `${totalPeople} person${totalPeople === 1 ? '' : 's'} × ${totalDays} day${totalDays === 1 ? '' : 's'} = $${amount}`;
+            document.getElementById('totalAmount').textContent = amount;
+
+            const datesStr = selectedDays
+                .map(d => d.split('-').slice(1).join('/'))
+                .join(', ');
+            const note = encodeURIComponent(`${name}${plus > 0 ? ` +${plus}` : ''} — ${datesStr}`);
+            
+            document.getElementById('venmoLink').href = 
+                `https://venmo.com/gratifiedwegrow?txn=pay&amount=${amount}&note=${note}`;
+
+            document.getElementById('paymentCheckbox').checked = false;
+            document.getElementById('confirmPaid').disabled = true;
+            document.getElementById('confirmModal').classList.add('show');
+        });
+
+        // Modal close handlers (unchanged)
+        document.getElementById('confirmModal').addEventListener('click', e => {
+            if (e.target.id === 'confirmModal') {
+                document.getElementById('confirmModal').classList.remove('show');
+            }
+        });
+
+        document.getElementById('cancelBtn').addEventListener('click', () => {
+            document.getElementById('confirmModal').classList.remove('show');
+        });
+
+        document.getElementById('paymentCheckbox').addEventListener('change', e => {
+            document.getElementById('confirmPaid').disabled = !e.target.checked;
+        });
+
+        document.getElementById('confirmPaid').addEventListener('click', async () => {
+            if (isSubmitting) return;
+            const name = getCurrentName();
+            if (!name) return;
+
+            isSubmitting = true;
+            const btn = document.getElementById('confirmPaid');
+            const originalText = btn.textContent;
+            btn.textContent = 'Submitting...';
+            btn.disabled = true;
+
+            const plus = parseInt(document.getElementById('plusOne').value) || 0;
+
+            try {
+                for (const date of selectedDays) {
+                    if (isAlreadySignedUp(date, name)) continue; // double safety
+                    const dayRef = ref(database, `signups/${date}`);
+                    const newRef = push(dayRef);
+                    await set(newRef, {
+                        name,
+                        plus,
+                        timestamp: Date.now()
+                    });
+                }
+
+                // Reset form
+                selectedDays = [];
+                document.getElementById('newName').value = '';
+                document.getElementById('existingName').value = '';
+                document.getElementById('plusOne').value = 0;
+                document.getElementById('confirmModal').classList.remove('show');
+                document.getElementById('paymentCheckbox').checked = false;
+                updatePlusVisibility();
+                renderDays();
+                updateSubmitButton();
+                alert('Thanks! You\'re signed up — see you at 1pm!');
+            } catch (error) {
+                console.error('Signup failed:', error);
+                alert('Something went wrong. Please try again or contact us.');
+            } finally {
+                isSubmitting = false;
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        });
+
+        // Initial render
+        renderDays();
+        updateNameDropdown();
+        updateSubmitButton();
+    </script>
+</body>
+</html>

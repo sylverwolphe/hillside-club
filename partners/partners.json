@@ -1,0 +1,40 @@
+{
+  "partners": [
+    {
+      "name": "TimeCube",
+      "logo": "timecube.png",
+      "url": ""
+    },
+    {
+      "name": "CoRo",
+      "logo": "corologo.png",
+      "url": "https://www.corocoffee.com/"
+    },
+    {
+      "name": "Eating Love",
+      "logo": "eatinglovelogo.png",
+      "url": "https://eatinglove.com/"
+    },
+    {
+      "name": "relod",
+      "logo": "relod.png",
+      "url": "https://www.relod.app/"
+    },
+    
+    {
+      "name": "Mox",
+      "logo": "moxlogo.png",
+      "url": "https://moxsf.com/"
+    },
+     {
+      "name": "Inkhaven",
+      "logo": "favicon.png",
+      "url": "https://www.inkhaven.blog/"
+    },
+      {
+      "name": "not diamond",
+      "logo": "diamondlogo.png",
+      "url": "https://www.notdiamond.ai/"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor directories
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Local development
+.env
+.env.local
+
+# AI/Coding Agents
+CLAUDE.md
+.claude/
+.cursor/
+.aider*
+.continue/
+.codeium/
+.tabnine/
+.sourcegraph/
+.cody/
+.copilot/
+.github/copilot/
+.windsurf/
+.bolt/
+.v0/
+.replit/
+.idx/
+.codex/
+.amazonq/
+.aws/amazonq/
+.devika/
+.devin/
+.swekit/
+.mentat/
+.gpt-pilot/
+.smol-dev/

@@ -1,0 +1,104 @@
+{
+  "drinks": [
+    {
+      "id": "pour-over",
+      "name": "Pour Over",
+      "shortDesc": "Clean, bright, single origin",
+      "fullDesc": "A slow, meditative brewing process that highlights the unique characteristics of each bean. We rotate our single origins weekly and source almost exclusively from East Africa.",
+      "extras": [
+        "Ask about today's origin",
+        "Available hot only"
+      ],
+      "icon": "pour-over",
+            "image": "config/menu-images/pour-over.jpg"
+
+    },
+    {
+      "id": "cappuccino",
+      "name": "Cappuccino",
+      "shortDesc": "Espresso, steamed milk, velvet foam",
+      "fullDesc": "The classic Italian preparation—equal parts espresso, steamed milk, and microfoam. Rich, balanced, and perfect for savoring slowly.",
+      "extras": [
+        "Oat, almond, or whole milk",
+        "Extra shot available"
+      ],
+      "icon": "cappuccino",
+            "image": "config/menu-images/capp.jpg"
+
+    },
+    {
+      "id": "latte",
+      "name": "Latte",
+      "shortDesc": "Smooth espresso, silky milk",
+      "fullDesc": "Our house espresso blend meets perfectly steamed milk for a smooth, comforting cup. A canvas for latte art and quiet mornings.",
+      "extras": [
+        "Oat, almond, or whole milk",
+        "Maple or honey syrup"
+      ],
+      "icon": "latte",
+            "image": "config/menu-images/latte.jpg"
+
+    },
+    {
+      "id": "mocha",
+      "name": "Mocha",
+      "shortDesc": "Espresso meets rich chocolate",
+      "fullDesc": "Tcho chocolate swirled with our espresso and topped with steamed milk. Indulgent but not too sweet—the way chocolate and coffee were meant to meet.",
+      "extras": [
+        "Get a double shot",
+        "Add whipped cream"
+      ],
+      "icon": "mocha",
+      "image": "config/menu-images/mocha.jpeg"
+    },
+    {
+      "id": "hot-chocolate",
+      "name": "Hot Chocolate",
+      "shortDesc": "Decadent mixture of love",
+      "fullDesc": "Made with Tcho chocolate, chocolate sauce, and melted cacao powder. Liquified in hot milk, and topped with a sprinkle of cinnamon. Pure comfort in a cup.",
+      "extras": [
+        "Dairy-free option available",
+        "Thinking about weird marshmallow alternatives"
+      ],
+      "icon": "hot-chocolate",
+            "image": "config/menu-images/hotchocolate.jpg"
+
+    },
+    {
+      "id": "matcha-latte",
+      "name": "Matcha Latte",
+      "shortDesc": "Ceremonial grade, oat milk",
+      "fullDesc": "Premium ceremonial-grade matcha from, whisked and combined with your choice of milk. Earthy, smooth, and gently energizing.",
+      "extras": [
+        "Iced option available",
+        "Add honey syrup and/or vanilla"
+      ],
+      "icon": "matcha-latte",
+      "image": "config/menu-images/matcha.jpeg"
+    },
+    {
+      "id": "moroccan-mint",
+      "name": "Moroccan Mint",
+      "shortDesc": "Two mints, green tea, herbs",
+      "fullDesc": "Traditional Moroccan-style mint tea made with spearmint, peppermint, gunpowder green - and weird herbs. Refreshing and aromatic.",
+      "extras": [
+        "Caffeine-free mint available",
+        "Ask for sweetness"
+      ],
+      "icon": "moroccan-mint",
+      "image": "config/menu-images/mint.jpeg"
+    },
+    {
+      "id": "something-different",
+      "name": "Surprise Me",
+      "shortDesc": "Trust the barista's choice",
+      "fullDesc": "Feeling adventurous? Let our barista craft something special based on your mood and preferences. Tell us if you like it sweet, strong, fruity, or cozy—we'll take it from there.",
+      "extras": [
+        "Just tell us your vibe",
+        "muahahaha"
+      ],
+      "icon": "surprise",
+      "image": "config/menu-images/surprise.jpeg"
+    }
+  ]
+}

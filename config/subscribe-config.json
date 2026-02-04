@@ -1,0 +1,62 @@
+{
+  "page": {
+    "title": "Subscribe",
+    "tagline": "join the journey"
+  },
+  "joinSection": {
+    "title": "Join Us",
+    "intro": "Stay connected or become a member for unlimited coffee."
+  },
+  "tiers": [
+    {
+      "id": "follow",
+      "name": "Follow",
+      "price": "Free",
+      "priceSubtext": "",
+      "featured": false,
+      "perks": [
+        "Check out what we're up to in the mind, matter, sauce"
+      ],
+      "buttons": [
+        {
+          "text": "Substack",
+          "url": "https://substack.com/@gratifiedwegrow",
+          "type": "link",
+          "primary": false
+        },
+        {
+          "text": "Partiful",
+          "url": "https://partiful.com/u/FYZcDQXvTPeptryuZgJ7",
+          "type": "link",
+          "primary": false
+        },
+        {
+          "text": "Discord",
+          "url": "https://discord.gg/UDRNAydqWf",
+          "type": "link",
+          "primary": false
+        }
+      ]
+    },
+    {
+      "id": "subscribe",
+      "name": "Subscribe",
+      "price": "$108",
+      "priceSubtext": "/month",
+      "featured": true,
+      "perks": [
+        "Walk in and ask for your drink w/o card",
+        "Freedom at the first flr nut bar",
+        "Pastry/event prio"
+      ],
+      "buttons": [
+        {
+          "text": "Subscribe",
+          "modalId": "unlimitedModal",
+          "type": "modal",
+          "primary": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "infoCards": {
+    "default": {
+      "title": "Let's Build Together",
+      "intro": "Tell us who you are and we'll share how we might work together."
+    },
+    "investor": {
+      "title": "Invest in Gratified",
+      "intro": "Join us as a founding investor and help build something meaningful.",
+      "tier": {
+        "amount": "$25,000",
+        "equity": "0.2% equity stake",
+        "label": "Founding Investor"
+      },
+      "listTitle": "What you get:",
+      "items": [
+        "Equity stake in Gratified",
+        "Quarterly investor updates",
+        "Input on key decisions",
+        "Unlimited coffee for life"
+      ],
+      "note": "We're raising a small friends & family round. Serious inquiries only."
+    },
+    "business": {
+      "title": "Business Partnerships",
+      "intro": "Whether you're a venue, food maker, or brand—let's collaborate.",
+      "listTitle": "We work with:",
+      "items": [
+        "Venues & coworking spaces",
+        "Bakeries & food artisans",
+        "Artists & galleries",
+        "Brands & events"
+      ],
+      "note": "We bring coffee, community, and good vibes. You bring your space or product."
+    },
+    "barista": {
+      "title": "Join as a Barista",
+      "intro": "We're looking for people who care about craft, community, and good coffee.",
+      "listTitle": "What we offer:",
+      "items": [
+        "Training provided",
+        "Flexible schedules",
+        "Free coffee (obviously)",
+        "Creative, community-first culture"
+      ],
+      "note": "No experience required—just enthusiasm and reliability."
+    }
+  }
+}
