@@ -3023,204 +3023,187 @@ body {
 }
 
 .solstice-details {
-    margin-bottom: 20px;
-    position: relative;
-    z-index: 1;
+margin-bottom: 20px;
+position: relative;
+z-index: 1;
+}
+.solstice-date {
+font-family: 'BluuNext', serif;
+font-size: 18px;
+color: var(--theme-accent);
+letter-spacing: 1px;
+margin-bottom: 5px;
+}
+.solstice-location {
+font-size: 14px;
+color: var(--deep-walnut);
+letter-spacing: 0.5px;
+}
+.welcome-text {
+font-size: 15px;
+color: var(--charcoal-slate);
+line-height: 1.8;
+margin-bottom: 25px;
+max-width: 420px;
+margin-left: auto;
+margin-right: auto;
+position: relative;
+z-index: 1;
+}
+.solstice-activities {
+display: flex;
+justify-content: center;
+gap: 12px;
+flex-wrap: wrap;
+margin-bottom: 30px;
+position: relative;
+z-index: 1;
+}
+.solstice-activities span {
+font-size: 13px;
+color: var(--deep-walnut);
+padding: 6px 12px;
+border: 1px solid var(--theme-accent);
+background: var(--card-bg);
+letter-spacing: 0.5px;
+}
+.welcome-btn-group {
+display: flex;
+gap: 12px;
+position: relative;
+z-index: 1;
+flex-wrap: wrap;
+justify-content: center;
+}
+.welcome-btn {
+background-color: var(--sage-green);
+color: var(--cream-plaster);
+border: 3px solid var(--warm-oak);
+padding: 14px 30px;
+font-size: 14px;
+font-weight: 600;
+letter-spacing: 2px;
+cursor: pointer;
+transition: all 0.4s ease;
+font-family: 'Satoshi', serif;
+text-transform: lowercase;
+text-decoration: none;
+display: inline-block;
+flex: 1;
+min-width: 140px;
+}
+.welcome-btn:hover {
+background-color: var(--warm-oak);
+border-color: var(--warm-oak);
+letter-spacing: 3px;
+transform: translateY(-2px);
+box-shadow: 0 6px 20px rgba(47, 82, 51, 0.3);
+}
+.welcome-btn.secondary {
+background-color: transparent;
+color: var(--sage-green);
+border-color: var(--sage-green);
+}
+.welcome-btn.secondary:hover {
+background-color: var(--sage-green);
+color: var(--cream-plaster);
+border-color: var(--sage-green);
+}
+@media (max-width: 600px) {
+.welcome-modal {
+padding: 45px 25px 35px;
+border-left-width: 6px;
+border-right-width: 6px;
+}
+.welcome-title {
+    font-size: 30px;
+    letter-spacing: 2px;
+}
+
+.welcome-subtitle {
+    font-size: 14px;
 }
 
 .solstice-date {
-    font-family: 'BluuNext', serif;
-    font-size: 18px;
-    color: var(--theme-accent);
-    letter-spacing: 1px;
-    margin-bottom: 5px;
+    font-size: 16px;
 }
 
 .solstice-location {
-    font-size: 14px;
-    color: var(--olive-bronze);
-    letter-spacing: 0.5px;
+    font-size: 13px;
 }
 
 .welcome-text {
-    font-size: 15px;
-    color: var(--charcoal-ink);
-    line-height: 1.8;
-    margin-bottom: 25px;
-    max-width: 420px;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    z-index: 1;
+    font-size: 14px;
 }
 
 .solstice-activities {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 30px;
-    position: relative;
-    z-index: 1;
+    gap: 8px;
 }
 
 .solstice-activities span {
-    font-size: 13px;
-    color: var(--olive-bronze);
-    padding: 6px 12px;
-    border: 1px solid var(--theme-accent);
-    background: var(--card-bg);
-    letter-spacing: 0.5px;
-}
-
-.welcome-btn-group {
-    display: flex;
-    gap: 12px;
-    position: relative;
-    z-index: 1;
-    flex-wrap: wrap;
-    justify-content: center;
+    font-size: 12px;
+    padding: 5px 10px;
 }
 
 .welcome-btn {
-    background-color: var(--dusty-rose);
-    color: var(--cream-parchment);
-    border: 3px solid var(--rich-saffron);
-    padding: 14px 30px;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    cursor: pointer;
-    transition: all 0.4s ease;
-    font-family: 'Satoshi', serif;
-    text-transform: lowercase;
-    text-decoration: none;
-    display: inline-block;
-    flex: 1;
-    min-width: 140px;
+    padding: 12px 24px;
+    font-size: 13px;
+    min-width: 120px;
 }
 
-.welcome-btn:hover {
-    background-color: var(--rich-saffron);
-    border-color: var(--rich-saffron);
-    letter-spacing: 3px;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(114, 47, 55, 0.3);
+.welcome-btn-group {
+    flex-direction: column;
 }
 
-.welcome-btn.secondary {
-    background-color: transparent;
-    color: var(--dusty-rose);
-    border-color: var(--dusty-rose);
+.welcome-btn {
+    width: 100%;
 }
 
-.welcome-btn.secondary:hover {
-    background-color: var(--dusty-rose);
-    color: var(--cream-parchment);
-    border-color: var(--dusty-rose);
+.welcome-diamond {
+    width: 60px;
+    height: 60px;
 }
-
-@media (max-width: 600px) {
-    .welcome-modal {
-        padding: 45px 25px 35px;
-        border-left-width: 6px;
-        border-right-width: 6px;
-    }
-
-    .welcome-title {
-        font-size: 30px;
-        letter-spacing: 2px;
-    }
-
-    .welcome-subtitle {
-        font-size: 14px;
-    }
-
-    .solstice-date {
-        font-size: 16px;
-    }
-
-    .solstice-location {
-        font-size: 13px;
-    }
-
-    .welcome-text {
-        font-size: 14px;
-    }
-
-    .solstice-activities {
-        gap: 8px;
-    }
-
-    .solstice-activities span {
-        font-size: 12px;
-        padding: 5px 10px;
-    }
-
-    .welcome-btn {
-        padding: 12px 24px;
-        font-size: 13px;
-        min-width: 120px;
-    }
-
-    .welcome-btn-group {
-        flex-direction: column;
-    }
-
-    .welcome-btn {
-        width: 100%;
-    }
-
-    .welcome-diamond {
-        width: 60px;
-        height: 60px;
-    }
 }
-
 /* ===== SOLSTICE TOGGLE BUTTON ===== */
 .solstice-toggle {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    width: 50px;
-    height: 50px;
-    border: 3px solid var(--dusty-rose);
-    background-color: var(--card-bg);
-    cursor: pointer;
-    z-index: 1000;
-    transform: rotate(45deg);
-    transition: all 0.4s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    padding: 0;
+position: fixed;
+top: 20px;
+left: 20px;
+width: 50px;
+height: 50px;
+border: 3px solid var(--sage-green);
+background-color: var(--card-bg);
+cursor: pointer;
+z-index: 1000;
+transform: rotate(45deg);
+transition: all 0.4s ease;
+display: flex;
+align-items: center;
+justify-content: center;
+overflow: hidden;
+padding: 0;
 }
-
 .solstice-toggle:hover {
-    background-color: var(--card-bg-hover);
-    border-color: var(--rich-saffron);
-    transform: rotate(45deg) scale(1.1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+background-color: var(--card-bg-hover);
+border-color: var(--warm-oak);
+transform: rotate(45deg) scale(1.1);
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
-
 .solstice-toggle-diamond {
-    width: 40px;
-    height: 40px;
-    transform: rotate(-45deg);
-    animation: gentleRotate 20s linear infinite;
+width: 40px;
+height: 40px;
+transform: rotate(-45deg);
+animation: gentleRotate 20s linear infinite;
 }
-
 @media (max-width: 768px) {
-    .solstice-toggle {
-        width: 42px;
-        height: 42px;
-        top: 15px;
-        left: 15px;
-    }
-
-    .solstice-toggle-diamond {
-        width: 32px;
-        height: 32px;
-    }
+.solstice-toggle {
+width: 42px;
+height: 42px;
+top: 15px;
+left: 15px;
+}
+.solstice-toggle-diamond {
+    width: 32px;
+    height: 32px;
+}
 }
