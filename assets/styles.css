@@ -1,3 +1,4 @@
+```css
 @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Lateef:wght@200;300;400;500;600;700;800&display=swap');
 
 @font-face {
@@ -31,69 +32,69 @@ body, p, .blog-excerpt, .project-subtitle, .team-title {
 }
 
 :root {
-    /* Light theme (default) */
-    --deep-burgundy: #722F37;
-    --rich-saffron: #E8A317;
-    --warm-amber: #D2691E;
-    --dusty-rose: #C08497;
-    --deep-teal: #2D5B69;
-    --golden-sand: #E6C89C;
-    --burnt-orange: #CC5500;
-    --olive-bronze: #6B5740;            /* Darkened for WCAG AA contrast (5.2:1) */
-    --cream-parchment: #EDE8E0;         /* Warmer, less bright cream */
-    --charcoal-ink: #3C3C3C;
+    /* Light theme - Craftsman Arts & Crafts palette */
+    --forest-green: #2F5233;
+    --barn-red: #8B3A3A;
+    --warm-oak: #A0774F;
+    --sage-green: #7A9B76;
+    --terracotta: #B85C38;
+    --cream-plaster: #F5F1E8;
+    --deep-walnut: #4A3728;
+    --copper-patina: #6B8E7F;
+    --golden-oak: #D4A574;
+    --charcoal-slate: #3A3A3A;
 
     /* Theme-specific backgrounds */
-    --section-bg: rgba(237, 232, 224, 0.8);
-    --card-bg: rgba(230, 200, 156, 0.3);
-    --card-bg-hover: rgba(192, 132, 151, 0.3);
-    --team-bg: rgba(192, 132, 151, 0.15);
-    --input-bg: rgba(237, 232, 224, 0.9);
-    --modal-bg: #EDE8E0;
-    --modal-overlay-bg: rgba(60, 60, 60, 0.8);
-    --ticker-bg: #3C3C3C;
-    --dot-bg: rgba(237, 232, 224, 0.6);
+    --section-bg: rgba(245, 241, 232, 0.9);
+    --card-bg: rgba(212, 165, 116, 0.2);
+    --card-bg-hover: rgba(122, 155, 118, 0.25);
+    --team-bg: rgba(122, 155, 118, 0.15);
+    --input-bg: rgba(245, 241, 232, 0.95);
+    --modal-bg: #F5F1E8;
+    --modal-overlay-bg: rgba(58, 58, 58, 0.85);
+    --ticker-bg: #3A3A3A;
+    --dot-bg: rgba(245, 241, 232, 0.7);
 
-    /* Mobile nav icon colors (default) */
-    --drink-nav-color-1: #6B5740;
-    --drink-nav-color-2: #D2691E;
-    --drink-nav-color-3: #C08497;
-    --drink-nav-color-4: #CD7F32;
-    --drink-nav-color-5: #E8A317;
+    /* Mobile nav icon colors */
+    --drink-nav-color-1: #4A3728;
+    --drink-nav-color-2: #A0774F;
+    --drink-nav-color-3: #7A9B76;
+    --drink-nav-color-4: #B85C38;
+    --drink-nav-color-5: #6B8E7F;
 
-    /* Theme accent (changes with drink selection) */
-    --theme-accent: var(--dusty-rose);
+    /* Theme accent */
+    --theme-accent: var(--forest-green);
 
-    /* Button text - light text for filled buttons */
-    --btn-text: #EDE8E0;
+    /* Button text */
+    --btn-text: #F5F1E8;
 }
 
 [data-theme="dark"] {
-    /* Dark theme - lightened accent colors for better contrast */
-    --deep-burgundy: #A85A64;           /* Lightened for dark bg visibility */
-    --rich-saffron: #F0B832;            /* Slightly brighter gold */
-    --warm-amber: #E8884A;              /* Lightened amber */
-    --dusty-rose: #D9A5B3;              /* Lightened rose for contrast */
-    --deep-teal: #7FBDCC;               /* Brighter teal */
-    --golden-sand: #F0D9B5;             /* Lighter sand */
-    --burnt-orange: #E87830;            /* Brighter orange */
-    --olive-bronze: #C9B090;            /* Much lighter for readability */
-    --cream-parchment: #2A2622;
-    --charcoal-ink: #F7F3E9;
+    /* Dark theme - warmer craftsman tones */
+    --forest-green: #6B9B6F;
+    --barn-red: #C76B6B;
+    --warm-oak: #D4A574;
+    --sage-green: #9BBF98;
+    --terracotta: #E08B6B;
+    --cream-plaster: #2B2822;
+    --deep-walnut: #E5D5C5;
+    --copper-patina: #9BBFAE;
+    --golden-oak: #E5C598;
+    --charcoal-slate: #F0EDE5;
 
-    /* Button text - stays light in dark mode for filled buttons */
-    --btn-text: #F7F3E9;
+    /* Button text */
+    --btn-text: #F0EDE5;
 
     /* Theme-specific backgrounds */
-    --section-bg: rgba(50, 46, 42, 0.8);
-    --card-bg: rgba(70, 65, 60, 0.5);   /* Slightly lighter cards */
-    --card-bg-hover: rgba(217, 165, 179, 0.25);
-    --team-bg: rgba(217, 165, 179, 0.15);
-    --input-bg: rgba(50, 46, 42, 0.9);
-    --modal-bg: #3A3632;
-    --modal-overlay-bg: rgba(20, 18, 16, 0.9);
-    --ticker-bg: #2A2622;
-    --dot-bg: rgba(50, 46, 42, 0.6);
+    --section-bg: rgba(50, 46, 40, 0.85);
+    --card-bg: rgba(90, 80, 70, 0.5);
+    --card-bg-hover: rgba(155, 191, 152, 0.25);
+    --team-bg: rgba(155, 191, 152, 0.15);
+    --input-bg: rgba(50, 46, 40, 0.95);
+    --modal-bg: #3A352E;
+    --modal-overlay-bg: rgba(20, 18, 15, 0.9);
+    --ticker-bg: #2B2822;
+    --dot-bg: rgba(50, 46, 40, 0.7);
 }
 
 * {
@@ -108,15 +109,15 @@ body, p, .blog-excerpt, .project-subtitle, .team-title {
     top: -100px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: var(--dusty-rose);
-    color: var(--cream-parchment);
+    background-color: var(--forest-green);
+    color: var(--cream-plaster);
     padding: 12px 24px;
     font-family: 'Satoshi', sans-serif;
     font-size: 14px;
     font-weight: 600;
     text-decoration: none;
     z-index: 10000;
-    border: 2px solid var(--rich-saffron);
+    border: 2px solid var(--warm-oak);
     transition: top 0.3s ease;
 }
 
@@ -141,7 +142,7 @@ body, p, .blog-excerpt, .project-subtitle, .team-title {
     outline-offset: 2px;
 }
 
-/* Focus-visible for mouse users (hide outline on click) */
+/* Focus-visible for mouse users */
 .nav-link:focus:not(:focus-visible),
 .mobile-nav-item:focus:not(:focus-visible),
 .cta-btn:focus:not(:focus-visible),
@@ -184,29 +185,32 @@ footer {
 }
 
 body {
-    background-color: var(--cream-parchment);
+    background-color: var(--cream-plaster);
     background-image:
-        radial-gradient(circle at 25% 25%, rgba(114, 47, 55, 0.03) 0%, transparent 50%),
-        radial-gradient(circle at 75% 75%, rgba(232, 163, 23, 0.02) 0%, transparent 50%);
-    color: var(--charcoal-ink);
+        radial-gradient(circle at 20% 30%, rgba(47, 82, 51, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(160, 119, 79, 0.03) 0%, transparent 50%);
+    color: var(--charcoal-slate);
     line-height: 1.8;
     font-family: 'Satoshi', serif;
     font-weight: 400;
     min-height: 100vh;
 }
 
+/* Craftsman geometric pattern - inspired by stained glass */
 .ancient-pattern {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 0.015;
-    /* Using radial gradients instead of sharp lines for Safari compatibility */
+    opacity: 0.02;
     background-image:
-        radial-gradient(circle at 25% 25%, var(--dusty-rose) 0%, transparent 2%),
-        radial-gradient(circle at 75% 75%, var(--rich-saffron) 0%, transparent 2%);
-    background-size: 24px 24px;
+        linear-gradient(45deg, var(--forest-green) 25%, transparent 25%),
+        linear-gradient(-45deg, var(--warm-oak) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, var(--forest-green) 75%),
+        linear-gradient(-45deg, transparent 75%, var(--warm-oak) 75%);
+    background-size: 40px 40px;
+    background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
     pointer-events: none;
     z-index: -1;
 }
@@ -222,7 +226,7 @@ body {
     z-index: -3;
 }
 
-/* Film grain overlay - using CSS noise pattern for cross-browser support */
+/* Wood grain texture overlay */
 .grain-overlay {
     position: fixed;
     top: 0;
@@ -231,8 +235,7 @@ body {
     height: 100%;
     pointer-events: none;
     z-index: -1;
-    opacity: 0.08;
-    /* Tiny noise pattern as base64 PNG - works consistently across all browsers */
+    opacity: 0.06;
     background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAElBMVEUAAAD8/vz08teleHrw8teleHoZ5X8LAAAAAXRSTlMAQObYZgAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAb1JREFUOBGdU8uKwzAMzEMoNLQH04MpNJTQQ6CnQC+lp6a/t5O/K8nOtrQQ9mDJM6MZ25m8VkbNAQR4nAgPbMQQEf2PxEgaFc0xExGxYDCWtHOJqEoaqzBt7BOGDNmQ4gHI2YEgOqRxZxZc7DM0SYKJIISqh/p2AOJ2k9A8IAONOvKQz+Lw/4bQWJ/Fh8gQuIQAYknXlQSIxKV0BU5C4FQEChOViP5CqHVrQ5wE0OYj5F2G6bQeKn3DVQJ9ALgJCsI4OZkUAcTk/vD2AADGB8E18BL+D/RAbSyQqEfQvwjKd+4tO6qBp96GbLCJBYoFD7EUQMPe8B1Ur4qDXSjw1gj+JGhAAzFG0DMEKoRxF4F4CQFQ+sAaghMCeAaBPLMYJEL3DQMBNJGAqxgpxA9C8xzQAphxdBNjNoD6/kPQ3qpBv1MjgTPT8FxPZD7ADGjCg3KBMF2K7CbxXxGJH+B7wwT0DTxhP/RGbqP7DBuKKZRLN8bO+oj5l6F4Rj7NnGCpxgAAAABJRU5ErkJggg==");
     background-repeat: repeat;
     background-size: 64px 64px;
@@ -246,7 +249,7 @@ body {
     75% { transform: translate(-2px, -2px); }
 }
 
-/* Muddy water undertone */
+/* Natural light undertone - like filtered through redwood */
 .muddy-flow {
     position: fixed;
     top: 0;
@@ -257,15 +260,15 @@ body {
     z-index: -3;
     background:
         linear-gradient(180deg,
-            rgba(139, 115, 85, 0.04) 0%,
-            rgba(139, 115, 85, 0.08) 50%,
-            rgba(139, 115, 85, 0.04) 100%);
-    animation: muddyFlow 25s ease-in-out infinite;
+            rgba(160, 119, 79, 0.03) 0%,
+            rgba(122, 155, 118, 0.05) 50%,
+            rgba(160, 119, 79, 0.03) 100%);
+    animation: muddyFlow 30s ease-in-out infinite;
 }
 
 @keyframes muddyFlow {
     0%, 100% {
-        opacity: 0.7;
+        opacity: 0.8;
     }
     50% {
         opacity: 1;
@@ -290,14 +293,14 @@ body {
 }
 
 .logobot {
-        color: var(--theme-accent);
-    letter-spacing: 2px; /* Adds 2 pixels between characters */
-    word-spacing: 5px;   /* Adds 5 pixels between words */
+    color: var(--theme-accent);
+    letter-spacing: 2px;
+    word-spacing: 5px;
 }
 
 .tagline {
     font-size: clamp(16px, 3vw, 28px);
-    color: var(--olive-bronze);
+    color: var(--deep-walnut);
     font-weight: 400;
     letter-spacing: clamp(2px, 0.4vw, 4px);
 }
@@ -330,7 +333,7 @@ body {
 .dot {
     width: 16px;
     height: 16px;
-    background-color: var(--olive-bronze);
+    background-color: var(--deep-walnut);
     opacity: 0.5;
     cursor: pointer;
     transition: all 0.4s ease;
@@ -339,7 +342,7 @@ body {
 }
 
 .dot.active {
-    background-color: var(--rich-saffron);
+    background-color: var(--warm-oak);
     opacity: 1;
     border-color: var(--theme-accent);
     transform: rotate(45deg) scale(1.3);
@@ -352,8 +355,8 @@ body {
     margin-bottom: clamp(20px, 4vw, 35px);
     position: relative;
     box-shadow:
-        inset 0 0 20px rgba(114, 47, 55, 0.05),
-        0 2px 8px rgba(60, 60, 60, 0.08);
+        inset 0 0 20px rgba(47, 82, 51, 0.04),
+        0 2px 8px rgba(58, 58, 58, 0.08);
 }
 
 /* Liquid shader canvas for menu */
@@ -379,7 +382,7 @@ body {
 
 #menu .drink-card.selected {
     background-color: var(--card-bg-hover);
-    box-shadow: 0 0 0 3px var(--drink-color, var(--dusty-rose)), 0 8px 16px rgba(114, 47, 55, 0.2);
+    box-shadow: 0 0 0 3px var(--drink-color, var(--forest-green)), 0 8px 16px rgba(47, 82, 51, 0.2);
 }
 
 .section::before {
@@ -390,7 +393,7 @@ body {
     bottom: 15px;
     left: 15px;
     border: 2px solid var(--drink-accent);
-    opacity: 0.3;
+    opacity: 0.25;
     pointer-events: none;
     transition: border-color 0.4s ease;
 }
@@ -416,7 +419,7 @@ body {
 
 .project-card {
     background-color: var(--card-bg);
-    border: 3px solid var(--deep-teal);
+    border: 3px solid var(--forest-green);
     transition: all 0.4s ease;
     overflow: hidden;
     text-decoration: none;
@@ -460,7 +463,7 @@ body {
 }
 
 .project-subtitle {
-    color: var(--deep-teal);
+    color: var(--copper-patina);
     font-size: 14px;
     line-height: 1.5;
 }
@@ -491,9 +494,9 @@ body {
 .team-photo {
     width: 120px;
     height: 120px;
-    background: linear-gradient(135deg, var(--dusty-rose), var(--warm-amber));
+    background: linear-gradient(135deg, var(--sage-green), var(--warm-oak));
     margin: 0 auto 20px;
-    border: 6px solid var(--deep-teal);
+    border: 6px solid var(--forest-green);
     overflow: hidden;
 }
 
@@ -512,35 +515,35 @@ body {
 }
 
 .team-title {
-    color: var(--deep-teal);
+    color: var(--copper-patina);
     font-size: 18px;
 }
 
 .coming-soon {
-    background-color: var(--burnt-orange);
-    color: var(--cream-parchment);
+    background-color: var(--terracotta);
+    color: var(--cream-plaster);
     padding: 6px 12px;
     font-size: 12px;
     margin-left: 12px;
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 2px;
-    border: 2px solid var(--rich-saffron);
+    border: 2px solid var(--warm-oak);
 }
 
 footer {
     text-align: center;
     padding: 40px 20px;
-    color: var(--olive-bronze);
+    color: var(--deep-walnut);
     margin-top: 60px;
     font-size: 16px;
     letter-spacing: 2px;
     border-top: 3px solid var(--theme-accent);
-    background-color: rgba(232, 163, 23, 0.05);
+    background-color: rgba(160, 119, 79, 0.05);
 }
 
 footer a {
-    color: var(--warm-amber);
+    color: var(--warm-oak);
     text-decoration: none;
     transition: color 0.3s ease;
     font-weight: 400;
@@ -551,7 +554,7 @@ footer a:hover {
     color: var(--theme-accent);
 }
 
-/* ===== BOOKING MODAL STYLES - ANCIENT MOROCCO AESTHETIC ===== */
+/* ===== BOOKING MODAL STYLES - CRAFTSMAN AESTHETIC ===== */
 
 .modal-overlay {
     position: fixed;
@@ -577,8 +580,8 @@ footer a:hover {
     bottom: 100px;
     left: 50%;
     transform: translateX(-50%) translateY(20px);
-    background-color: var(--charcoal-ink);
-    color: var(--cream-parchment);
+    background-color: var(--charcoal-slate);
+    color: var(--cream-plaster);
     padding: 16px 28px;
     z-index: 2000;
     max-width: 90%;
@@ -600,7 +603,7 @@ footer a:hover {
 }
 
 .form-notification.success {
-    border-left-color: var(--olive-bronze);
+    border-left-color: var(--deep-walnut);
 }
 
 .form-notification.error {
@@ -622,14 +625,14 @@ footer a:hover {
     max-height: 85vh;
     overflow-y: auto;
     padding: 50px 45px;
-    border-left: 8px solid var(--warm-amber);
-    border-right: 8px solid var(--warm-amber);
+    border-left: 8px solid var(--warm-oak);
+    border-right: 8px solid var(--warm-oak);
     position: relative;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
     box-sizing: border-box;
 }
 
-/* Ancient pattern overlay for modal */
+/* Craftsman pattern overlay */
 .booking-modal::after {
     content: '';
     position: absolute;
@@ -637,10 +640,10 @@ footer a:hover {
     left: 0;
     right: 0;
     bottom: 0;
-    opacity: 0.02;
+    opacity: 0.015;
     background-image:
-        repeating-linear-gradient(45deg, var(--dusty-rose) 0px, var(--dusty-rose) 1px, transparent 1px, transparent 15px),
-        repeating-linear-gradient(-45deg, var(--rich-saffron) 0px, var(--rich-saffron) 1px, transparent 1px, transparent 15px);
+        repeating-linear-gradient(45deg, var(--forest-green) 0px, var(--forest-green) 1px, transparent 1px, transparent 15px),
+        repeating-linear-gradient(-45deg, var(--warm-oak) 0px, var(--warm-oak) 1px, transparent 1px, transparent 15px);
     pointer-events: none;
     z-index: 0;
 }
@@ -652,7 +655,7 @@ footer a:hover {
     background: none;
     border: none;
     font-size: 28px;
-    color: var(--olive-bronze);
+    color: var(--deep-walnut);
     cursor: pointer;
     z-index: 10;
     width: 35px;
@@ -704,7 +707,7 @@ footer a:hover {
     background-color: var(--input-bg);
     font-family: 'Satoshi', serif;
     font-size: 16px;
-    color: var(--charcoal-ink);
+    color: var(--charcoal-slate);
     transition: all 0.4s ease;
     position: relative;
     -webkit-appearance: none;
@@ -716,9 +719,9 @@ footer a:hover {
 .form-select:focus,
 .form-textarea:focus {
     outline: none;
-    border-color: var(--rich-saffron);
-    background-color: var(--cream-parchment);
-    box-shadow: inset 0 0 10px rgba(232, 163, 23, 0.1);
+    border-color: var(--warm-oak);
+    background-color: var(--cream-plaster);
+    box-shadow: inset 0 0 10px rgba(160, 119, 79, 0.1);
 }
 
 .form-textarea {
@@ -730,7 +733,7 @@ footer a:hover {
 .form-select {
     cursor: pointer;
     appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23722F37' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232F5233' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat;
     background-position: right 15px center;
     background-size: 16px;
@@ -738,11 +741,11 @@ footer a:hover {
 }
 
 .estimate-display {
-    background-color: rgba(139, 115, 85, 0.1);
+    background-color: rgba(160, 119, 79, 0.08);
     padding: 25px;
     margin: 30px 0;
-    border-left: 6px solid var(--olive-bronze);
-    border-right: 6px solid var(--olive-bronze);
+    border-left: 6px solid var(--deep-walnut);
+    border-right: 6px solid var(--deep-walnut);
     text-align: center;
     position: relative;
     z-index: 2;
@@ -768,7 +771,7 @@ footer a:hover {
 }
 
 .estimate-note {
-    color: var(--olive-bronze);
+    color: var(--deep-walnut);
     font-style: italic;
     font-size: 14px;
     letter-spacing: 0.5px;
@@ -776,8 +779,8 @@ footer a:hover {
 
 .submit-btn {
     width: 100%;
-    background-color: var(--olive-bronze);
-    color: var(--cream-parchment);
+    background-color: var(--deep-walnut);
+    color: var(--cream-plaster);
     border: 3px solid var(--theme-accent);
     padding: 20px;
     font-size: 18px;
@@ -795,7 +798,7 @@ footer a:hover {
 .submit-btn:hover {
     background-color: var(--theme-accent);
     border-color: var(--theme-accent);
-    color: var(--cream-parchment);
+    color: var(--cream-plaster);
     letter-spacing: 3px;
 }
 
@@ -810,10 +813,8 @@ footer a:hover {
 /* Mobile Responsive */
 @media (max-width: 768px) {
     .container {
-        padding-bottom: 100px; /* Space for mobile navbar */
+        padding-bottom: 100px;
     }
-
-    /* Typography uses clamp() for fluid scaling - no overrides needed */
 
     .navigation {
         padding: 0 15px;
@@ -835,7 +836,6 @@ footer a:hover {
         justify-content: center;
     }
 
-    /* Modal Mobile Styles */
     .booking-modal {
         width: 95%;
         padding: 35px 25px;
@@ -960,7 +960,7 @@ footer a:hover {
 .drink-detail-illustration .drink-svg {
     width: 120px;
     height: 150px;
-    color: var(--rich-saffron);
+    color: var(--warm-oak);
 }
 
 .drink-detail-illustration .drink-image {
@@ -993,14 +993,14 @@ footer a:hover {
 
 .drink-detail-desc {
     font-size: 16px;
-    color: var(--charcoal-ink);
+    color: var(--charcoal-slate);
     line-height: 1.7;
     margin-bottom: 20px;
 }
 
 .drink-detail-extras {
     font-size: 14px;
-    color: var(--olive-bronze);
+    color: var(--deep-walnut);
     font-style: italic;
 }
 
@@ -1008,7 +1008,6 @@ footer a:hover {
     margin-bottom: 8px;
 }
 
-/* Hide scroll wrapper when detail view is active */
 .menu-scroll-wrapper.hidden {
     display: none;
 }
@@ -1096,24 +1095,24 @@ footer a:hover {
 }
 
 .menu-slider:hover {
-    border-color: var(--rich-saffron);
+    border-color: var(--warm-oak);
 }
 
-/* Slider thumb - Webkit (Chrome, Safari) */
+/* Slider thumb - Webkit */
 .menu-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 20px;
     height: 20px;
     background: var(--theme-accent);
-    border: 2px solid var(--rich-saffron);
+    border: 2px solid var(--warm-oak);
     cursor: pointer;
     transform: rotate(45deg);
     transition: all 0.3s ease;
 }
 
 .menu-slider::-webkit-slider-thumb:hover {
-    background: var(--rich-saffron);
+    background: var(--warm-oak);
     transform: rotate(45deg) scale(1.1);
 }
 
@@ -1122,7 +1121,7 @@ footer a:hover {
     width: 20px;
     height: 20px;
     background: var(--theme-accent);
-    border: 2px solid var(--rich-saffron);
+    border: 2px solid var(--warm-oak);
     border-radius: 0;
     cursor: pointer;
     transform: rotate(45deg);
@@ -1130,7 +1129,7 @@ footer a:hover {
 }
 
 .menu-slider::-moz-range-thumb:hover {
-    background: var(--rich-saffron);
+    background: var(--warm-oak);
 }
 
 /* Slider track - Firefox */
@@ -1163,7 +1162,7 @@ footer a:hover {
     bottom: 8px;
     left: 8px;
     border: 1px solid var(--theme-accent);
-    opacity: 0.3;
+    opacity: 0.25;
     pointer-events: none;
     transition: opacity 0.4s ease;
 }
@@ -1171,11 +1170,11 @@ footer a:hover {
 .drink-card:hover {
     background-color: var(--card-bg-hover);
     transform: translateY(-8px);
-    box-shadow: 0 12px 30px rgba(114, 47, 55, 0.25);
+    box-shadow: 0 12px 30px rgba(47, 82, 51, 0.25);
 }
 
 .drink-card:hover::before {
-    opacity: 0.5;
+    opacity: 0.4;
 }
 
 /* Selected state */
@@ -1183,13 +1182,13 @@ footer a:hover {
     background-color: var(--card-bg-hover);
     transform: translateY(-8px);
     box-shadow:
-        0 0 0 4px var(--drink-color, var(--dusty-rose)),
-        0 12px 30px rgba(114, 47, 55, 0.3);
+        0 0 0 4px var(--drink-color, var(--forest-green)),
+        0 12px 30px rgba(47, 82, 51, 0.3);
     border-width: 4px;
 }
 
 #menu .drink-card.selected::before {
-    opacity: 0.6;
+    opacity: 0.5;
 }
 
 /* Drink illustration */
@@ -1205,7 +1204,7 @@ footer a:hover {
 .drink-svg {
     width: 70px;
     height: 90px;
-    color: var(--drink-color, var(--dusty-rose));
+    color: var(--drink-color, var(--forest-green));
     transition: color 0.4s ease, transform 0.4s ease;
 }
 
@@ -1214,7 +1213,7 @@ footer a:hover {
     transform: scale(1.05);
 }
 
-/* Drink images (square cropped) */
+/* Drink images */
 .drink-image {
     width: 100px;
     height: 100px;
@@ -1245,12 +1244,12 @@ footer a:hover {
 
 .drink-card:hover .drink-name,
 #menu .drink-card.selected .drink-name {
-    color: var(--rich-saffron);
+    color: var(--warm-oak);
 }
 
 .drink-desc {
     font-size: 13px;
-    color: var(--olive-bronze);
+    color: var(--deep-walnut);
     line-height: 1.5;
     font-style: italic;
     letter-spacing: 0.3px;
@@ -1301,7 +1300,7 @@ footer a:hover {
 
 .scroll-text {
     font-size: 11px;
-    color: var(--olive-bronze);
+    color: var(--deep-walnut);
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: 600;
@@ -1400,7 +1399,7 @@ footer a:hover {
 .ticker-symbol {
     font-size: 64px;
     font-weight: bold;
-    color: var(--deep-teal);
+    color: var(--forest-green);
     font-family: 'Courier New', monospace;
 }
 
@@ -1419,7 +1418,7 @@ footer a:hover {
     justify-content: center;
     font-size: 48px;
     font-weight: bold;
-    color: var(--rich-saffron);
+    color: var(--warm-oak);
     font-family: 'Courier New', monospace;
     overflow: hidden;
 }
@@ -1433,7 +1432,7 @@ footer a:hover {
 
 .ticker-label {
     font-size: 18px;
-    color: var(--olive-bronze);
+    color: var(--deep-walnut);
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-top: 10px;
@@ -1524,7 +1523,7 @@ footer a:hover {
 }
 
 .slideshow-dots .dot.active {
-    background-color: var(--rich-saffron);
+    background-color: var(--warm-oak);
     transform: rotate(45deg) scale(1.2);
 }
 
@@ -1549,7 +1548,7 @@ footer a:hover {
 
 .theme-toggle:hover {
     background-color: var(--card-bg-hover);
-    border-color: var(--rich-saffron);
+    border-color: var(--warm-oak);
     transform: rotate(45deg) scale(1.1);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
@@ -1563,7 +1562,7 @@ footer a:hover {
 }
 
 .theme-toggle-icon.light {
-    color: var(--rich-saffron);
+    color: var(--warm-oak);
     opacity: 0;
     transform: rotate(-45deg) scale(0.5);
 }
@@ -1608,7 +1607,7 @@ footer a:hover {
     padding: 10px 16px;
     background-color: var(--card-bg);
     border: 2px solid var(--theme-accent);
-    color: var(--charcoal-ink);
+    color: var(--charcoal-slate);
     font-family: 'Satoshi', sans-serif;
     font-size: 13px;
     cursor: pointer;
@@ -1618,7 +1617,7 @@ footer a:hover {
 
 .particle-toggle:hover {
     opacity: 1;
-    border-color: var(--rich-saffron);
+    border-color: var(--warm-oak);
     transform: translateY(-2px);
 }
 
@@ -1655,7 +1654,7 @@ footer a:hover {
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    color: var(--charcoal-ink);
+    color: var(--charcoal-slate);
     padding: 8px 16px;
     transition: all 0.3s ease;
     min-width: 60px;
@@ -1668,7 +1667,7 @@ footer a:hover {
 
 .mobile-nav-icon {
     font-size: 32px;
-    color: var(--drink-nav-color, var(--dusty-rose));
+    color: var(--drink-nav-color, var(--forest-green));
     transition: color 0.3s ease;
 }
 
@@ -1676,7 +1675,7 @@ footer a:hover {
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.5px;
-    color: var(--charcoal-ink);
+    color: var(--charcoal-slate);
     font-family: 'Satoshi', sans-serif;
     transition: color 0.3s ease;
 }
@@ -1686,7 +1685,6 @@ footer a:hover {
         display: flex;
     }
 
-    /* Account for mobile navbar in scroll behavior */
     html {
         scroll-padding-bottom: 80px;
     }
@@ -1695,7 +1693,6 @@ footer a:hover {
         padding-bottom: 80px;
     }
 
-    /* Hide footer on mobile since we have navbar */
     footer {
         margin-bottom: 20px;
     }
@@ -1739,7 +1736,7 @@ footer a:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: var(--charcoal-ink);
+    color: var(--charcoal-slate);
     text-decoration: none;
     padding: 16px 20px;
     transition: all 0.3s ease;
@@ -1762,13 +1759,13 @@ footer a:hover {
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.5px;
-    color: var(--charcoal-ink);
+    color: var(--charcoal-slate);
     font-family: 'Satoshi', sans-serif;
     margin-top: 4px;
     transition: color 0.3s ease;
 }
 
-/* Desktop nav icons - mirrors mobile */
+/* Desktop nav icons */
 .nav-icon {
     font-size: 32px;
     transition: color 0.3s ease;
@@ -1846,7 +1843,7 @@ body {
 
 @media (min-width: 769px) {
     .pages-container {
-        padding-top: 70px; /* Account for fixed nav */
+        padding-top: 70px;
     }
 }
 
@@ -1858,7 +1855,6 @@ body {
     opacity: 1;
 }
 
-/* On mobile, let pages size to content (except landing) */
 @media (max-width: 768px) {
     .page {
         min-height: auto;
@@ -1868,7 +1864,6 @@ body {
         min-height: auto;
     }
 
-    /* Landing stays full height */
     #page-landing {
         min-height: 100vh;
     }
@@ -1894,7 +1889,6 @@ body {
 
 @media (min-width: 769px) {
     .landing-container {
-        /* Account for fixed nav */
         padding-top: 20px;
     }
 }
@@ -1914,12 +1908,11 @@ body {
     margin-top: -40px;
     margin-bottom: 40px;
     animation: fadeInUp 1s ease 0.4s both;
-    
 }
 
 .landing-intro {
     font-size: 18px;
-    color: var(--olive-bronze);
+    color: var(--deep-walnut);
     line-height: 1.8;
     max-width: 400px;
     margin: 0 auto;
@@ -1972,7 +1965,7 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    color: var(--olive-bronze);
+    color: var(--deep-walnut);
     opacity: 0.6;
     animation: fadeInUp 1s ease 1.2s both, bounce 2s ease-in-out 2s infinite;
     cursor: pointer;
@@ -2008,7 +2001,7 @@ body {
 
 @media (max-width: 768px) {
     .scroll-hint {
-        bottom: 100px; /* Above mobile navbar */
+        bottom: 100px;
     }
 }
 
@@ -2020,7 +2013,7 @@ body {
     display: flex;
     align-items: center;
     gap: 15px;
-    color: var(--olive-bronze);
+    color: var(--deep-walnut);
     font-size: 12px;
     letter-spacing: 2px;
     opacity: 0.6;
@@ -2051,7 +2044,7 @@ body {
 /* ========== SUBSCRIPTION PAGE ========== */
 .section-intro {
     text-align: center;
-    color: var(--olive-bronze);
+    color: var(--deep-walnut);
     font-size: clamp(15px, 2.5vw, 18px);
     max-width: 600px;
     margin: 0 auto clamp(20px, 4vw, 40px);
@@ -2072,7 +2065,7 @@ body {
     text-align: center;
     position: relative;
     transition: all 0.4s ease;
-    box-shadow: 0 2px 12px rgba(60, 60, 60, 0.06);
+    box-shadow: 0 2px 12px rgba(58, 58, 58, 0.06);
 }
 
 .subscription-card::before {
@@ -2083,7 +2076,7 @@ body {
     bottom: 10px;
     left: 10px;
     border: 1px solid var(--theme-accent);
-    opacity: 0.3;
+    opacity: 0.25;
     pointer-events: none;
 }
 
@@ -2101,8 +2094,8 @@ body {
     top: -12px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: var(--rich-saffron);
-    color: var(--cream-parchment);
+    background-color: var(--warm-oak);
+    color: var(--cream-plaster);
     padding: 4px 16px;
     font-size: 11px;
     font-weight: 600;
@@ -2120,14 +2113,14 @@ body {
 .sub-price {
     font-size: clamp(36px, 6vw, 48px);
     font-weight: 700;
-    color: var(--charcoal-ink);
+    color: var(--charcoal-slate);
     margin-bottom: clamp(15px, 3vw, 25px);
 }
 
 .sub-price span {
     font-size: 16px;
     font-weight: 400;
-    color: var(--olive-bronze);
+    color: var(--deep-walnut);
 }
 
 .sub-perks {
@@ -2139,7 +2132,7 @@ body {
 .sub-perks li {
     padding: clamp(6px, 1vw, 10px) 0;
     border-bottom: 1px solid var(--theme-accent);
-    color: var(--charcoal-ink);
+    color: var(--charcoal-slate);
     font-size: clamp(13px, 2vw, 14px);
 }
 
@@ -2182,8 +2175,8 @@ body {
 }
 
 .sub-btn.primary:hover {
-    background-color: var(--rich-saffron);
-    border-color: var(--rich-saffron);
+    background-color: var(--warm-oak);
+    border-color: var(--warm-oak);
 }
 
 .sub-btn-group {
@@ -2225,12 +2218,11 @@ body {
 }
 
 .perk-item p {
-    color: var(--olive-bronze);
+    color: var(--deep-walnut);
     line-height: 1.6;
     font-size: 14px;
 }
 
-/* Subscribe page social links */
 .subscribe-links {
     display: flex;
     justify-content: center;
@@ -2241,7 +2233,7 @@ body {
 }
 
 .subscribe-links a {
-    color: var(--olive-bronze);
+    color: var(--deep-walnut);
     text-decoration: none;
     font-size: 13px;
     letter-spacing: 1px;
@@ -2254,19 +2246,16 @@ body {
 
 /* ========== PARTNERSHIPS PAGE ========== */
 
-/* Content box needs relative positioning and overflow visible for info card */
 #page-partnerships .content {
     position: relative;
     overflow: visible;
 }
 
-/* Layout container */
 .partnership-layout {
     display: flex;
     justify-content: center;
 }
 
-/* Form container */
 .partnership-form-container {
     background-color: var(--card-bg);
     border: 3px solid var(--theme-accent);
@@ -2275,7 +2264,7 @@ body {
     z-index: 2;
     width: 100%;
     max-width: 550px;
-    box-shadow: 0 2px 12px rgba(60, 60, 60, 0.06);
+    box-shadow: 0 2px 12px rgba(58, 58, 58, 0.06);
 }
 
 .partnership-form .form-group {
@@ -2286,7 +2275,6 @@ body {
     min-height: 150px;
 }
 
-/* Category button row */
 .category-buttons {
     display: flex;
     flex-wrap: wrap;
@@ -2298,8 +2286,8 @@ body {
     min-width: 70px;
     padding: 12px 16px;
     background: transparent;
-    border: 2px solid var(--olive-bronze);
-    color: var(--charcoal-ink);
+    border: 2px solid var(--deep-walnut);
+    color: var(--charcoal-slate);
     font-family: 'Satoshi', sans-serif;
     font-size: 14px;
     cursor: pointer;
@@ -2307,17 +2295,16 @@ body {
 }
 
 .category-btn:hover {
-    background: var(--olive-bronze);
-    color: var(--cream-parchment);
+    background: var(--deep-walnut);
+    color: var(--cream-plaster);
 }
 
 .category-btn.active {
     background: var(--theme-accent);
     border-color: var(--theme-accent);
-    color: var(--cream-parchment);
+    color: var(--cream-plaster);
 }
 
-/* Diamond toggle button - on right edge of form container */
 .info-card-toggle {
     position: absolute;
     top: 50%;
@@ -2325,7 +2312,7 @@ body {
     transform: translateY(-50%) rotate(45deg);
     width: 36px;
     height: 36px;
-    background-color: var(--olive-bronze);
+    background-color: var(--deep-walnut);
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -2342,7 +2329,7 @@ body {
 
 .info-card-toggle::after {
     content: '→';
-    color: var(--cream-parchment);
+    color: var(--cream-plaster);
     font-size: 16px;
     transform: rotate(-45deg);
     transition: transform 0.3s ease;
@@ -2352,7 +2339,6 @@ body {
     transform: rotate(-45deg) scaleX(-1);
 }
 
-/* Category-specific fields (hidden by default) */
 .category-fields {
     display: none;
 }
@@ -2361,12 +2347,10 @@ body {
     display: block;
 }
 
-/* Bottom sheet backdrop - hidden on desktop */
 .bottom-sheet-backdrop {
     display: none;
 }
 
-/* Info card - slides out from underneath content box */
 .partnership-info-container {
     position: absolute;
     top: 60px;
@@ -2387,10 +2371,10 @@ body {
 
 .partnership-info-card {
     background-color: var(--card-bg);
-    border: 3px solid var(--olive-bronze);
+    border: 3px solid var(--deep-walnut);
     padding: 30px 25px;
     position: relative;
-    box-shadow: 0 2px 12px rgba(60, 60, 60, 0.06);
+    box-shadow: 0 2px 12px rgba(58, 58, 58, 0.06);
 }
 
 .partnership-info-card::before {
@@ -2400,8 +2384,8 @@ body {
     right: 10px;
     bottom: 10px;
     left: 10px;
-    border: 1px solid var(--olive-bronze);
-    opacity: 0.3;
+    border: 1px solid var(--deep-walnut);
+    opacity: 0.25;
     pointer-events: none;
 }
 
@@ -2418,7 +2402,7 @@ body {
 }
 
 .info-card-content p {
-    color: var(--charcoal-ink);
+    color: var(--charcoal-slate);
     line-height: 1.7;
     margin-bottom: 20px;
 }
@@ -2441,7 +2425,7 @@ body {
 
 .info-card-content li {
     padding: 6px 0;
-    color: var(--olive-bronze);
+    color: var(--deep-walnut);
     font-size: 14px;
 }
 
@@ -2453,14 +2437,14 @@ body {
 .info-note {
     font-size: 13px;
     font-style: italic;
-    color: var(--olive-bronze);
+    color: var(--deep-walnut);
     opacity: 0.9;
 }
 
 .info-tag {
     display: inline-block;
     background-color: var(--theme-accent);
-    color: var(--cream-parchment);
+    color: var(--cream-plaster);
     font-size: 10px;
     padding: 2px 8px;
     margin-left: 8px;
@@ -2468,10 +2452,9 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* Investor tier display */
 .investor-tier {
-    background-color: var(--cream-parchment);
-    border: 2px solid var(--rich-saffron);
+    background-color: var(--cream-plaster);
+    border: 2px solid var(--warm-oak);
     padding: 20px;
     text-align: center;
     margin: 20px 0;
@@ -2480,24 +2463,23 @@ body {
 .tier-amount {
     font-family: 'BluuNext', serif;
     font-size: 36px;
-    color: var(--rich-saffron);
+    color: var(--warm-oak);
     margin-bottom: 5px;
 }
 
 .tier-equity {
     font-size: 14px;
-    color: var(--charcoal-ink);
+    color: var(--charcoal-slate);
     margin-bottom: 5px;
 }
 
 .tier-label {
     font-size: 12px;
-    color: var(--olive-bronze);
+    color: var(--deep-walnut);
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-/* Tablet/Mobile - info card as bottom sheet */
 @media (max-width: 1100px) {
     .partnership-form-container {
         max-width: 100%;
@@ -2508,7 +2490,6 @@ body {
         align-items: center;
     }
 
-    /* Bottom sheet backdrop */
     .bottom-sheet-backdrop {
         display: block;
         position: fixed;
@@ -2528,7 +2509,6 @@ body {
         visibility: visible;
     }
 
-    /* Bottom sheet container */
     .partnership-info-container {
         position: fixed;
         bottom: 0;
@@ -2552,15 +2532,14 @@ body {
     }
 
     .partnership-info-card {
-        background-color: var(--cream-parchment);
-        border: 3px solid var(--olive-bronze);
+        background-color: var(--cream-plaster);
+        border: 3px solid var(--deep-walnut);
         border-bottom: none;
         padding: 25px 25px 40px;
         max-height: 85vh;
         overflow-y: auto;
     }
 
-    /* Toggle button - below form */
     .info-card-toggle {
         position: relative;
         top: auto;
@@ -2613,7 +2592,7 @@ body {
 
 .partners-note {
     text-align: center;
-    color: var(--olive-bronze);
+    color: var(--deep-walnut);
     margin-bottom: 30px;
 }
 
@@ -2623,8 +2602,9 @@ body {
     gap: 30px;
     flex-wrap: wrap;
 }
+
 .partners-logos > *:last-child {
-        opacity: 0.25;
+    opacity: 0.25;
 }
 
 .partner-logo-placeholder {
@@ -2634,7 +2614,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--olive-bronze);
+    color: var(--deep-walnut);
     font-size: 12px;
     font-style: italic;
     opacity: 0.6;
@@ -2655,9 +2635,9 @@ body {
 }
 
 .partner-logo:hover {
-    border-color: var(--rich-saffron);
+    border-color: var(--warm-oak);
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(114, 47, 55, 0.15);
+    box-shadow: 0 6px 20px rgba(47, 82, 51, 0.15);
 }
 
 .partner-logo img {
@@ -2668,7 +2648,7 @@ body {
 
 /* ========== BUTTERCUP DESTINY PAGE ========== */
 .buttercup-logo {
-    color: var(--rich-saffron) !important;
+    color: var(--warm-oak) !important;
 }
 
 .buttercup-hero {
@@ -2691,14 +2671,14 @@ body {
 }
 
 .buttercup-title {
-    color: var(--rich-saffron) !important;
+    color: var(--warm-oak) !important;
 }
 
 .buttercup-description {
     max-width: 600px;
     margin: 0 auto;
     font-size: 18px;
-    color: var(--olive-bronze);
+    color: var(--deep-walnut);
     line-height: 1.8;
 }
 
@@ -2717,7 +2697,7 @@ body {
 .concept-number {
     font-family: 'BluuNext', serif;
     font-size: 48px;
-    color: var(--rich-saffron);
+    color: var(--warm-oak);
     opacity: 0.3;
     margin-bottom: 15px;
 }
@@ -2725,12 +2705,12 @@ body {
 .concept-item h3 {
     font-family: 'BluuNext', serif;
     font-size: 24px;
-    color: var(--rich-saffron);
+    color: var(--warm-oak);
     margin-bottom: 15px;
 }
 
 .concept-item p {
-    color: var(--olive-bronze);
+    color: var(--deep-walnut);
     line-height: 1.7;
 }
 
@@ -2752,7 +2732,6 @@ body {
     padding: 16px 30px;
 }
 
-/* Mobile nav icon sizing for consistency */
 .mobile-nav-icon {
     display: flex;
     align-items: center;
@@ -2761,10 +2740,9 @@ body {
     height: 32px;
 }
 
-/* CSS-drawn icons for consistency */
 .mobile-nav-icon.icon-dash,
 .mobile-nav-icon.icon-equal {
-    font-size: 0; /* Hide any text character */
+    font-size: 0;
 }
 
 .mobile-nav-icon.icon-dash::before {
@@ -2789,7 +2767,6 @@ body {
     transition: background-color 0.4s ease, box-shadow 0.4s ease;
 }
 
-/* Mobile nav icon colors */
 .mobile-nav-icon.icon-diamond {
     color: var(--drink-nav-color-3);
     width: 24px;
@@ -2812,13 +2789,11 @@ body {
     transition: color 0.4s ease;
 }
 
-/* Mobile nav active state */
 .mobile-nav-item.active {
     background-color: var(--card-bg);
     border-radius: 0;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .landing-container {
         height: calc(100vh - 70px);
@@ -2910,7 +2885,6 @@ body {
     opacity: 1;
 }
 
-/* Make detail images clickable */
 .drink-detail-illustration .drink-image {
     cursor: zoom-in;
 }
@@ -2943,8 +2917,8 @@ body {
     max-width: 520px;
     width: 90%;
     padding: 50px 45px 45px;
-    border-left: 8px solid var(--dusty-rose);
-    border-right: 8px solid var(--dusty-rose);
+    border-left: 8px solid var(--sage-green);
+    border-right: 8px solid var(--sage-green);
     position: relative;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
     text-align: center;
@@ -2956,7 +2930,6 @@ body {
     transform: scale(1);
 }
 
-/* Ancient pattern overlay */
 .welcome-modal::after {
     content: '';
     position: absolute;
@@ -2964,10 +2937,10 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    opacity: 0.02;
+    opacity: 0.015;
     background-image:
-        repeating-linear-gradient(45deg, var(--dusty-rose) 0px, var(--dusty-rose) 1px, transparent 1px, transparent 15px),
-        repeating-linear-gradient(-45deg, var(--rich-saffron) 0px, var(--rich-saffron) 1px, transparent 1px, transparent 15px);
+        repeating-linear-gradient(45deg, var(--forest-green) 0px, var(--forest-green) 1px, transparent 1px, transparent 15px),
+        repeating-linear-gradient(-45deg, var(--warm-oak) 0px, var(--warm-oak) 1px, transparent 1px, transparent 15px);
     pointer-events: none;
     z-index: 0;
 }
@@ -2979,7 +2952,7 @@ body {
     background: none;
     border: none;
     font-size: 32px;
-    color: var(--olive-bronze);
+    color: var(--deep-walnut);
     cursor: pointer;
     z-index: 10;
     width: 40px;
@@ -2992,7 +2965,7 @@ body {
 }
 
 .welcome-close:hover {
-    color: var(--dusty-rose);
+    color: var(--sage-green);
     transform: scale(1.1) rotate(90deg);
 }
 
@@ -3034,7 +3007,7 @@ body {
     font-size: 38px;
     font-weight: 700;
     letter-spacing: 3px;
-    color: var(--dusty-rose);
+    color: var(--sage-green);
     margin-bottom: 8px;
     position: relative;
     z-index: 1;
@@ -3042,7 +3015,7 @@ body {
 
 .welcome-subtitle {
     font-size: 16px;
-    color: var(--olive-bronze);
+    color: var(--deep-walnut);
     letter-spacing: 2px;
     margin-bottom: 25px;
     position: relative;
