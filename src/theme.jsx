@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 
 /* ───────── palette & tokens ───────── */
 export const C = {
@@ -76,6 +76,58 @@ export const CraftDivider = ({ color = C.gold }) => (
   </svg>
 );
 
+/* ───────── reusable modal ───────── */
+export const Modal = ({ open, onClose, children, maxWidth = 440 }) => {
+  useEffect(() => {
+    if (!open) return;
+    const handleKey = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [open, onClose]);
+
+  if (!open) return null;
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-box" style={{ maxWidth }} onClick={(e) => e.stopPropagation()}>
+        <button onClick={onClose} style={{
+          position: "absolute", top: 12, right: 16, background: "none", border: "none",
+          fontSize: 22, cursor: "pointer", color: C.brownLight, fontFamily: "serif",
+        }}>×</button>
+        {children}
+      </div>
+    </div>
+  );
+};
+
+/* ───────── skeleton loading block ───────── */
+export const SkeletonBlock = ({ width = "100%", height = 18, style = {} }) => (
+  <div style={{
+    width, height, borderRadius: 4, background: C.parchmentDark,
+    animation: "shimmer 1.5s ease-in-out infinite",
+    ...style,
+  }} />
+);
+
+/* ───────── toast notification ───────── */
+export const Toast = ({ message, type = "success", visible }) => {
+  if (!visible) return null;
+  const bg = type === "error" ? C.rust : C.forest;
+  return (
+    <div style={{
+      position: "fixed", bottom: 90, left: "50%", transform: "translateX(-50%)",
+      background: bg, color: C.warmWhite, padding: "12px 24px", borderRadius: 8,
+      fontFamily: "'Playfair Display', serif", fontSize: 14, fontWeight: 600,
+      zIndex: 200, boxShadow: "0 4px 16px rgba(44,36,24,0.3)",
+      animation: "fadeUp 0.3s ease-out",
+    }}>
+      {message}
+    </div>
+  );
+};
+
 /* ───────── nav icons (hand-drawn style) ───────── */
 export const NavIcons = {
   home: (
@@ -150,6 +202,13 @@ export const PinNote = ({ note, style = {} }) => {
     >
       {/* tack */}
       <div style={{ position: "absolute", top: -6, left: "50%", marginLeft: -7, width: 14, height: 14, borderRadius: "50%", background: tack.current, boxShadow: `0 2px 4px rgba(0,0,0,0.3), inset 0 -2px 3px rgba(0,0,0,0.2)`, zIndex: 2 }} />
+      {note.imageUrl && (
+        <img
+          src={note.imageUrl}
+          alt=""
+          style={{ width: "100%", borderRadius: 2, marginBottom: 8, maxHeight: 120, objectFit: "cover" }}
+        />
+      )}
       <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 4, color: C.inkLight }}>{note.author || note.authorName}</div>
       <div>{note.text}</div>
       {note.date && <div style={{ fontSize: 12, color: C.brownLight, marginTop: 6, textAlign: "right" }}>{note.date}</div>}

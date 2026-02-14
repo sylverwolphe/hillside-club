@@ -6,9 +6,10 @@ import { db } from "./firebase";
  * Real-time Firestore collection listener.
  * @param {string} path - Collection path (e.g. "forumThreads" or "groups/abc/messages")
  * @param {Array} queryConstraints - Additional Firestore query constraints (orderBy, where, limit, etc.)
+ * @param {string} [depsKey] - Optional key that triggers re-subscription when changed (for dynamic queries)
  * @returns {{ docs: Array, loading: boolean, error: Error|null }}
  */
-export function useCollection(path, queryConstraints = []) {
+export function useCollection(path, queryConstraints = [], depsKey = "") {
   const [docs, setDocs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -20,6 +21,7 @@ export function useCollection(path, queryConstraints = []) {
       return;
     }
 
+    setLoading(true);
     const q = query(collection(db, ...path.split("/")), ...queryConstraints);
     const unsub = onSnapshot(
       q,
@@ -34,9 +36,8 @@ export function useCollection(path, queryConstraints = []) {
       }
     );
     return unsub;
-    // Serialize constraints for dep comparison by using path as key
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [path]);
+  }, [path, depsKey]);
 
   return { docs, loading, error };
 }

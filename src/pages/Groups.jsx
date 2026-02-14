@@ -3,33 +3,21 @@ import { Link } from "react-router-dom";
 import { collection, addDoc, serverTimestamp, orderBy } from "firebase/firestore";
 import { db } from "../firebase";
 import { useAuth } from "../AuthContext";
+import { useToast } from "../App";
 import { useCollection } from "../useFirestore";
-import { C, HandDrawnBox, CraftDivider } from "../theme";
+import { C, HandDrawnBox, CraftDivider, Modal, SkeletonBlock } from "../theme";
 
 const GROUP_ICONS = ["🌿", "🎨", "📚", "🏡", "🎶", "🍂", "✨", "🪴", "🧵", "🕯️"];
 
 export default function Groups() {
   const { user, setShowAuthModal } = useAuth();
+  const showToast = useToast();
   const { docs: groups, loading } = useCollection("groups", [orderBy("createdAt", "desc")]);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [icon, setIcon] = useState("🌿");
   const [submitting, setSubmitting] = useState(false);
-
-  if (!user) {
-    return (
-      <div style={{ padding: "60px 20px", maxWidth: 600, margin: "0 auto", textAlign: "center" }}>
-        <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 28, color: C.brown, marginBottom: 12 }}>
-          Community Groups
-        </h2>
-        <p style={{ color: C.inkLight, marginBottom: 24 }}>Sign in to explore and join groups</p>
-        <button className="craft-btn-primary" style={{ border: "none", cursor: "pointer" }} onClick={() => setShowAuthModal(true)}>
-          Sign In to Access
-        </button>
-      </div>
-    );
-  }
 
   const handleCreate = async () => {
     if (!name.trim()) return;
@@ -54,8 +42,10 @@ export default function Groups() {
       setDescription("");
       setIcon("🌿");
       setShowCreateModal(false);
+      showToast?.("Group created!");
     } catch (err) {
       console.error("Failed to create group:", err);
+      showToast?.("Failed to create group", "error");
     }
     setSubmitting(false);
   };
@@ -73,13 +63,24 @@ export default function Groups() {
       </div>
 
       <div style={{ textAlign: "right", marginBottom: 20 }}>
-        <button className="craft-btn" onClick={() => setShowCreateModal(true)}>
+        <button
+          className="craft-btn"
+          onClick={() => user ? setShowCreateModal(true) : setShowAuthModal(true)}
+        >
           + Create Group
         </button>
       </div>
 
       {loading ? (
-        <p style={{ textAlign: "center", color: C.brownLight, fontStyle: "italic" }}>Loading groups...</p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 16 }}>
+          {[1, 2, 3].map((i) => (
+            <HandDrawnBox key={i} fill={C.warmWhite} style={{ padding: "24px 20px", borderRadius: 6, textAlign: "center", minHeight: 140 }}>
+              <SkeletonBlock width={36} height={36} style={{ margin: "0 auto 10px", borderRadius: "50%" }} />
+              <SkeletonBlock width="70%" height={18} style={{ margin: "0 auto 8px" }} />
+              <SkeletonBlock width="50%" height={12} style={{ margin: "0 auto" }} />
+            </HandDrawnBox>
+          ))}
+        </div>
       ) : groups.length === 0 ? (
         <HandDrawnBox fill={C.warmWhite} style={{ padding: 32, textAlign: "center" }}>
           <p style={{ fontFamily: "'Caveat', cursive", fontSize: 20, color: C.brownLight }}>
@@ -116,61 +117,69 @@ export default function Groups() {
         </div>
       )}
 
-      {/* Create Group Modal */}
-      {showCreateModal && (
-        <div className="modal-overlay" onClick={() => setShowCreateModal(false)}>
-          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-            <button onClick={() => setShowCreateModal(false)} style={{
-              position: "absolute", top: 12, right: 16, background: "none", border: "none",
-              fontSize: 22, cursor: "pointer", color: C.brownLight, fontFamily: "serif",
-            }}>×</button>
-            <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, color: C.brown, marginBottom: 20 }}>
-              Create a Group
-            </h3>
-            <div style={{ marginBottom: 14 }}>
-              <label style={{ fontSize: 13, color: C.inkLight, fontWeight: 600, display: "block", marginBottom: 4 }}>Group Icon</label>
-              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                {GROUP_ICONS.map((g) => (
-                  <button
-                    key={g}
-                    onClick={() => setIcon(g)}
-                    style={{
-                      fontSize: 24, padding: "4px 8px", background: icon === g ? C.forestPale : "transparent",
-                      border: `2px solid ${icon === g ? C.forest : C.parchmentDark}`, borderRadius: 6, cursor: "pointer",
-                    }}
-                  >{g}</button>
-                ))}
-              </div>
-            </div>
-            <div style={{ marginBottom: 14 }}>
-              <label style={{ fontSize: 13, color: C.inkLight, fontWeight: 600, display: "block", marginBottom: 4 }}>Group Name</label>
-              <input
-                placeholder="e.g. Garden Enthusiasts"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
-            <div style={{ marginBottom: 20 }}>
-              <label style={{ fontSize: 13, color: C.inkLight, fontWeight: 600, display: "block", marginBottom: 4 }}>Description</label>
-              <textarea
-                rows="3"
-                placeholder="What's this group about?"
-                style={{ resize: "vertical" }}
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </div>
-            <button
-              className="craft-btn-primary"
-              style={{ width: "100%", cursor: "pointer", border: "none", opacity: submitting || !name.trim() ? 0.6 : 1 }}
-              onClick={handleCreate}
-              disabled={submitting || !name.trim()}
-            >
-              {submitting ? "Creating..." : "Create Group"}
-            </button>
-          </div>
+      {/* Sign-in prompt for logged-out users */}
+      {!user && !loading && (
+        <div style={{ textAlign: "center", marginTop: 24, padding: "16px", background: C.forestPale, borderRadius: 6 }}>
+          <p style={{ fontFamily: "'Caveat', cursive", fontSize: 18, color: C.forest, marginBottom: 8 }}>
+            Want to create or join a group?
+          </p>
+          <button
+            className="craft-btn-primary"
+            style={{ border: "none", cursor: "pointer", fontSize: 14, padding: "8px 20px" }}
+            onClick={() => setShowAuthModal(true)}
+          >
+            Sign In
+          </button>
         </div>
       )}
+
+      {/* Create Group Modal */}
+      <Modal open={showCreateModal} onClose={() => setShowCreateModal(false)}>
+        <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, color: C.brown, marginBottom: 20 }}>
+          Create a Group
+        </h3>
+        <div style={{ marginBottom: 14 }}>
+          <label style={{ fontSize: 13, color: C.inkLight, fontWeight: 600, display: "block", marginBottom: 4 }}>Group Icon</label>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {GROUP_ICONS.map((g) => (
+              <button
+                key={g}
+                onClick={() => setIcon(g)}
+                style={{
+                  fontSize: 24, padding: "4px 8px", background: icon === g ? C.forestPale : "transparent",
+                  border: `2px solid ${icon === g ? C.forest : C.parchmentDark}`, borderRadius: 6, cursor: "pointer",
+                }}
+              >{g}</button>
+            ))}
+          </div>
+        </div>
+        <div style={{ marginBottom: 14 }}>
+          <label style={{ fontSize: 13, color: C.inkLight, fontWeight: 600, display: "block", marginBottom: 4 }}>Group Name</label>
+          <input
+            placeholder="e.g. Garden Enthusiasts"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+        <div style={{ marginBottom: 20 }}>
+          <label style={{ fontSize: 13, color: C.inkLight, fontWeight: 600, display: "block", marginBottom: 4 }}>Description</label>
+          <textarea
+            rows="3"
+            placeholder="What's this group about?"
+            style={{ resize: "vertical" }}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
+        <button
+          className="craft-btn-primary"
+          style={{ width: "100%", cursor: "pointer", border: "none", opacity: submitting || !name.trim() ? 0.6 : 1 }}
+          onClick={handleCreate}
+          disabled={submitting || !name.trim()}
+        >
+          {submitting ? "Creating..." : "Create Group"}
+        </button>
+      </Modal>
     </div>
   );
 }

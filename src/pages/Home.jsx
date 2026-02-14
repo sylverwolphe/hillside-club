@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { collection, addDoc, serverTimestamp, orderBy, query, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
 import { useAuth } from "../AuthContext";
+import { useToast } from "../App";
 import {
   C, HandDrawnBox, CraftDivider, ClubIllustration,
-  PinNote, CalendarEvent, LockedCard,
+  PinNote, CalendarEvent, LockedCard, Modal,
 } from "../theme";
 
 const SEED_PINS = [
@@ -31,10 +32,19 @@ const EVENTS = [
 export default function Home() {
   const { user, setShowAuthModal } = useAuth();
   const navigate = useNavigate();
+  const showToast = useToast();
   const [showPinModal, setShowPinModal] = useState(false);
   const [showEventModal, setShowEventModal] = useState(false);
   const [pinText, setPinText] = useState("");
+  const [pinImageUrl, setPinImageUrl] = useState("");
   const [submittingPin, setSubmittingPin] = useState(false);
+
+  // Event proposal form state
+  const [eventTitle, setEventTitle] = useState("");
+  const [eventDate, setEventDate] = useState("");
+  const [eventTime, setEventTime] = useState("");
+  const [eventDesc, setEventDesc] = useState("");
+  const [submittingEvent, setSubmittingEvent] = useState(false);
 
   // Live pins from Firestore, falling back to seeds
   const [pins, setPins] = useState(SEED_PINS);
@@ -48,7 +58,7 @@ export default function Home() {
           const data = d.data();
           const ts = data.createdAt?.toDate?.();
           const dateStr = ts ? ts.toLocaleDateString("en-US", { month: "short", day: "numeric" }) : "";
-          return { id: d.id, author: data.authorName, text: data.text, date: dateStr };
+          return { id: d.id, author: data.authorName, text: data.text, date: dateStr, imageUrl: data.imageUrl || null };
         }));
         setPinsLive(true);
       }
@@ -60,18 +70,52 @@ export default function Home() {
     if (!user || !pinText.trim()) return;
     setSubmittingPin(true);
     try {
-      await addDoc(collection(db, "pins"), {
+      const pinData = {
         authorId: user.uid,
         authorName: user.displayName || user.email?.split("@")[0] || "Member",
         text: pinText.trim(),
         createdAt: serverTimestamp(),
-      });
+      };
+      if (pinImageUrl.trim()) {
+        pinData.imageUrl = pinImageUrl.trim();
+      }
+      await addDoc(collection(db, "pins"), pinData);
       setPinText("");
+      setPinImageUrl("");
       setShowPinModal(false);
+      showToast?.("Pin added!");
     } catch (err) {
       console.error("Failed to add pin:", err);
+      showToast?.("Failed to add pin", "error");
     }
     setSubmittingPin(false);
+  };
+
+  const handleProposeEvent = async () => {
+    if (!user || !eventTitle.trim()) return;
+    setSubmittingEvent(true);
+    try {
+      await addDoc(collection(db, "eventProposals"), {
+        title: eventTitle.trim(),
+        date: eventDate,
+        time: eventTime,
+        description: eventDesc.trim(),
+        proposedBy: user.uid,
+        proposerName: user.displayName || user.email?.split("@")[0] || "Member",
+        status: "pending",
+        createdAt: serverTimestamp(),
+      });
+      setEventTitle("");
+      setEventDate("");
+      setEventTime("");
+      setEventDesc("");
+      setShowEventModal(false);
+      showToast?.("Event proposal submitted!");
+    } catch (err) {
+      console.error("Failed to propose event:", err);
+      showToast?.("Failed to submit proposal", "error");
+    }
+    setSubmittingEvent(false);
   };
 
   // Section refs for scroll tracking (used by parent nav)
@@ -83,7 +127,6 @@ export default function Home() {
     members: useRef(null),
   };
 
-  // Expose scroll targets via data attributes for the bottom nav
   return (
     <div>
       {/* HERO */}
@@ -221,11 +264,11 @@ export default function Home() {
         </HandDrawnBox>
 
         <div style={{ textAlign: "center", marginTop: 24 }}>
-          <button className="craft-btn" onClick={() => setShowEventModal(true)}>
+          <button className="craft-btn" onClick={() => user ? setShowEventModal(true) : setShowAuthModal(true)}>
             ✦ Propose an Event
           </button>
           <p style={{ fontSize: 13, color: C.brownLight, marginTop: 8, fontStyle: "italic" }}>
-            Established members may propose new events for the calendar
+            {user ? "Submit a proposal for the events calendar" : "Sign in to propose events"}
           </p>
         </div>
       </section>
@@ -234,71 +277,66 @@ export default function Home() {
       <section id="members" ref={sectionRefs.members} style={{ padding: "48px 20px", maxWidth: 880, margin: "0 auto" }} className="section">
         <div style={{ textAlign: "center", marginBottom: 28 }}>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 30, fontWeight: 700, color: C.brown }}>
-            Members Only
+            Community Spaces
           </h2>
           <p style={{ fontFamily: "'Caveat', cursive", fontSize: 18, color: C.terracotta, marginTop: 4 }}>
-            {user ? "explore your member spaces" : "a few more rooms to explore, once you're in"}
+            {user ? "explore your member spaces" : "browse our community spaces"}
           </p>
         </div>
         <div className="locked-grid">
-          {user ? (
-            <>
-              <div
-                onClick={() => navigate("/groups")}
-                style={{
-                  padding: "32px 24px", background: C.forestPale, borderRadius: 6,
-                  border: `2px solid ${C.sage}`, textAlign: "center", cursor: "pointer",
-                  transition: "transform 0.2s ease", minHeight: 160,
-                  display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-                }}
-                onMouseEnter={e => e.currentTarget.style.transform = "translateY(-3px)"}
-                onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}
-              >
-                <div style={{ fontSize: 32, marginBottom: 8 }}>🏡</div>
-                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 700, color: C.forest }}>Groups</div>
-                <div style={{ fontSize: 14, color: C.inkLight, marginTop: 4 }}>Find your people in interest-based circles</div>
-              </div>
-              <div
-                onClick={() => navigate("/forum")}
-                style={{
-                  padding: "32px 24px", background: C.forestPale, borderRadius: 6,
-                  border: `2px solid ${C.sage}`, textAlign: "center", cursor: "pointer",
-                  transition: "transform 0.2s ease", minHeight: 160,
-                  display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-                }}
-                onMouseEnter={e => e.currentTarget.style.transform = "translateY(-3px)"}
-                onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}
-              >
-                <div style={{ fontSize: 32, marginBottom: 8 }}>💬</div>
-                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 700, color: C.forest }}>Forum</div>
-                <div style={{ fontSize: 14, color: C.inkLight, marginTop: 4 }}>Ongoing conversations & member discussions</div>
-              </div>
-              <div
-                style={{
-                  padding: "32px 24px", background: C.cream, borderRadius: 6,
-                  border: `2px solid ${C.parchmentDark}`, textAlign: "center", minHeight: 160,
-                  display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-                  opacity: 0.7,
-                }}
-              >
-                <div style={{ fontSize: 32, marginBottom: 8 }}>📖</div>
-                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 700, color: C.ink }}>Yearbook</div>
-                <div style={{ fontSize: 14, color: C.inkLight, marginTop: 4 }}>Coming soon</div>
-              </div>
-            </>
-          ) : (
-            <>
-              <LockedCard title="Groups" icon="🏡" desc="Find your people in interest-based circles" />
-              <LockedCard title="Forum" icon="💬" desc="Ongoing conversations & member discussions" />
-              <LockedCard title="Yearbook" icon="📖" desc="Faces, memories & milestones through the years" />
-            </>
-          )}
+          {/* Groups — always clickable */}
+          <div
+            onClick={() => navigate("/groups")}
+            style={{
+              padding: "32px 24px", background: C.forestPale, borderRadius: 6,
+              border: `2px solid ${C.sage}`, textAlign: "center", cursor: "pointer",
+              transition: "transform 0.2s ease", minHeight: 160,
+              display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+            }}
+            onMouseEnter={e => e.currentTarget.style.transform = "translateY(-3px)"}
+            onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}
+          >
+            <div style={{ fontSize: 32, marginBottom: 8 }}>🏡</div>
+            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 700, color: C.forest }}>Groups</div>
+            <div style={{ fontSize: 14, color: C.inkLight, marginTop: 4 }}>Find your people in interest-based circles</div>
+          </div>
+
+          {/* Forum — always clickable */}
+          <div
+            onClick={() => navigate("/forum")}
+            style={{
+              padding: "32px 24px", background: C.forestPale, borderRadius: 6,
+              border: `2px solid ${C.sage}`, textAlign: "center", cursor: "pointer",
+              transition: "transform 0.2s ease", minHeight: 160,
+              display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+            }}
+            onMouseEnter={e => e.currentTarget.style.transform = "translateY(-3px)"}
+            onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}
+          >
+            <div style={{ fontSize: 32, marginBottom: 8 }}>💬</div>
+            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 700, color: C.forest }}>Forum</div>
+            <div style={{ fontSize: 14, color: C.inkLight, marginTop: 4 }}>Ongoing conversations & member discussions</div>
+          </div>
+
+          {/* Yearbook — coming soon */}
+          <div
+            style={{
+              padding: "32px 24px", background: C.cream, borderRadius: 6,
+              border: `2px solid ${C.parchmentDark}`, textAlign: "center", minHeight: 160,
+              display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+              opacity: 0.7,
+            }}
+          >
+            <div style={{ fontSize: 32, marginBottom: 8 }}>📖</div>
+            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 700, color: C.ink }}>Yearbook</div>
+            <div style={{ fontSize: 14, color: C.inkLight, marginTop: 4 }}>Coming soon</div>
+          </div>
         </div>
         {!user && (
-          <div style={{ textAlign: "center", marginTop: 28 }}>
-            <button className="craft-btn-primary" style={{ border: "none", cursor: "pointer" }} onClick={() => setShowAuthModal(true)}>
-              Sign In to Access
-            </button>
+          <div style={{ textAlign: "center", marginTop: 20 }}>
+            <p style={{ fontSize: 13, color: C.brownLight, fontStyle: "italic" }}>
+              Sign in to post, create groups, and join the conversation
+            </p>
           </div>
         )}
       </section>
@@ -315,107 +353,132 @@ export default function Home() {
       </div>
 
       {/* PIN MODAL */}
-      {showPinModal && (
-        <div className="modal-overlay" onClick={() => setShowPinModal(false)}>
-          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-            <button onClick={() => setShowPinModal(false)} style={{
-              position: "absolute", top: 12, right: 16, background: "none", border: "none",
-              fontSize: 22, cursor: "pointer", color: C.brownLight, fontFamily: "serif",
-            }}>×</button>
-            <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, color: C.brown, marginBottom: 20 }}>
-              Pin a Note
-            </h3>
-            {user ? (
-              <>
-                <div style={{ marginBottom: 14 }}>
-                  <label style={{ fontSize: 13, color: C.inkLight, fontWeight: 600, display: "block", marginBottom: 4 }}>Posting as</label>
-                  <div style={{ fontSize: 16, color: C.forest, fontFamily: "'Caveat', cursive", fontWeight: 700 }}>
-                    {user.displayName || user.email}
-                  </div>
-                </div>
-                <div style={{ marginBottom: 20 }}>
-                  <label style={{ fontSize: 13, color: C.inkLight, fontWeight: 600, display: "block", marginBottom: 4 }}>Your Note</label>
-                  <textarea
-                    rows="4"
-                    placeholder="Share a thought, a question, or a hello..."
-                    style={{ resize: "vertical" }}
-                    value={pinText}
-                    onChange={(e) => setPinText(e.target.value)}
-                  />
-                </div>
-                <button
-                  className="craft-btn-primary"
-                  style={{ width: "100%", cursor: "pointer", border: "none", opacity: submittingPin || !pinText.trim() ? 0.6 : 1 }}
-                  onClick={handleAddPin}
-                  disabled={submittingPin || !pinText.trim()}
-                >
-                  {submittingPin ? "Pinning..." : "Pin It!"}
-                </button>
-              </>
-            ) : (
-              <>
-                <div style={{
-                  background: C.cream, border: `1.5px dashed ${C.gold}`, borderRadius: 6, padding: "12px 16px",
-                  marginBottom: 20, textAlign: "center",
-                }}>
-                  <p style={{ fontFamily: "'Caveat', cursive", fontSize: 16, color: C.brownLight }}>
-                    Please log in to post. Pinning is for members only!
-                  </p>
-                </div>
-                <button className="craft-btn-primary" style={{ width: "100%", cursor: "pointer", border: "none" }} onClick={() => { setShowPinModal(false); setShowAuthModal(true); }}>
-                  Sign In to Pin
-                </button>
-              </>
-            )}
-          </div>
-        </div>
-      )}
+      <Modal open={showPinModal} onClose={() => setShowPinModal(false)}>
+        <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, color: C.brown, marginBottom: 20 }}>
+          Pin a Note
+        </h3>
+        {user ? (
+          <>
+            <div style={{ marginBottom: 14 }}>
+              <label style={{ fontSize: 13, color: C.inkLight, fontWeight: 600, display: "block", marginBottom: 4 }}>Posting as</label>
+              <div style={{ fontSize: 16, color: C.forest, fontFamily: "'Caveat', cursive", fontWeight: 700 }}>
+                {user.displayName || user.email}
+              </div>
+            </div>
+            <div style={{ marginBottom: 14 }}>
+              <label style={{ fontSize: 13, color: C.inkLight, fontWeight: 600, display: "block", marginBottom: 4 }}>Your Note</label>
+              <textarea
+                rows="4"
+                placeholder="Share a thought, a question, or a hello..."
+                style={{ resize: "vertical" }}
+                value={pinText}
+                onChange={(e) => setPinText(e.target.value)}
+              />
+            </div>
+            <div style={{ marginBottom: 20 }}>
+              <label style={{ fontSize: 13, color: C.inkLight, fontWeight: 600, display: "block", marginBottom: 4 }}>Image URL (optional)</label>
+              <input
+                placeholder="https://example.com/photo.jpg"
+                value={pinImageUrl}
+                onChange={(e) => setPinImageUrl(e.target.value)}
+              />
+            </div>
+            <button
+              className="craft-btn-primary"
+              style={{ width: "100%", cursor: "pointer", border: "none", opacity: submittingPin || !pinText.trim() ? 0.6 : 1 }}
+              onClick={handleAddPin}
+              disabled={submittingPin || !pinText.trim()}
+            >
+              {submittingPin ? "Pinning..." : "Pin It!"}
+            </button>
+          </>
+        ) : (
+          <>
+            <div style={{
+              background: C.cream, border: `1.5px dashed ${C.gold}`, borderRadius: 6, padding: "12px 16px",
+              marginBottom: 20, textAlign: "center",
+            }}>
+              <p style={{ fontFamily: "'Caveat', cursive", fontSize: 16, color: C.brownLight }}>
+                Please log in to post. Pinning is for members only!
+              </p>
+            </div>
+            <button className="craft-btn-primary" style={{ width: "100%", cursor: "pointer", border: "none" }} onClick={() => { setShowPinModal(false); setShowAuthModal(true); }}>
+              Sign In to Pin
+            </button>
+          </>
+        )}
+      </Modal>
 
       {/* EVENT PROPOSAL MODAL */}
-      {showEventModal && (
-        <div className="modal-overlay" onClick={() => setShowEventModal(false)}>
-          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-            <button onClick={() => setShowEventModal(false)} style={{
-              position: "absolute", top: 12, right: 16, background: "none", border: "none",
-              fontSize: 22, cursor: "pointer", color: C.brownLight, fontFamily: "serif",
-            }}>×</button>
-            <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, color: C.brown, marginBottom: 20 }}>
-              Propose an Event
-            </h3>
+      <Modal open={showEventModal} onClose={() => setShowEventModal(false)}>
+        <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, color: C.brown, marginBottom: 20 }}>
+          Propose an Event
+        </h3>
+        {user ? (
+          <>
             <div style={{ marginBottom: 14 }}>
               <label style={{ fontSize: 13, color: C.inkLight, fontWeight: 600, display: "block", marginBottom: 4 }}>Event Title</label>
-              <input placeholder="e.g. Spring Watercolor Session" />
+              <input
+                placeholder="e.g. Spring Watercolor Session"
+                value={eventTitle}
+                onChange={(e) => setEventTitle(e.target.value)}
+              />
             </div>
             <div style={{ display: "flex", gap: 12, marginBottom: 14 }}>
               <div style={{ flex: 1 }}>
                 <label style={{ fontSize: 13, color: C.inkLight, fontWeight: 600, display: "block", marginBottom: 4 }}>Date</label>
-                <input type="date" style={{ fontFamily: "'EB Garamond', serif", fontSize: 16 }} />
+                <input
+                  type="date"
+                  style={{ fontFamily: "'EB Garamond', serif", fontSize: 16 }}
+                  value={eventDate}
+                  onChange={(e) => setEventDate(e.target.value)}
+                />
               </div>
               <div style={{ flex: 1 }}>
                 <label style={{ fontSize: 13, color: C.inkLight, fontWeight: 600, display: "block", marginBottom: 4 }}>Time</label>
-                <input type="time" style={{ fontFamily: "'EB Garamond', serif", fontSize: 16 }} />
+                <input
+                  type="time"
+                  style={{ fontFamily: "'EB Garamond', serif", fontSize: 16 }}
+                  value={eventTime}
+                  onChange={(e) => setEventTime(e.target.value)}
+                />
               </div>
             </div>
             <div style={{ marginBottom: 20 }}>
               <label style={{ fontSize: 13, color: C.inkLight, fontWeight: 600, display: "block", marginBottom: 4 }}>Description</label>
-              <textarea rows="3" placeholder="What's your event about?" style={{ resize: "vertical" }} />
+              <textarea
+                rows="3"
+                placeholder="What's your event about?"
+                style={{ resize: "vertical" }}
+                value={eventDesc}
+                onChange={(e) => setEventDesc(e.target.value)}
+              />
             </div>
+            <button
+              className="craft-btn-primary"
+              style={{ width: "100%", cursor: "pointer", border: "none", opacity: submittingEvent || !eventTitle.trim() ? 0.6 : 1 }}
+              onClick={handleProposeEvent}
+              disabled={submittingEvent || !eventTitle.trim()}
+            >
+              {submittingEvent ? "Submitting..." : "Submit Proposal"}
+            </button>
+          </>
+        ) : (
+          <>
             <div style={{
               background: C.cream, border: `1.5px dashed ${C.terracotta}`, borderRadius: 6, padding: "12px 16px",
               marginBottom: 20, textAlign: "center",
             }}>
               <p style={{ fontFamily: "'Caveat', cursive", fontSize: 16, color: C.brownLight }}>
-                ✦ Event proposals are available to established members only
+                Sign in to propose events for the calendar
               </p>
             </div>
-            <button className="craft-btn-primary" style={{ width: "100%", cursor: "pointer", border: "none" }}
-              onClick={() => { setShowEventModal(false); if (!user) setShowAuthModal(true); }}
-            >
-              {user ? "Submit Proposal" : "Sign In to Propose"}
+            <button className="craft-btn-primary" style={{ width: "100%", cursor: "pointer", border: "none" }} onClick={() => { setShowEventModal(false); setShowAuthModal(true); }}>
+              Sign In to Propose
             </button>
-          </div>
-        </div>
-      )}
+          </>
+        )}
+      </Modal>
     </div>
   );
 }

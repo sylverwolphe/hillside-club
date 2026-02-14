@@ -6,12 +6,14 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { useAuth } from "../AuthContext";
+import { useToast } from "../App";
 import { useCollection } from "../useFirestore";
-import { C, HandDrawnBox, CraftDivider } from "../theme";
+import { C, HandDrawnBox, CraftDivider, SkeletonBlock } from "../theme";
 
 export default function GroupDetail() {
   const { groupId } = useParams();
   const { user, setShowAuthModal } = useAuth();
+  const showToast = useToast();
   const [group, setGroup] = useState(null);
   const [loadingGroup, setLoadingGroup] = useState(true);
   const [isMember, setIsMember] = useState(false);
@@ -25,7 +27,8 @@ export default function GroupDetail() {
   );
   const { docs: messages, loading: loadingMessages } = useCollection(
     isMember ? `groups/${groupId}/messages` : null,
-    [orderBy("createdAt", "asc")]
+    [orderBy("createdAt", "asc")],
+    isMember ? "member" : "none"
   );
 
   const [msgBody, setMsgBody] = useState("");
@@ -46,7 +49,7 @@ export default function GroupDetail() {
 
   // Check membership
   useEffect(() => {
-    if (!user) { setCheckingMember(false); return; }
+    if (!user) { setCheckingMember(false); setIsMember(false); setMemberDocId(null); return; }
     async function checkMembership() {
       const membersRef = collection(db, "groups", groupId, "members");
       const q = query(membersRef, where("uid", "==", user.uid));
@@ -71,7 +74,7 @@ export default function GroupDetail() {
   }, [messages.length]);
 
   const handleJoin = async () => {
-    if (!user) return;
+    if (!user) { setShowAuthModal(true); return; }
     setJoiningLeaving(true);
     try {
       await addDoc(collection(db, "groups", groupId, "members"), {
@@ -87,8 +90,10 @@ export default function GroupDetail() {
       const q = query(membersRef, where("uid", "==", user.uid));
       const snap = await getDocs(q);
       if (!snap.empty) setMemberDocId(snap.docs[0].id);
+      showToast?.("Joined group!");
     } catch (err) {
       console.error("Failed to join:", err);
+      showToast?.("Failed to join group", "error");
     }
     setJoiningLeaving(false);
   };
@@ -101,8 +106,10 @@ export default function GroupDetail() {
       await updateDoc(doc(db, "groups", groupId), { memberCount: increment(-1) });
       setIsMember(false);
       setMemberDocId(null);
+      showToast?.("Left group");
     } catch (err) {
       console.error("Failed to leave:", err);
+      showToast?.("Failed to leave group", "error");
     }
     setJoiningLeaving(false);
   };
@@ -120,6 +127,7 @@ export default function GroupDetail() {
       setMsgBody("");
     } catch (err) {
       console.error("Failed to send message:", err);
+      showToast?.("Failed to send message", "error");
     }
     setSubmitting(false);
   };
@@ -130,24 +138,17 @@ export default function GroupDetail() {
     return d.toLocaleDateString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
   };
 
-  if (!user) {
-    return (
-      <div style={{ padding: "60px 20px", maxWidth: 600, margin: "0 auto", textAlign: "center" }}>
-        <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 28, color: C.brown, marginBottom: 12 }}>
-          Community Groups
-        </h2>
-        <p style={{ color: C.inkLight, marginBottom: 24 }}>Sign in to view this group</p>
-        <button className="craft-btn-primary" style={{ border: "none", cursor: "pointer" }} onClick={() => setShowAuthModal(true)}>
-          Sign In to Access
-        </button>
-      </div>
-    );
-  }
-
   if (loadingGroup) {
     return (
-      <div style={{ padding: "60px 20px", textAlign: "center" }}>
-        <p style={{ color: C.brownLight, fontStyle: "italic" }}>Loading...</p>
+      <div style={{ padding: "40px 20px 100px", maxWidth: 700, margin: "0 auto" }}>
+        <SkeletonBlock width="30%" height={14} style={{ marginBottom: 20 }} />
+        <HandDrawnBox fill={C.warmWhite} color={C.forest} strokeWidth={2} style={{ padding: "24px 28px", borderRadius: 6, marginBottom: 24 }}>
+          <div style={{ textAlign: "center" }}>
+            <SkeletonBlock width={48} height={48} style={{ margin: "0 auto 12px", borderRadius: "50%" }} />
+            <SkeletonBlock width="50%" height={26} style={{ margin: "0 auto 8px" }} />
+            <SkeletonBlock width="70%" height={14} style={{ margin: "0 auto" }} />
+          </div>
+        </HandDrawnBox>
       </div>
     );
   }
@@ -201,7 +202,7 @@ export default function GroupDetail() {
               onClick={handleJoin}
               disabled={joiningLeaving}
             >
-              {joiningLeaving ? "Joining..." : "Join Group"}
+              {joiningLeaving ? "Joining..." : user ? "Join Group" : "Sign In to Join"}
             </button>
           )}
         </div>
@@ -213,7 +214,11 @@ export default function GroupDetail() {
           Members
         </h3>
         {loadingMembers ? (
-          <p style={{ color: C.brownLight, fontStyle: "italic" }}>Loading...</p>
+          <div style={{ display: "flex", gap: 8 }}>
+            {[1, 2, 3].map((i) => (
+              <SkeletonBlock key={i} width={80} height={28} style={{ borderRadius: 12 }} />
+            ))}
+          </div>
         ) : (
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
             {members.map((m) => (
@@ -254,7 +259,7 @@ export default function GroupDetail() {
               </p>
             ) : (
               messages.map((msg) => {
-                const isOwnMessage = msg.authorId === user.uid;
+                const isOwnMessage = user && msg.authorId === user.uid;
                 return (
                   <div
                     key={msg.id}
@@ -320,8 +325,20 @@ export default function GroupDetail() {
       ) : (
         <HandDrawnBox fill={C.cream} style={{ padding: "24px", textAlign: "center", borderRadius: 6 }}>
           <p style={{ fontFamily: "'Caveat', cursive", fontSize: 18, color: C.brownLight }}>
-            Join this group to see the discussion and post messages
+            {user
+              ? "Join this group to see the discussion and post messages"
+              : "Sign in and join this group to participate in the discussion"
+            }
           </p>
+          {!user && (
+            <button
+              className="craft-btn-primary"
+              style={{ border: "none", cursor: "pointer", fontSize: 14, padding: "8px 20px", marginTop: 12 }}
+              onClick={() => setShowAuthModal(true)}
+            >
+              Sign In
+            </button>
+          )}
         </HandDrawnBox>
       )}
     </div>
