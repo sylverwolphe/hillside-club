@@ -1,15 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
-// Firebase config
-const FIREBASE_CONFIG = {
-  apiKey: "AIzaSyCa6tv-h3yGoFl7PE5JL_o0cqCKZGywu0I",
-  authDomain: "hillside-club.firebaseapp.com",
-  projectId: "hillside-club",
-  storageBucket: "hillside-club.firebasestorage.app",
-  messagingSenderId: "636382514861",
-  appId: "1:636382514861:web:b9af2769e0e30f466f4024",
-};
-
 /* ───────── palette & tokens ───────── */
 const C = {
   parchment: "#F5EDD6",
@@ -61,7 +51,6 @@ const SketchFilter = () => (
 
 /* ───────── hand-drawn box component ───────── */
 const HandDrawnBox = ({ children, style = {}, color = C.brown, fill = "transparent", strokeWidth = 2, className = "" }) => {
-  const id = useRef(`box-${Math.random().toString(36).slice(2, 8)}`);
   return (
     <div style={{ position: "relative", ...style }} className={className}>
       <svg
@@ -243,7 +232,7 @@ const CalendarEvent = ({ event }) => (
       {event.tag && (
         <span style={{
           display: "inline-block", marginTop: 6, padding: "2px 10px", background: C.sagePale,
-          color: C.forest, fontSize: 12, borderRadius: 10, fontWeight: 600, fontFamily: "'Caveat', cursive", fontSize: 14,
+          color: C.forest, borderRadius: 10, fontWeight: 600, fontFamily: "'Caveat', cursive", fontSize: 14,
         }}>{event.tag}</span>
       )}
     </div>
@@ -329,9 +318,6 @@ export default function HillsideClub() {
   return (
     <div style={{ background: C.parchment, minHeight: "100vh", fontFamily: "'EB Garamond', 'Georgia', serif", color: C.ink, paddingBottom: 80 }}>
       <SketchFilter />
-
-      {/* Google Fonts */}
-      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
